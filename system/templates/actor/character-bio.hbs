@@ -1,0 +1,29 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="bio">
+  <div class="bio-grid">
+    <div class="form-group"><label>{{localize "LAUNDRY.Details.codename"}}</label><input type="text" name="system.details.codename" value="{{system.details.codename}}"></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.Details.nickname"}}</label><input type="text" name="system.details.nickname" value="{{system.details.nickname}}"></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.Details.assignment"}}</label><input type="text" name="system.details.assignment" value="{{system.details.assignment}}"></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.Details.department"}}</label><select name="system.details.department">{{selectOptions config.departments selected=system.details.department localize=true blank="—"}}</select></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.Details.age"}}</label><input type="text" name="system.details.age" value="{{system.details.age}}"></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.Details.eyes"}}</label><input type="text" name="system.details.eyes" value="{{system.details.eyes}}"></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.Details.hair"}}</label><input type="text" name="system.details.hair" value="{{system.details.hair}}"></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.Details.features"}}</label><input type="text" name="system.details.features" value="{{system.details.features}}"></div>
+  </div>
+
+  <h3 class="section-title">{{localize "LAUNDRY.Details.goals"}}</h3>
+  <div class="goals">
+    <div class="form-group"><label>{{localize "LAUNDRY.Details.shortGoal"}}</label><input type="text" name="system.details.goals.short" value="{{system.details.goals.short}}"><input type="checkbox" name="system.details.goals.shortDone" {{checked system.details.goals.shortDone}}></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.Details.longGoal"}}</label><input type="text" name="system.details.goals.long" value="{{system.details.goals.long}}"><input type="checkbox" name="system.details.goals.longDone" {{checked system.details.goals.longDone}}></div>
+  </div>
+
+  <div class="form-group stacked">
+    <label>{{localize "LAUNDRY.Details.connections"}}</label>
+    <textarea name="system.details.connections" rows="3">{{system.details.connections}}</textarea>
+  </div>
+
+  <h3 class="section-title">{{localize "LAUNDRY.Details.biography"}}</h3>
+  <prose-mirror name="system.details.biography" value="{{system.details.biography}}" toggled="true">{{{enriched.biography}}}</prose-mirror>
+
+  <h3 class="section-title">{{localize "LAUNDRY.Details.notes"}}</h3>
+  <prose-mirror name="system.details.notes" value="{{system.details.notes}}" toggled="true">{{{enriched.notes}}}</prose-mirror>
+</section>

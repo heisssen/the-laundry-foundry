@@ -1,0 +1,81 @@
+<div class="laundry-form">
+  <div class="pool-preview">
+    <div class="pool-dice">{{#laundry-times prepared.pool}}<img src="systems/the-laundry/assets/dice/face-6.svg">{{/laundry-times}}</div>
+    <div class="pool-summary">
+      <strong>{{prepared.pool}}d6</strong> · DN <strong>{{prepared.dn}}:{{config.complexity}}</strong>
+      {{#if prepared.focus}} · {{localize "LAUNDRY.Skill.focus"}} {{prepared.focus}}{{/if}}
+      {{#if prepared.auto}}<span class="auto" data-tooltip="{{localize 'LAUNDRY.Test.AutoSuccessHint'}}"><i class="fa-solid fa-circle-check"></i> {{localize "LAUNDRY.Test.AutoSuccess"}}</span>{{/if}}
+    </div>
+    <ul class="breakdown">
+      {{#each prepared.breakdown}}<li>{{localize label}} <span>{{laundry-signed value}}</span></li>{{/each}}
+      {{#if dnMod}}<li class="warn">{{localize "LAUNDRY.Test.InjuryDN"}} <span>DN {{laundry-signed dnMod}}</span></li>{{/if}}
+    </ul>
+  </div>
+
+  <div class="form-group">
+    <label>{{localize "LAUNDRY.Test.Attribute"}}</label>
+    <select name="attribute" {{#if lockAttribute}}disabled{{/if}}>{{selectOptions attributes selected=config.attribute localize=true}}</select>
+  </div>
+  <div class="form-group">
+    <label>{{localize "LAUNDRY.Test.Skill"}}</label>
+    <select name="skill" {{#if lockSkill}}disabled{{/if}}>{{selectOptions skills selected=config.skill localize=true}}</select>
+  </div>
+  {{#if showDN}}
+  <div class="form-group">
+    <label>{{localize "LAUNDRY.Test.DN"}}</label>
+    <div class="form-fields">
+      <select name="dn">{{selectOptions dns selected=config.dn}}</select>
+      <span>:</span>
+      <input type="number" name="complexity" value="{{config.complexity}}" min="1" max="20">
+    </div>
+  </div>
+  {{/if}}
+  <div class="form-group">
+    <label>{{localize "LAUNDRY.Test.AdvantageLabel"}}</label>
+    <select name="advantage">{{selectOptions advantages selected=config.advantage localize=true}}</select>
+  </div>
+  <div class="form-group">
+    <label>{{localize "LAUNDRY.Test.BonusDice"}} / {{localize "LAUNDRY.Test.PenaltyDice"}}</label>
+    <div class="form-fields">
+      <input type="number" name="bonusDice" value="{{config.bonusDice}}" min="0">
+      <input type="number" name="penaltyDice" value="{{config.penaltyDice}}" min="0">
+    </div>
+  </div>
+  {{#if prepared.talentMods.length}}
+  <fieldset class="talent-mods">
+    <legend><i class="fa-solid fa-star"></i> {{localize "LAUNDRY.Test.TalentMods"}}</legend>
+    {{#each prepared.talentMods}}
+    <label class="talent-mod {{#if auto}}auto{{/if}}" data-tooltip="{{source}}">
+      <input type="checkbox" name="tm:{{id}}" {{checked checked}} {{#if auto}}disabled{{/if}}>
+      {{label}} <span class="muted">({{localize (concat "LAUNDRY.ModType." type)}}{{#if value}} {{value}}{{/if}})</span>
+    </label>
+    {{/each}}
+  </fieldset>
+  {{/if}}
+  {{#if conditionsPool}}
+  <div class="form-group">
+    <label>{{localize "LAUNDRY.Test.ApplyConditions"}} ({{conditionsPool}})</label>
+    <input type="checkbox" name="applyConditions" {{#unless (laundry-eq config.applyConditions false)}}checked{{/unless}}>
+  </div>
+  {{/if}}
+  {{#if canDouble}}
+  <div class="form-group adrenaline">
+    <label><i class="fa-solid fa-bolt"></i> {{localize "LAUNDRY.Test.DoubleTraining"}} ({{adrenaline}})</label>
+    <input type="checkbox" name="doubleTraining" {{checked config.doubleTraining}}>
+  </div>
+  {{/if}}
+  {{#if canMaximise}}
+  <div class="form-group luck">
+    <label><i class="fa-solid fa-clover"></i> {{localize "LAUNDRY.Test.MaximiseLabel"}} ({{luck}})</label>
+    <input type="checkbox" name="maximise" {{checked config.maximise}}>
+  </div>
+  {{/if}}
+  <div class="form-group">
+    <label>{{localize "CHAT.RollVisibility"}}</label>
+    <select name="rollMode">{{selectOptions rollModes selected=config.rollMode localize=true}}</select>
+  </div>
+  <footer class="form-footer">
+    <button type="submit" class="primary"><i class="fa-solid fa-dice-six"></i> {{localize "LAUNDRY.Test.Roll"}}</button>
+    <button type="button" data-action="cancel">{{localize "Cancel"}}</button>
+  </footer>
+</div>

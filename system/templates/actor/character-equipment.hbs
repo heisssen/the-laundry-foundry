@@ -1,0 +1,31 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="equipment">
+  <h3 class="section-title">{{localize "LAUNDRY.Sheet.Gear"}}
+    {{#if editable}}<a class="create" data-action="itemCreate" data-type="gear"><i class="fa-solid fa-plus"></i></a>{{/if}}
+  </h3>
+  <ol class="item-list gear">
+    {{#each gear}}
+    <li class="item draggable {{#if expanded}}expanded{{/if}}" data-item-id="{{id}}">
+      <div class="item-row">
+        <img src="{{img}}" class="item-img" data-action="itemChat">
+        <a class="item-name" data-action="itemExpand">{{name}}{{#if system.isDevice}} <i class="fa-solid fa-microchip" data-tooltip="{{localize 'LAUNDRY.Gear.Device'}}"></i>{{/if}}</a>
+        {{#if system.deviceState}}<span class="device-state state-{{system.deviceState}}">{{system.deviceState}} <a data-action="resetDevice" data-tooltip="{{localize 'LAUNDRY.Gear.ResetDevice'}}"><i class="fa-solid fa-wrench"></i></a></span>{{/if}}
+        {{#if system.quantity}}<span class="qty">×{{system.quantity}}</span>{{/if}}
+        {{#if system.requisition}}<a class="req-tag" data-action="requisition" data-tooltip="{{localize 'LAUNDRY.Requisition.Hint'}}"><i class="fa-solid fa-file-signature"></i> {{system.requisition}}</a>{{/if}}
+        <span class="controls">
+          <a data-action="itemEdit"><i class="fa-solid fa-pen"></i></a>
+          <a data-action="itemDelete"><i class="fa-solid fa-trash"></i></a>
+        </span>
+      </div>
+      {{#if expanded}}<div class="item-summary">{{{system.description}}}</div>{{/if}}
+    </li>
+    {{else}}<li class="empty">{{localize "LAUNDRY.Sheet.NoGear"}}</li>
+    {{/each}}
+  </ol>
+
+  <div class="two-col">
+    <div class="form-group stacked">
+      <h3 class="section-title">{{localize "LAUNDRY.Details.training"}}</h3>
+      <textarea name="system.details.training" rows="4">{{system.details.training}}</textarea>
+    </div>
+  </div>
+</section>

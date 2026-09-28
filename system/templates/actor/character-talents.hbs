@@ -1,0 +1,12 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="talents">
+  <h3 class="section-title">{{localize "LAUNDRY.Sheet.Talents"}}
+    {{#if editable}}<a class="create" data-action="itemCreate" data-type="talent"><i class="fa-solid fa-plus"></i></a>{{/if}}
+  </h3>
+  <ol class="item-list talents">
+    {{#each talents}}{{> laundry.item-row}}{{else}}<li class="empty">{{localize "LAUNDRY.Sheet.DropTalents"}}</li>{{/each}}
+  </ol>
+  {{#if traits.length}}
+  <h3 class="section-title">{{localize "LAUNDRY.Sheet.Traits"}}</h3>
+  <ol class="item-list">{{#each traits}}{{> laundry.item-row}}{{/each}}</ol>
+  {{/if}}
+</section>

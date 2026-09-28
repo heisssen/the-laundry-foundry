@@ -1,0 +1,8 @@
+<div class="dice-row">
+  {{#each dice}}
+  <div class="die {{css}}" data-index="{{index}}" data-tooltip="{{#if bonus}}{{raw}} + {{bonus}} Focus = {{value}}{{else}}{{value}}{{/if}}">
+    <img src="{{img}}" alt="{{value}}">
+    {{#if bonus}}<span class="focus-badge">+{{bonus}}</span>{{/if}}
+  </div>
+  {{/each}}
+</div>

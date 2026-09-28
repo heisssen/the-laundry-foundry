@@ -1,0 +1,87 @@
+<div class="laundry-form">
+  <div class="attack-summary">
+    <img src="{{weapon.img}}" class="card-icon">
+    <div>
+      <strong>{{weapon.name}}</strong>
+      <div class="muted">{{#if comp.ranged}}{{localize "LAUNDRY.Stat.accuracy"}}{{else}}{{localize "LAUNDRY.Stat.melee"}}{{/if}}: {{laundry-ladder comp.attackStepBase}}</div>
+    </div>
+  </div>
+
+  <ol class="target-cards">
+    {{#each comp.targets}}
+    <li class="{{#unless uuid}}no-target{{/unless}}">
+      {{#if uuid}}<img src="{{img}}" alt="">{{else}}<i class="fa-solid fa-crosshairs"></i>{{/if}}
+      <div class="t-body"><strong>{{name}}</strong>
+        <small>{{localize "LAUNDRY.Stat.defence"}}: {{laundry-ladder defenceStep}}{{#each notes}} <span class="note-tag">{{this}}</span>{{/each}}</small></div>
+      <span class="t-dn">DN <strong>{{dn}}</strong></span>
+    </li>
+    {{/each}}
+  </ol>
+  {{#unless hasTargets}}
+  <div class="form-group">
+    <label>{{localize "LAUNDRY.Attack.ManualDefence"}}</label>
+    <select name="manualDefence">{{selectOptions ladder selected=manualDefenceKey localize=true}}</select>
+  </div>
+  <p class="hint">{{localize "LAUNDRY.Attack.TargetHint"}}</p>
+  {{/unless}}
+
+  {{#if comp.zoneApplied.length}}
+  <p class="zone-note"><i class="fa-solid fa-map-location-dot"></i> {{localize "LAUNDRY.Zone.FromZone"}}: {{#each comp.zoneApplied}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}</p>
+  {{/if}}
+  <div class="form-group">
+    <label>{{localize "LAUNDRY.Attack.Range"}}</label>
+    <select name="range">{{selectOptions ranges selected=config.range localize=true}}</select>
+  </div>
+  {{#if comp.ranged}}
+  <div class="form-group">
+    <label>{{localize "LAUNDRY.Attack.Cover"}}</label>
+    <select name="cover">{{selectOptions covers selected=config.cover localize=true}}</select>
+  </div>
+  {{/if}}
+  <div class="form-group">
+    <label>{{localize "LAUNDRY.Attack.CalledShot"}}</label>
+    <select name="calledShot">{{selectOptions calledShots selected=config.calledShot localize=true}}</select>
+  </div>
+  <div class="form-row checks">
+    {{#if canThrow}}<label><input type="checkbox" name="thrown" {{checked config.thrown}}> {{localize "LAUNDRY.Attack.Throw"}}</label>{{/if}}
+    {{#if canCharge}}<label><input type="checkbox" name="charge" {{checked config.charge}}> {{localize "LAUNDRY.Attack.Charge"}}</label>{{/if}}
+    <label><input type="checkbox" name="hidden" {{checked config.hidden}}> {{localize "LAUNDRY.Attack.Hidden"}}</label>
+    <label><input type="checkbox" name="dualWield" {{checked config.dualWield}}> {{localize "LAUNDRY.Attack.DualWield"}}</label>
+  </div>
+  {{#if comp.talentMods.length}}
+  <fieldset class="talent-mods">
+    <legend><i class="fa-solid fa-star"></i> {{localize "LAUNDRY.Test.TalentMods"}}</legend>
+    {{#each comp.talentMods}}
+    <label class="talent-mod {{#if auto}}auto{{/if}}" data-tooltip="{{source}}">
+      <input type="checkbox" name="tm:{{id}}" {{checked checked}} {{#if auto}}disabled{{/if}}>
+      {{label}} <span class="muted">({{localize (concat "LAUNDRY.ModType." type)}}{{#if value}} {{value}}{{/if}})</span>
+    </label>
+    {{/each}}
+  </fieldset>
+  {{/if}}
+  <div class="form-group">
+    <label>{{localize "LAUNDRY.Attack.StepMods"}}</label>
+    <div class="form-fields">
+      <input type="number" name="attackMod" value="{{config.attackMod}}" data-tooltip="{{localize 'LAUNDRY.Attack.AttackMod'}}">
+      <input type="number" name="defenceMod" value="{{config.defenceMod}}" data-tooltip="{{localize 'LAUNDRY.Attack.DefenceMod'}}">
+    </div>
+  </div>
+  <div class="form-group">
+    <label>{{localize "LAUNDRY.Test.AdvantageLabel"}}</label>
+    <select name="advantage">{{selectOptions advantages selected=config.advantage localize=true}}</select>
+  </div>
+  <div class="form-group">
+    <label>{{localize "LAUNDRY.Test.BonusDice"}}</label>
+    <input type="number" name="bonusDice" value="{{config.bonusDice}}" min="0">
+  </div>
+  {{#if canDouble}}<div class="form-group adrenaline"><label><i class="fa-solid fa-bolt"></i> {{localize "LAUNDRY.Test.DoubleTraining"}}</label><input type="checkbox" name="doubleTraining" {{checked config.doubleTraining}}></div>{{/if}}
+  {{#if canMaximise}}<div class="form-group luck"><label><i class="fa-solid fa-clover"></i> {{localize "LAUNDRY.Test.MaximiseLabel"}}</label><input type="checkbox" name="maximise" {{checked config.maximise}}></div>{{/if}}
+  <div class="form-group">
+    <label>{{localize "CHAT.RollVisibility"}}</label>
+    <select name="rollMode">{{selectOptions rollModes selected=config.rollMode localize=true}}</select>
+  </div>
+  <footer class="form-footer">
+    <button type="submit" class="primary"><i class="fa-solid fa-crosshairs"></i> {{localize "LAUNDRY.Attack.Attack"}}</button>
+    <button type="button" data-action="cancel">{{localize "Cancel"}}</button>
+  </footer>
+</div>

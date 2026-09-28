@@ -1,0 +1,15 @@
+<div class="laundry-card death-prompt">
+  <header class="card-header">
+    <img src="{{actor.img}}" class="card-icon">
+    <div class="card-title">
+      <h3><i class="fa-solid fa-skull-crossbones"></i> {{actor.name}}</h3>
+      <div class="card-subtitle">{{localize "LAUNDRY.Death.Critical"}} · DN {{actor.system.injuries.deathDN}}:{{actor.system.injuries.deathComplexity}}</div>
+    </div>
+  </header>
+  <p>{{localize "LAUNDRY.Death.PromptText"}}</p>
+  <footer class="card-controls">
+    <button type="button" data-action="death-test"><i class="fa-solid fa-heart-pulse"></i> {{localize "LAUNDRY.Death.Test"}}</button>
+    <button type="button" data-action="last-stand"><i class="fa-solid fa-fire"></i> {{localize "LAUNDRY.Death.LastStand"}}</button>
+    <button type="button" data-action="cheat-death"><i class="fa-solid fa-clover"></i> {{localize "LAUNDRY.Death.CheatDeath"}}</button>
+  </footer>
+</div>

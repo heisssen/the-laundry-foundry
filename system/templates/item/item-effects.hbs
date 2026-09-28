@@ -1,0 +1,19 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="effects">
+  <p class="hint">{{localize "LAUNDRY.Item.EffectsHint"}}</p>
+  <ol class="item-list effects">
+    {{#each effects}}
+    <li class="item" data-effect-id="{{id}}">
+      <div class="item-row">
+        <img src="{{img}}" class="item-img">
+        <span class="item-name">{{name}} {{#if disabled}}<em>({{localize "LAUNDRY.Item.Disabled"}})</em>{{/if}}
+          <small>{{#each changes}}{{key}} {{type}} {{value}}; {{/each}}</small></span>
+        <span class="controls">
+          <a data-action="effectEdit"><i class="fa-solid fa-pen"></i></a>
+          <a data-action="effectDelete"><i class="fa-solid fa-trash"></i></a>
+        </span>
+      </div>
+    </li>
+    {{/each}}
+  </ol>
+  {{#if editable}}<button type="button" data-action="effectCreate"><i class="fa-solid fa-plus"></i> {{localize "LAUNDRY.Item.AddEffect"}}</button>{{/if}}
+</section>

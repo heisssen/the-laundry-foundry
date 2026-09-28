@@ -1,0 +1,5 @@
+2026/09/28-10:20:04.028 509c Delete type=3 #1
+2026/09/28-10:20:04.033 2fac Level-0 table #5: started
+2026/09/28-10:20:04.037 2fac Level-0 table #5: 2868 bytes OK
+2026/09/28-10:20:04.044 2fac Delete type=0 #3
+2026/09/28-10:20:04.044 2fac Manual compaction at level-0 from '!actors!0Qd7nKzqNTsXLApe' @ 72057594037927935 : 1 .. '!actors!u26UQ3pgEiSBqf4S' @ 0 : 0; will stop at (end)

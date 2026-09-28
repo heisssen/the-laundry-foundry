@@ -1,0 +1,10 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="log">
+  <h3 class="section-title">{{localize "LAUNDRY.Team.Log"}}</h3>
+  <prose-mirror name="system.notes" value="{{system.notes}}" toggled="true">{{{enriched.notes}}}</prose-mirror>
+
+  <h3 class="section-title">{{localize "LAUNDRY.Team.KPIHistory"}}</h3>
+  <ol class="kpi-history">
+    {{#each system.kpi.history}}<li><span class="date">{{date}}</span> <span class="tag">{{kind}}</span> {{text}}</li>
+    {{else}}<li class="empty">—</li>{{/each}}
+  </ol>
+</section>

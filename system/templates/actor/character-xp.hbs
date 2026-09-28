@@ -1,0 +1,53 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="xp">
+  <div class="xp-summary">
+    <div><label>{{localize "LAUNDRY.XP.Total"}}</label>
+      {{#if isGM}}<input type="number" name="system.xp.total" value="{{system.xp.total}}" min="0">{{else}}<span>{{system.xp.total}}</span>{{/if}}
+    </div>
+    <div><label>{{localize "LAUNDRY.XP.Spent"}}</label><span>{{system.xp.spent}}</span></div>
+    <div class="available"><label>{{localize "LAUNDRY.XP.Available"}}</label><span>{{system.xp.available}}</span></div>
+  </div>
+  <p class="hint">{{localize "LAUNDRY.XP.Hint"}}</p>
+
+  <div class="xp-grid">
+    <div>
+      <h3 class="section-title">{{localize "LAUNDRY.Sheet.Attributes"}}</h3>
+      <ol class="xp-list">
+        {{#each xpAttributes}}
+        <li><span class="xp-label">{{localize label}}</span>
+          <span class="pips">{{#each pips}}<span class="pip {{#if filled}}filled{{/if}}"></span>{{/each}}</span>
+          {{#if maxed}}<span class="xp-max">MAX</span>{{else}}<button type="button" class="xp-buy" data-action="buy" data-kind="attribute" data-key="{{key}}" {{#unless afford}}disabled{{/unless}}><i class="fa-solid fa-plus"></i> {{cost}} XP</button>{{/if}}
+        </li>
+        {{/each}}
+      </ol>
+      <h3 class="section-title">{{localize "LAUNDRY.Sheet.Talents"}}</h3>
+      <p class="hint">{{localize "LAUNDRY.XP.TalentHint"}} ({{talentCost}} XP)</p>
+    </div>
+    <div>
+      <h3 class="section-title">{{localize "LAUNDRY.Sheet.Skills"}}</h3>
+      <ol class="xp-list skills">
+        <li class="xp-head"><span class="xp-label"></span><span class="xp-col">{{localize "LAUNDRY.Skill.training"}}</span><span class="xp-col">{{localize "LAUNDRY.Skill.focus"}}</span></li>
+        {{#each xpSkills}}
+        <li><span class="xp-label">{{localize label}}</span>
+          <span class="xp-col">
+            <span class="pips">{{#each tPips}}<span class="pip square {{#if filled}}filled{{/if}}"></span>{{/each}}</span>
+            {{#if tMaxed}}<span class="xp-max">MAX</span>{{else}}<button type="button" class="xp-buy" data-action="buy" data-kind="training" data-key="{{key}}" {{#unless tAfford}}disabled{{/unless}}>+{{tCost}}</button>{{/if}}
+          </span>
+          <span class="xp-col">
+            <span class="pips">{{#each fPips}}<span class="pip diamond {{#if filled}}filled{{/if}}"></span>{{/each}}</span>
+            {{#if fMaxed}}<span class="xp-max">MAX</span>{{else}}<button type="button" class="xp-buy" data-action="buy" data-kind="focus" data-key="{{key}}" {{#unless fAfford}}disabled{{/unless}}>+{{fCost}}</button>{{/if}}
+          </span>
+        </li>
+        {{/each}}
+      </ol>
+    </div>
+  </div>
+
+  <h3 class="section-title">{{localize "LAUNDRY.XP.Log"}}</h3>
+  <ol class="xp-log">
+    {{#each xpLog}}
+    <li><span class="date">{{date}}</span> <span>{{label}} {{from}}→{{to}}</span> <span class="cost">−{{cost}}</span>
+      {{#if ../editable}}<a data-action="undoPurchase" data-index="{{index}}" data-tooltip="{{localize 'LAUNDRY.XP.Undo'}}"><i class="fa-solid fa-rotate-left"></i></a>{{/if}}</li>
+    {{else}}<li class="empty">—</li>
+    {{/each}}
+  </ol>
+</section>

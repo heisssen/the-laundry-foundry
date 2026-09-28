@@ -1,0 +1,76 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="magic">
+  <div class="magic-header">
+    <div>
+      <strong>{{localize "LAUNDRY.Cast.Methods"}}:</strong>
+      {{#each methods}}<span class="tag">{{localize this}}</span>{{else}}<span class="muted">{{localize "LAUNDRY.Cast.NoMethods"}}</span>{{/each}}
+    </div>
+    <div class="mission-flag {{#if system.mission.complicationUsed}}used{{/if}}" data-tooltip="{{localize 'LAUNDRY.Complication.OncePerMission'}}">
+      <i class="fa-solid fa-laptop-code"></i> {{localize "LAUNDRY.Complication.Available"}}:
+      {{#if system.mission.complicationUsed}}<i class="fa-solid fa-xmark"></i>{{else}}<i class="fa-solid fa-check"></i>{{/if}}
+    </div>
+  </div>
+
+  <h3 class="section-title">{{localize "LAUNDRY.Sheet.Spells"}}
+    {{#if editable}}<a class="create" data-action="itemCreate" data-type="spell"><i class="fa-solid fa-plus"></i></a>{{/if}}
+  </h3>
+  <ol class="item-list spells">
+    {{#each spells}}
+    <li class="item draggable {{#if expanded}}expanded{{/if}}" data-item-id="{{id}}">
+      <div class="item-row">
+        <img src="{{img}}" class="item-img" data-action="itemUse">
+        <a class="item-name" data-action="itemExpand">{{name}}</a>
+        <span class="stat">DN {{system.dn}}:{{system.complexity}}</span>
+        <span class="stat"><i class="fa-regular fa-clock"></i> {{system.castingTime.value}} {{localize (concat "LAUNDRY.TimeUnit." system.castingTime.unit)}}</span>
+        <span class="controls">
+          <a data-action="itemUse" data-tooltip="{{localize 'LAUNDRY.Cast.Cast'}}"><i class="fa-solid fa-hat-wizard"></i></a>
+          <a data-action="itemEdit"><i class="fa-solid fa-pen"></i></a>
+          <a data-action="itemDelete"><i class="fa-solid fa-trash"></i></a>
+        </span>
+      </div>
+      {{#if expanded}}<div class="item-summary">{{{system.description}}}</div>{{/if}}
+    </li>
+    {{else}}<li class="empty">{{localize "LAUNDRY.Sheet.NoSpells"}}</li>
+    {{/each}}
+  </ol>
+
+  <h3 class="section-title">{{localize "LAUNDRY.Sheet.Apps"}}
+    {{#if editable}}<a class="create" data-action="itemCreate" data-type="app"><i class="fa-solid fa-plus"></i></a>{{/if}}
+  </h3>
+  <ol class="item-list apps">
+    {{#each apps}}
+    <li class="item draggable" data-item-id="{{id}}">
+      <div class="item-row">
+        <img src="{{img}}" class="item-img" data-action="itemUse">
+        <a class="item-name rollable" data-action="itemUse">{{name}}</a>
+        <span class="stat">L{{system.level}} · DN {{system.dn}}:{{system.complexity}}</span>
+        <span class="controls">
+          <a data-action="itemChat"><i class="fa-solid fa-comment"></i></a>
+          <a data-action="itemEdit"><i class="fa-solid fa-pen"></i></a>
+          <a data-action="itemDelete"><i class="fa-solid fa-trash"></i></a>
+        </span>
+      </div>
+    </li>
+    {{else}}<li class="empty">{{localize "LAUNDRY.Sheet.NoApps"}}</li>
+    {{/each}}
+  </ol>
+
+  <h3 class="section-title">{{localize "LAUNDRY.KSyndrome.Title"}}</h3>
+  <div class="ksyndrome {{#if kSyndrome.contracted}}contracted{{/if}}">
+    <div class="ks-track">
+      {{#each kSyndrome.track}}<span class="ks-box {{#if filled}}filled{{/if}}" data-tooltip="{{localize label}}">{{n}}</span>{{/each}}
+    </div>
+    <div class="ks-info">
+      <span>{{localize "LAUNDRY.KSyndrome.Mishaps"}}: {{kSyndrome.mishaps}}</span>
+      <span>{{localize "LAUNDRY.KSyndrome.NextResist"}}: Mind (Zeal) 4:{{kSyndrome.resistComplexity}}</span>
+      {{#if kSyndrome.stageLabel}}<span class="warn">{{localize kSyndrome.stageLabel}}</span>{{/if}}
+    </div>
+    {{#if editable}}<button type="button" data-action="kResist"><i class="fa-solid fa-brain"></i> {{localize "LAUNDRY.KSyndrome.Resist"}}</button>{{/if}}
+    {{#if editMode}}
+    <div class="form-row">
+      <label>{{localize "LAUNDRY.KSyndrome.Mishaps"}} <input type="number" name="system.kSyndrome.mishaps" value="{{system.kSyndrome.mishaps}}" min="0"></label>
+      <label>{{localize "LAUNDRY.KSyndrome.Fails"}} <input type="number" name="system.kSyndrome.fails" value="{{system.kSyndrome.fails}}" min="0" max="6"></label>
+      <label><input type="checkbox" name="system.mission.complicationUsed" {{checked system.mission.complicationUsed}}> {{localize "LAUNDRY.Complication.Used"}}</label>
+    </div>
+    {{/if}}
+  </div>
+</section>

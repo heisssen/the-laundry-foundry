@@ -1,0 +1,18 @@
+<div class="laundry-card request-card">
+  <header class="card-header">
+    <div class="card-title">
+      <h3><i class="fa-solid fa-clipboard-question"></i> {{#if group}}{{localize "LAUNDRY.GM.GroupTest"}}{{else}}{{localize "LAUNDRY.GM.TestRequested"}}{{/if}}{{#if label}}: {{label}}{{/if}}</h3>
+      <div class="card-subtitle">{{localize attributeLabel}}{{#if skillLabel}} ({{localize skillLabel}}){{/if}} · DN {{dn}}:{{#if group}}1{{else}}{{complexity}}{{/if}}</div>
+    </div>
+  </header>
+  {{#if group}}
+  <div class="extended-progress status-{{progress.status}}">
+    <span>{{localize "LAUNDRY.GM.GroupProgress"}}: <strong>{{#if progress}}{{progress.total}}{{else}}0{{/if}} / {{required}}</strong></span>
+    {{#if progress}}<ul class="contributors">{{#each progress.attempts}}<li>{{by}}: {{successes}}</li>{{/each}}</ul>{{/if}}
+    {{#if (laundry-eq progress.status "success")}}<strong class="ok">{{localize "LAUNDRY.Outcome.pass"}}</strong>{{/if}}
+  </div>
+  <footer class="card-controls"><button type="button" data-action="group-contribute"><i class="fa-solid fa-people-group"></i> {{localize "LAUNDRY.GM.Contribute"}}</button></footer>
+  {{else}}
+  <footer class="card-controls"><button type="button" data-action="request-roll"><i class="fa-solid fa-dice-six"></i> {{localize "LAUNDRY.GM.RollIt"}}</button></footer>
+  {{/if}}
+</div>

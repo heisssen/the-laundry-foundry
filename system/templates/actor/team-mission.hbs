@@ -1,0 +1,42 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="mission">
+  <div class="mission-top">
+    <div class="budget">
+      <label>{{localize "LAUNDRY.Team.Budget"}}</label>
+      <div><input type="number" name="system.mission.budget" value="{{system.mission.budget}}"> <span>−</span>
+        <input type="number" name="system.mission.spent" value="{{system.mission.spent}}" data-tooltip="{{localize 'LAUNDRY.Team.Spent'}}">
+        <strong class="{{#if (laundry-lt budgetLeft 0)}}over{{/if}}">= £{{budgetLeft}}</strong></div>
+    </div>
+    {{#if isGM}}<button type="button" data-action="newMission"><i class="fa-solid fa-folder-plus"></i> {{localize "LAUNDRY.Team.NewMission"}}</button>{{/if}}
+  </div>
+
+  <h3 class="section-title">{{localize "LAUNDRY.Team.Briefing"}}</h3>
+  <prose-mirror name="system.briefing" value="{{system.briefing}}" toggled="true">{{{enriched.briefing}}}</prose-mirror>
+
+  <h3 class="section-title">{{localize "LAUNDRY.Team.Objectives"}} <small>{{objectivesDone}}/{{objectivesTotal}}</small>
+    {{#if editable}}<a class="create" data-action="addRow" data-array="objectives" data-tooltip="{{localize 'LAUNDRY.Team.AddObjectiveHint'}}"><i class="fa-solid fa-plus"></i></a>{{/if}}</h3>
+  <ol class="checklist objectives">
+    {{#each objectives}}
+    <li class="{{#if done}}done{{/if}} {{#if secret}}secret{{/if}}">
+      <a class="check" data-action="toggleRow" data-array="objectives" data-index="{{index}}" data-key="done"><i class="fa-regular {{#if done}}fa-square-check{{else}}fa-square{{/if}}"></i></a>
+      <input type="text" value="{{text}}" data-array="objectives" data-index="{{index}}" data-key="text" placeholder="{{localize 'LAUNDRY.Team.ObjectivePlaceholder'}}">
+      {{#if ../isGM}}<a data-action="toggleRow" data-array="objectives" data-index="{{index}}" data-key="secret" data-tooltip="{{localize 'LAUNDRY.Team.SecretHint'}}"><i class="fa-solid {{#if secret}}fa-eye-slash{{else}}fa-eye{{/if}}"></i></a>{{/if}}
+      {{#if ../editable}}<a data-action="removeRow" data-array="objectives" data-index="{{index}}"><i class="fa-solid fa-trash"></i></a>{{/if}}
+    </li>
+    {{else}}<li class="empty">{{localize "LAUNDRY.Team.NoObjectives"}}</li>
+    {{/each}}
+  </ol>
+
+  <h3 class="section-title">{{localize "LAUNDRY.Team.KPIs"}}</h3>
+  <div class="kpis">
+    <div class="kpi-card">
+      <label><i class="fa-solid fa-flag"></i> {{localize "LAUNDRY.Team.ShortKPI"}}</label>
+      <input type="text" name="system.kpi.short" value="{{system.kpi.short}}">
+      {{#if isGM}}<button type="button" data-action="kpi" data-kind="short" data-tooltip="{{localize 'LAUNDRY.Team.CompleteShortHint'}}"><i class="fa-solid fa-trophy"></i></button>{{/if}}
+    </div>
+    <div class="kpi-card">
+      <label><i class="fa-solid fa-flag-checkered"></i> {{localize "LAUNDRY.Team.LongKPI"}}</label>
+      <input type="text" name="system.kpi.long" value="{{system.kpi.long}}">
+      {{#if isGM}}<button type="button" data-action="kpi" data-kind="long" data-tooltip="{{localize 'LAUNDRY.Team.CompleteLongHint'}}"><i class="fa-solid fa-trophy"></i></button>{{/if}}
+    </div>
+  </div>
+</section>

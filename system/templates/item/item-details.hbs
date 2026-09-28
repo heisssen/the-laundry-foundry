@@ -1,0 +1,148 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="details">
+  <div class="laundry-form">
+
+  {{#if isType.talent}}
+    <div class="form-group"><label>{{localize "LAUNDRY.Talent.Category"}}</label><select name="system.category">{{selectOptions config.talentCategories selected=system.category localize=true}}</select></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.Talent.Requirements"}}</label><input type="text" name="system.requirements.text" value="{{system.requirements.text}}"></div>
+    <fieldset>
+      <legend>{{localize "LAUNDRY.Talent.StructuredRequirements"}}
+        <a data-action="addRow" data-field="requirements.skills"><i class="fa-solid fa-plus"></i> {{localize "LAUNDRY.Sheet.Skills"}}</a>
+        <a data-action="addRow" data-field="requirements.attributes"><i class="fa-solid fa-plus"></i> {{localize "LAUNDRY.Sheet.Attributes"}}</a></legend>
+      {{#each system.requirements.skills}}
+      <div class="form-row">
+        <input type="text" name="system.requirements.skills.{{@index}}.keys" value="{{keys}}" data-tooltip="{{localize 'LAUNDRY.Talent.SkillKeysHint'}}">
+        <label>T <input type="number" name="system.requirements.skills.{{@index}}.training" value="{{training}}" min="0" max="4"></label>
+        <label>F <input type="number" name="system.requirements.skills.{{@index}}.focus" value="{{focus}}" min="0" max="4"></label>
+        <label><input type="checkbox" name="system.requirements.skills.{{@index}}.either" {{checked either}}> {{localize "LAUNDRY.Talent.Either"}}</label>
+        <a data-action="removeRow" data-field="requirements.skills" data-index="{{@index}}"><i class="fa-solid fa-trash"></i></a>
+      </div>
+      {{/each}}
+      {{#each system.requirements.attributes}}
+      <div class="form-row">
+        <select name="system.requirements.attributes.{{@index}}.key">{{selectOptions ../config.attributes selected=key localize=true}}</select>
+        <input type="number" name="system.requirements.attributes.{{@index}}.value" value="{{value}}" min="1" max="6">
+        <a data-action="removeRow" data-field="requirements.attributes" data-index="{{@index}}"><i class="fa-solid fa-trash"></i></a>
+      </div>
+      {{/each}}
+      <div class="form-group"><label>{{localize "LAUNDRY.Talent.AssignmentReq"}}</label><input type="text" name="system.requirements.assignment" value="{{system.requirements.assignment}}"></div>
+    </fieldset>
+    <fieldset>
+      <legend>{{localize "LAUNDRY.Talent.Activation"}}</legend>
+      <div class="form-group"><label>{{localize "LAUNDRY.Talent.ActivationType"}}</label><select name="system.activation.type">{{selectOptions activationTypes selected=system.activation.type localize=true}}</select></div>
+      <div class="form-group"><label>{{localize "LAUNDRY.Stat.adrenaline"}} / {{localize "LAUNDRY.LuckThreat.Luck"}}</label>
+        <div class="form-fields"><input type="number" name="system.activation.adrenaline" value="{{system.activation.adrenaline}}" min="0"><input type="number" name="system.activation.luck" value="{{system.activation.luck}}" min="0"></div></div>
+      <div class="form-group"><label>{{localize "LAUNDRY.Talent.Test"}}</label><input type="text" name="system.activation.test" value="{{system.activation.test}}" placeholder="4:1 spirit presence"></div>
+      <div class="form-group"><label>{{localize "LAUNDRY.Talent.Uses"}}</label><select name="system.activation.uses">{{selectOptions usesOptions selected=system.activation.uses localize=true}}</select></div>
+    </fieldset>
+    <div class="form-row checks">
+      <label><input type="checkbox" name="system.repeatable" {{checked system.repeatable}}> {{localize "LAUNDRY.Talent.Repeatable"}}</label>
+      <label><input type="checkbox" name="system.core" {{checked system.core}}> {{localize "LAUNDRY.Talent.Core"}}</label>
+      <label>{{localize "LAUNDRY.Talent.Rank"}} <input type="number" name="system.rank" value="{{system.rank}}" min="1"></label>
+    </div>
+  {{/if}}
+
+  {{#if isType.weapon}}
+    <div class="form-group"><label>{{localize "LAUNDRY.Weapon.Kind"}}</label>
+      <select name="system.kind">{{selectOptions (object melee="LAUNDRY.Attack.Melee" ranged="LAUNDRY.Attack.Ranged") selected=system.kind localize=true}}</select></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.Sheet.Damage"}}</label>
+      <div class="form-fields"><input type="number" name="system.damage" value="{{system.damage}}" min="0"><label><input type="checkbox" name="system.addSuccesses" {{checked system.addSuccesses}}> + S</label></div></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.Trait.blast"}}</label><input type="number" name="system.blast" value="{{system.blast}}" min="0"></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.Sheet.Range"}}</label><select name="system.range">{{selectOptions config.weaponRanges selected=system.range localize=true blank="—"}}</select></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.Weapon.ThrownRange"}}</label><select name="system.thrownRange">{{selectOptions config.weaponRanges selected=system.thrownRange localize=true blank="—"}}</select></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.DamageType.label"}}</label><select name="system.damageType">{{selectOptions config.damageTypes selected=system.damageType localize=true}}</select></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.Requisition.Label"}}</label><input type="text" name="system.requisition" value="{{system.requisition}}" placeholder="4:1"></div>
+    <div class="form-row checks"><label><input type="checkbox" name="system.equipped" {{checked system.equipped}}> {{localize "LAUNDRY.Sheet.Equip"}}</label><label>{{localize "LAUNDRY.Item.Quantity"}} <input type="number" name="system.quantity" value="{{system.quantity}}" min="0"></label></div>
+    <fieldset><legend>{{localize "LAUNDRY.Weapon.NPCOverrides"}}</legend>
+      <div class="form-group"><label>{{localize "LAUNDRY.Sheet.Step"}}</label><select name="system.step">{{selectOptions ladderOptions selected=system.step localize=true blank="auto"}}</select></div>
+      <div class="form-group"><label>{{localize "LAUNDRY.Sheet.Pool"}} / F</label><div class="form-fields"><input type="number" name="system.pool" value="{{system.pool}}" placeholder="auto"><input type="number" name="system.focus" value="{{system.focus}}" placeholder="auto"></div></div>
+    </fieldset>
+  {{/if}}
+
+  {{#if isType.armour}}
+    <div class="form-group"><label>{{localize "LAUNDRY.Stat.armour"}}</label><input type="number" name="system.value" value="{{system.value}}" min="0"></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.Armour.Damaged"}}</label><input type="number" name="system.damage" value="{{system.damage}}" min="0"></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.Requisition.Label"}}</label><input type="text" name="system.requisition" value="{{system.requisition}}" placeholder="4:1"></div>
+    <div class="form-row checks"><label><input type="checkbox" name="system.equipped" {{checked system.equipped}}> {{localize "LAUNDRY.Sheet.Equip"}}</label></div>
+  {{/if}}
+
+  {{#if (or isType.weapon isType.armour)}}
+    <fieldset class="traits-editor"><legend>{{localize "LAUNDRY.Sheet.Traits"}}</legend>
+      {{#each traitOptions}}<a class="trait-chip {{#if active}}active{{/if}}" data-action="toggleTrait" data-trait="{{key}}" data-tooltip="{{localize (concat 'LAUNDRY.TraitHint.' key)}}">{{localize label}}</a>{{/each}}
+    </fieldset>
+  {{/if}}
+
+  {{#if isType.gear}}
+    <div class="form-group"><label>{{localize "LAUNDRY.Gear.Category"}}</label><select name="system.category">{{selectOptions config.gearCategories selected=system.category localize=true}}</select></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.Item.Quantity"}}</label><input type="number" name="system.quantity" value="{{system.quantity}}" min="0"></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.Requisition.Label"}}</label><input type="text" name="system.requisition" value="{{system.requisition}}" placeholder="4:1"></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.Gear.Certification"}}</label><input type="text" name="system.certification" value="{{system.certification}}"></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.Gear.Uses"}}</label><div class="form-fields"><input type="number" name="system.uses.value" value="{{system.uses.value}}"><span>/</span><input type="number" name="system.uses.max" value="{{system.uses.max}}"></div></div>
+    <div class="form-row checks"><label><input type="checkbox" name="system.isDevice" {{checked system.isDevice}}> {{localize "LAUNDRY.Gear.Device"}}</label></div>
+    {{#if system.isDevice}}
+      <div class="form-group"><label>{{localize "LAUNDRY.Cast.Device"}}</label><select name="system.tech">{{selectOptions config.tech selected=system.tech localize=true}}</select></div>
+      <div class="form-group"><label>{{localize "LAUNDRY.Gear.DeviceState"}}</label><select name="system.deviceState">{{selectOptions deviceStates selected=system.deviceState localize=true}}</select></div>
+    {{/if}}
+  {{/if}}
+
+  {{#if isType.spell}}
+    <div class="form-group"><label>{{localize "LAUNDRY.Spell.Group"}}</label><select name="system.group">{{selectOptions config.spellGroups selected=system.group localize=true}}</select></div>
+    <div class="form-group"><label>DN</label><div class="form-fields"><select name="system.dn">{{selectOptions dnOptions selected=system.dn}}</select><span>:</span><input type="text" name="system.complexity" value="{{system.complexity}}" size="3"></div></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.Spell.CastingTime"}}</label><div class="form-fields"><input type="number" name="system.castingTime.value" value="{{system.castingTime.value}}" min="0"><select name="system.castingTime.unit">{{selectOptions timeUnits selected=system.castingTime.unit localize=true}}</select></div></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.Spell.Target"}}</label><input type="text" name="system.target" value="{{system.target}}"></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.Sheet.Range"}}</label><input type="text" name="system.range" value="{{system.range}}"></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.Spell.Duration"}}</label><input type="text" name="system.duration" value="{{system.duration}}"></div>
+    <fieldset><legend>{{localize "LAUNDRY.Spell.Levels"}} <a data-action="addRow" data-field="levels"><i class="fa-solid fa-plus"></i></a></legend>
+      {{#each system.levels}}
+      <div class="level-row">
+        <div class="form-row"><label>L <input type="number" name="system.levels.{{@index}}.min" value="{{min}}" min="1">–<input type="number" name="system.levels.{{@index}}.max" value="{{max}}" min="1"></label>
+          <a data-action="removeRow" data-field="levels" data-index="{{@index}}"><i class="fa-solid fa-trash"></i></a></div>
+        <textarea name="system.levels.{{@index}}.effect" rows="3">{{effect}}</textarea>
+      </div>
+      {{/each}}
+    </fieldset>
+    <fieldset><legend>{{localize "LAUNDRY.Cast.Modifications"}} <a data-action="addRow" data-field="modifications"><i class="fa-solid fa-plus"></i></a></legend>
+      {{#each system.modifications}}
+      <div class="form-row">
+        <input type="text" name="system.modifications.{{@index}}.label" value="{{label}}">
+        <label>+C <input type="number" name="system.modifications.{{@index}}.complexity" value="{{complexity}}" min="0"></label>
+        <label><input type="checkbox" name="system.modifications.{{@index}}.repeatable" {{checked repeatable}}> ↻</label>
+        <a data-action="removeRow" data-field="modifications" data-index="{{@index}}"><i class="fa-solid fa-trash"></i></a>
+      </div>
+      {{/each}}
+    </fieldset>
+  {{/if}}
+
+  {{#if isType.app}}
+    <div class="form-group"><label>{{localize "LAUNDRY.App.Spell"}}</label><input type="text" name="system.spell" value="{{system.spell}}"></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.Cast.Level"}}</label><input type="number" name="system.level" value="{{system.level}}" min="1"></div>
+    <div class="form-group"><label>DN</label><div class="form-fields"><select name="system.dn">{{selectOptions dnOptions selected=system.dn}}</select><span>:</span><input type="number" name="system.complexity" value="{{system.complexity}}" min="1"></div></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.Requisition.Label"}}</label><input type="text" name="system.requisition" value="{{system.requisition}}"></div>
+  {{/if}}
+
+  {{#if isType.assignment}}
+    <div class="form-group"><label>{{localize "LAUNDRY.Details.department"}}</label><select name="system.department">{{selectOptions config.departments selected=system.department localize=true}}</select></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.Assignment.Division"}}</label><input type="text" name="system.division" value="{{system.division}}"></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.Sheet.Attributes"}}</label><div class="form-fields">
+      <input type="number" name="system.attributes.body" value="{{system.attributes.body}}" min="1" max="4">
+      <input type="number" name="system.attributes.mind" value="{{system.attributes.mind}}" min="1" max="4">
+      <input type="number" name="system.attributes.spirit" value="{{system.attributes.spirit}}" min="1" max="4"></div></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.Creator.CoreSkill"}}</label><select name="system.coreSkill">{{selectOptions skillOptions selected=system.coreSkill localize=true}}</select></div>
+    <div class="form-group"><label>XP</label><input type="number" name="system.xp" value="{{system.xp}}" min="0"></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.Assignment.TalentChoices"}}</label><input type="number" name="system.talentChoices" value="{{system.talentChoices}}" min="0"></div>
+    {{#each (object skillOptions="LAUNDRY.Assignment.SkillOptions" coreTalents="LAUNDRY.Creator.CoreTalents" optionalTalents="LAUNDRY.Assignment.OptionalTalents" equipment="LAUNDRY.Creator.Equipment" spells="LAUNDRY.Creator.Spells") as |label field|}}
+    <fieldset class="list-editor"><legend>{{localize label}}</legend>
+      {{#each (lookup ../system field)}}<span class="tag">{{this}} <a data-action="removeListEntry" data-field="{{field}}" data-index="{{@index}}"><i class="fa-solid fa-xmark"></i></a></span>{{/each}}
+      <div class="form-fields"><input type="text" class="new-entry"><a data-action="addListEntry" data-field="{{field}}"><i class="fa-solid fa-plus"></i></a></div>
+    </fieldset>
+    {{/each}}
+  {{/if}}
+
+  {{#if isType.injury}}
+    <div class="form-group"><label>{{localize "LAUNDRY.InjuryKind.label"}}</label><select name="system.kind">{{selectOptions injuryKinds selected=system.kind localize=true}}</select></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.Severity.label"}}</label><select name="system.severity">{{selectOptions severityOptions selected=system.severity localize=true}}</select></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.Injury.Key"}}</label><input type="text" name="system.key" value="{{system.key}}"></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.Injury.Spaces"}}</label><input type="number" name="system.spaces" value="{{system.spaces}}" min="0" max="3"></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.Injury.Cause"}}</label><input type="text" name="system.cause" value="{{system.cause}}"></div>
+  {{/if}}
+  </div>
+</section>

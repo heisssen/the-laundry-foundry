@@ -1,0 +1,216 @@
+<div class="laundry-card test-card kind-{{state.kind}} outcome-{{outcome}}{{#if mishap}} has-mishap{{/if}}">
+  <header class="card-header">
+    {{#if state.attack.weaponImg}}<img src="{{state.attack.weaponImg}}" class="card-icon">{{else if state.spell.img}}<img src="{{state.spell.img}}" class="card-icon">{{/if}}
+    <div class="card-title">
+      <h3>{{title}}</h3>
+      <div class="card-subtitle">
+        {{#if showTestName}}{{#if attributeLabel}}{{localize attributeLabel}}{{/if}}{{#if skillLabel}} ({{localize skillLabel}}){{/if}}{{/if}}
+        <span class="dn-badge" data-tooltip="{{localize 'LAUNDRY.Test.DNTooltip'}}">DN {{dnLabel}}</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="card-meta">
+    <span><i class="fa-solid fa-dice-six"></i> {{state.pool}}d6</span>
+    {{#if hasFocus}}<span data-tooltip="{{localize 'LAUNDRY.Test.FocusTooltip'}}"><i class="fa-solid fa-bullseye"></i> {{localize "LAUNDRY.Skill.focus"}} {{focusTotal}}{{#if focusRemaining}} ({{focusRemaining}} {{localize "LAUNDRY.Test.Left"}}){{/if}}</span>{{/if}}
+    {{#if advantageLabel}}<span class="adv">{{localize advantageLabel}}</span>{{/if}}
+    {{#if state.dnMod}}<span class="warn" data-tooltip="{{localize 'LAUNDRY.Test.InjuryDN'}}">DN {{laundry-signed state.dnMod}}</span>{{/if}}
+    {{#if state.doubleTraining}}<span class="adrenaline"><i class="fa-solid fa-bolt"></i> {{localize "LAUNDRY.Test.DoubledTraining"}}</span>{{/if}}
+    {{#if state.doubleFocusUsed}}<span class="adrenaline"><i class="fa-solid fa-bolt"></i> {{localize "LAUNDRY.Test.DoubledFocus"}}</span>{{/if}}
+    {{#each state.talentsApplied}}<span class="talent"><i class="fa-solid fa-star"></i> {{this}}</span>{{/each}}
+    {{#each state.zonesApplied}}<span class="talent zone"><i class="fa-solid fa-map-location-dot"></i> {{this}}</span>{{/each}}
+    {{#if state.maximise}}<span class="luck"><i class="fa-solid fa-clover"></i> {{localize "LAUNDRY.Test.Maximised"}}</span>{{/if}}
+  </div>
+
+  {{> laundry.dice}}
+
+  {{#unless extended}}
+  <div class="outcome {{outcome}}" data-tooltip="{{outcomeHint}}">
+    <i class="{{outcomeIcon}}"></i>
+    <strong>{{localize outcomeLabel}}</strong>{{#if extraLabel}}<small class="extra">{{extraLabel}}</small>{{/if}}
+    <span class="successes">{{successes}} / {{state.evaluation.complexity}}</span>
+  </div>
+  {{/unless}}
+
+  {{#if extended}}
+  <div class="extended-progress status-{{extended.status}}">
+    <span>{{localize "LAUNDRY.Test.Extended"}}: <strong>{{extended.total}} / {{extended.required}}</strong> ({{extended.attempts.length}})</span>
+    {{#if (laundry-eq extended.status "success")}}<strong class="ok">{{localize "LAUNDRY.Outcome.pass"}}</strong>{{/if}}
+    {{#if (laundry-eq extended.status "failure")}}<strong class="bad">{{localize "LAUNDRY.Outcome.fail"}}</strong>{{/if}}
+    {{#if (laundry-eq extended.status "ongoing")}}
+    <button type="button" data-action="fast-cast-continue" data-owner-only><i class="fa-solid fa-forward"></i> {{localize "LAUNDRY.Cast.Continue"}}</button>
+    {{/if}}
+  </div>
+  {{/if}}
+
+  {{#if attack}}
+  <div class="attack-block">
+    <div class="attack-damage">
+      <span><i class="fa-solid fa-burst"></i> {{#if attack.blast}}{{localize "LAUNDRY.Trait.blast"}} ({{attack.blast}}){{else}}{{attack.baseDamage}}{{#if attack.addSuccesses}} + S{{/if}}{{/if}}{{#if attack.bonusDamage}} + {{attack.bonusDamage}}{{/if}}</span>
+      {{#if attack.traitsLabel}}<span class="traits">{{attack.traitsLabel}}</span>{{/if}}
+      {{#if attack.calledShot}}<span class="called">{{localize "LAUNDRY.Attack.CalledShot"}}: {{localize (concat "LAUNDRY.Attack." attack.calledShot)}}</span>{{/if}}
+    </div>
+    {{#each attack.targets}}
+    <div class="target-row {{#if hit}}hit{{else}}miss{{/if}}">
+      <img src="{{img}}" data-action="select-target" data-index="{{index}}">
+      <div class="target-info">
+        <strong>{{name}}</strong>
+        <small>{{stepsLabel}} · DN {{dnFinal}} · {{successes}} {{localize "LAUNDRY.Test.Successes"}}</small>
+      </div>
+      {{#if hit}}
+        <span class="damage-value" data-tooltip="{{localize 'LAUNDRY.Attack.DamageBeforeArmour'}}">{{damage.damage}}</span>
+        {{#if uuid}}
+        {{#if applied}}
+          <span class="applied"><i class="fa-solid fa-check"></i> {{applied.damage}}</span>
+        {{else}}
+          <div class="target-actions" data-owner-only>
+            <button type="button" data-action="apply-damage" data-index="{{index}}" data-mode="full" data-tooltip="{{localize 'LAUNDRY.Attack.ApplyDamage'}}"><i class="fa-solid fa-heart-crack"></i></button>
+            <button type="button" data-action="apply-damage" data-index="{{index}}" data-mode="half" data-tooltip="{{localize 'LAUNDRY.Attack.ApplyHalf'}}"><i class="fa-solid fa-circle-half-stroke"></i></button>
+            {{#if (laundry-includes ../attack.traits "subtle")}}<button type="button" data-action="apply-damage" data-index="{{index}}" data-mode="backstab" data-tooltip="{{localize 'LAUNDRY.Attack.Backstab'}}"><i class="fa-solid fa-user-ninja"></i></button>{{/if}}
+            {{#if damage.effects.cleave}}<button type="button" data-action="apply-damage" data-index="{{index}}" data-mode="cleave" data-tooltip="{{localize 'LAUNDRY.Trait.cleave'}}"><i class="fa-solid fa-wind"></i> {{damage.effects.cleave}}</button>{{/if}}
+          </div>
+        {{/if}}
+        {{/if}}
+      {{else}}
+        <span class="miss-label">{{localize "LAUNDRY.Attack.Miss"}}</span>
+      {{/if}}
+    </div>
+    {{#if hit}}
+      {{#if damage.effects.stunned}}<div class="trait-note"><i class="fa-solid fa-star"></i> {{localize "LAUNDRY.Attack.StunnedNote"}}</div>{{/if}}
+      {{#if damage.effects.rend}}<div class="trait-note"><i class="fa-solid fa-shield-halved"></i> {{localize "LAUNDRY.Trait.rend"}}: −{{damage.effects.rend}}</div>{{/if}}
+      {{#if damage.effects.spreadDamage}}<div class="trait-note"><i class="fa-solid fa-braille"></i> {{localize "LAUNDRY.Trait.spread"}}: {{damage.effects.spreadDamage}}</div>{{/if}}
+    {{/if}}
+    {{/each}}
+  </div>
+  {{/if}}
+
+  {{#if spell}}
+  <div class="spell-block">
+    <div class="spell-meta">
+      <span><i class="fa-solid fa-microchip"></i> {{localize (concat "LAUNDRY.CastMethod." spell.method)}}{{#if spell.deviceName}} · {{spell.deviceName}}{{/if}}</span>
+      <span><i class="fa-regular fa-clock"></i> {{#if spell.timeLabel}}{{spell.timeLabel}}{{else}}{{spell.minutes}} {{localize "LAUNDRY.TimeUnit.minutes"}}{{/if}}</span>
+      {{#if spell.range}}<span><i class="fa-solid fa-ruler"></i> {{spell.range}}</span>{{/if}}
+      {{#if spell.duration}}<span><i class="fa-solid fa-hourglass"></i> {{spell.duration}}</span>{{/if}}
+    </div>
+    {{#if state.evaluation.passed}}{{#if spell.effect}}<div class="spell-effect">{{{spell.effect}}}</div>{{/if}}{{/if}}
+    {{#if state.evaluation.passed}}{{#if spell.damage}}
+    <div class="spell-damage">
+      <div class="attack-damage"><span><i class="fa-solid fa-burst"></i> {{spell.damage}} {{localize (concat "LAUNDRY.DamageType." spell.damageType)}}</span>{{#if spell.ignoreArmour}}<span class="traits">{{localize "LAUNDRY.Cast.IgnoresArmour"}}</span>{{/if}}</div>
+      {{#each spell.targets}}
+      <div class="target-row hit">
+        <img src="{{img}}" data-action="select-target" data-index="{{@index}}" data-source="spell">
+        <div class="target-info"><strong>{{name}}</strong></div>
+        {{#if applied}}<span class="applied"><i class="fa-solid fa-check"></i> {{applied.damage}}</span>
+        {{else}}<div class="target-actions" data-owner-only><button type="button" data-action="apply-spell-damage" data-index="{{@index}}" data-tooltip="{{localize 'LAUNDRY.Cast.ApplySpellDamage'}}"><i class="fa-solid fa-heart-crack"></i></button></div>{{/if}}
+      </div>
+      {{else}}<p class="hint">{{localize "LAUNDRY.Cast.TargetHint"}}</p>
+      {{/each}}
+    </div>
+    {{/if}}{{/if}}
+    {{#if mishap}}
+    <div class="mishap-block">
+      <strong><i class="fa-solid fa-triangle-exclamation"></i> {{localize "LAUNDRY.Mishap.Triggered"}}</strong>
+      {{#unless spell.mishapResolved}}
+      <div class="buttons" data-owner-only>
+        <button type="button" data-action="mishap"><i class="fa-solid fa-dice"></i> {{localize "LAUNDRY.Mishap.Roll"}}</button>
+        {{#if (laundry-eq spell.method "computational")}}<button type="button" data-action="complication"><i class="fa-solid fa-laptop-code"></i> {{localize "LAUNDRY.Complication.RollInstead"}}</button>{{/if}}
+      </div>
+      {{else}}<em>{{localize "LAUNDRY.Mishap.Resolved"}}</em>{{/unless}}
+    </div>
+    {{/if}}
+  </div>
+  {{/if}}
+
+  {{#if app}}
+  <div class="spell-block">
+    {{#if app.deviceName}}<div class="spell-meta"><span><i class="fa-solid fa-mobile-screen"></i> {{app.deviceName}}</span></div>{{/if}}
+    {{#if state.evaluation.passed}}<div class="spell-effect">{{{app.description}}}</div>{{/if}}
+    {{#if state.evaluation.passed}}{{#if app.damage}}
+    <div class="spell-damage">
+      <div class="attack-damage"><span><i class="fa-solid fa-burst"></i> {{app.damage}} {{localize (concat "LAUNDRY.DamageType." app.damageType)}}</span>{{#if app.ignoreArmour}}<span class="traits">{{localize "LAUNDRY.Cast.IgnoresArmour"}}</span>{{/if}}</div>
+      {{#each app.targets}}
+      <div class="target-row hit">
+        <img src="{{img}}" data-action="select-target" data-index="{{@index}}" data-source="app">
+        <div class="target-info"><strong>{{name}}</strong></div>
+        {{#if applied}}<span class="applied"><i class="fa-solid fa-check"></i> {{applied.damage}}</span>
+        {{else}}<div class="target-actions" data-owner-only><button type="button" data-action="apply-spell-damage" data-index="{{@index}}" data-tooltip="{{localize 'LAUNDRY.Cast.ApplySpellDamage'}}"><i class="fa-solid fa-heart-crack"></i></button></div>{{/if}}
+      </div>
+      {{else}}<p class="hint">{{localize "LAUNDRY.Cast.TargetHint"}}</p>
+      {{/each}}
+    </div>
+    {{/if}}{{/if}}
+    {{#if mishap}}
+    <div class="mishap-block">
+      <strong><i class="fa-solid fa-bug"></i> {{localize "LAUNDRY.Complication.Triggered"}}</strong>
+      {{#unless app.complicationResolved}}<div class="buttons" data-owner-only><button type="button" data-action="mishap"><i class="fa-solid fa-dice"></i> {{localize "LAUNDRY.Complication.Roll"}}</button></div>{{/unless}}
+    </div>
+    {{/if}}
+  </div>
+  {{/if}}
+
+  {{#if requisition}}
+  <div class="status-block requisition {{#if state.evaluation.passed}}status-stable{{else}}status-dead{{/if}}">
+    <img src="{{requisition.img}}" alt="">
+    {{#if state.evaluation.passed}}
+      {{#if requisition.issued}}<span><i class="fa-solid fa-stamp"></i> {{localize "LAUNDRY.Requisition.Issued"}}</span>
+      {{else}}<span>{{localize "LAUNDRY.Requisition.Approved"}}</span>
+        <button type="button" data-action="requisition-issue" data-owner-only><i class="fa-solid fa-box-open"></i> {{localize "LAUNDRY.Requisition.Collect"}}</button>{{/if}}
+    {{else}}<span><i class="fa-solid fa-ban"></i> {{localize "LAUNDRY.Requisition.Denied"}}</span>{{/if}}
+  </div>
+  {{/if}}
+
+  {{#if death}}
+  <div class="status-block status-{{death.status}}">
+    {{#if (laundry-eq death.status "stable")}}<i class="fa-solid fa-heart-pulse"></i> {{localize "LAUNDRY.Death.Stable"}}{{/if}}
+    {{#if (laundry-eq death.status "dying")}}<i class="fa-solid fa-hourglass-half"></i> {{localize "LAUNDRY.Death.Dying"}} (DN {{death.dnAfter}}){{/if}}
+    {{#if (laundry-eq death.status "dead")}}<i class="fa-solid fa-skull"></i> {{localize "LAUNDRY.Death.Dead"}}{{/if}}
+  </div>
+  {{/if}}
+
+  {{#if kResist}}
+  <div class="status-block {{#if kResist.failed}}status-dead{{else}}status-stable{{/if}}">
+    <i class="fa-solid fa-brain"></i>
+    {{#if kResist.failed}}{{localize "LAUNDRY.KSyndrome.Failed"}} ({{kResist.stage}}/6){{else}}{{localize "LAUNDRY.KSyndrome.Resisted"}}{{/if}}
+  </div>
+  {{/if}}
+
+  {{#if presence}}
+  <div class="status-block {{#if presence.failed}}status-dead{{else}}status-stable{{/if}}">
+    <i class="fa-solid fa-ghost"></i> {{presence.source}}:
+    {{#if presence.failed}}{{localize "LAUNDRY.Presence.Failed"}} ({{presence.turns}}){{else}}{{localize "LAUNDRY.Presence.Resisted"}}{{/if}}
+  </div>
+  {{/if}}
+
+  {{#if opposed}}
+  <div class="opposed-block">
+    {{#if (laundry-eq opposed.status "waiting")}}
+      <button type="button" data-action="opposed-respond"><i class="fa-solid fa-people-arrows"></i> {{localize "LAUNDRY.GM.OpposedRespond"}}</button>
+    {{else}}
+      <div>{{opposed.responder}}: {{opposed.responderSuccesses}} ({{opposed.responderPool}}d6, DN {{opposed.responderDN}})</div>
+      <strong>{{#if (laundry-eq opposed.winner "a")}}{{localize "LAUNDRY.GM.OpposedWinA"}}{{else if (laundry-eq opposed.winner "b")}}{{opposed.responder}} {{localize "LAUNDRY.GM.OpposedWinB"}}{{else}}{{localize "LAUNDRY.GM.OpposedReroll"}}{{/if}}</strong>
+    {{/if}}
+  </div>
+  {{/if}}
+
+  {{#if history.length}}
+  <details class="history"><summary>{{localize "LAUNDRY.Test.History"}}</summary>
+    <ul>{{#each history}}<li>{{#if (laundry-eq type "reroll")}}<i class="fa-solid fa-clover"></i> {{before}} → {{after}}{{else if (laundry-eq type "doubleFocus")}}<i class="fa-solid fa-bolt"></i> {{localize "LAUNDRY.Test.DoubledFocus"}}{{else}}{{type}}: {{results}}{{/if}}</li>{{/each}}</ul>
+  </details>
+  {{/if}}
+
+  {{#unless state.maximise}}
+  <footer class="card-controls" data-owner-only>
+    {{#if hasFocus}}
+    <button type="button" data-action="focus-auto" data-tooltip="{{localize 'LAUNDRY.Test.FocusAuto'}}"><i class="fa-solid fa-wand-magic-sparkles"></i></button>
+    <button type="button" data-action="focus-clear" data-tooltip="{{localize 'LAUNDRY.Test.FocusClear'}}"><i class="fa-solid fa-eraser"></i></button>
+    {{#unless state.doubleFocusUsed}}<button type="button" data-action="double-focus" data-tooltip="{{localize 'LAUNDRY.Test.DoubleFocus'}}"><i class="fa-solid fa-bolt"></i> ×2F</button>{{/unless}}
+    {{/if}}
+    {{#if canBackupPlan}}<button type="button" data-action="backup-plan" data-tooltip="{{localize 'LAUNDRY.Talent.BackupPlanHint'}}"><i class="fa-solid fa-life-ring"></i></button>{{/if}}
+    {{#unless (laundry-eq state.kind "luck")}}
+    <button type="button" data-action="luck-reroll-failures" data-tooltip="{{localize 'LAUNDRY.Test.RerollFailures'}}"><i class="fa-solid fa-clover"></i> <i class="fa-solid fa-rotate"></i></button>
+    <button type="button" data-action="luck-select" class="select-toggle" data-tooltip="{{localize 'LAUNDRY.Test.SelectReroll'}}"><i class="fa-solid fa-hand-pointer"></i></button>
+    <button type="button" data-action="luck-reroll" class="select-confirm" data-tooltip="{{localize 'LAUNDRY.Test.RerollSelected'}}"><i class="fa-solid fa-clover"></i> {{localize "LAUNDRY.Test.Reroll"}}</button>
+    {{/unless}}
+  </footer>
+  {{/unless}}
+</div>

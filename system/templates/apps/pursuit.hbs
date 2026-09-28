@@ -1,0 +1,69 @@
+<div class="pursuit-body">
+  <header class="pursuit-head">
+    {{#if isGM}}
+    <input type="text" data-field="name" value="{{s.name}}" placeholder="{{localize 'LAUNDRY.Pursuit.NamePlaceholder'}}">
+    <label class="dist">{{localize "LAUNDRY.Pursuit.Distance"}} <input type="number" data-field="distance" value="{{s.distance}}" min="0" max="10"></label>
+    {{else}}<h3>{{s.name}}</h3>{{/if}}
+    <span class="round">{{#if s.active}}{{localize "LAUNDRY.Pursuit.Round"}} {{s.round}}{{else}}{{localize "LAUNDRY.Pursuit.Setup"}}{{/if}}</span>
+  </header>
+
+  <div class="pursuit-road status-{{s.status}}">
+    <div class="lane">
+      {{#each track}}<span class="cell {{#if current}}current{{/if}} {{#if caughtZone}}caught-zone{{/if}} {{#if escapeZone}}escape-zone{{/if}}">{{n}}</span>{{/each}}
+      <i class="fa-solid fa-person-running runner quarry-marker" style="left: {{quarryLeft}}%"></i>
+      <i class="fa-solid fa-user-ninja runner pursuer-marker"></i>
+    </div>
+    <div class="legend"><span><i class="fa-solid fa-handcuffs"></i> {{localize "LAUNDRY.Pursuit.CaughtLabel"}}</span>
+      {{#if (laundry-eq s.status "escaped")}}<strong class="flag">{{localize "LAUNDRY.Pursuit.Escaped"}}</strong>{{/if}}
+      {{#if (laundry-eq s.status "caught")}}<strong class="flag red">{{localize "LAUNDRY.Pursuit.CaughtEnd"}}</strong>{{/if}}
+      <span>{{localize "LAUNDRY.Pursuit.EscapeLabel"}} <i class="fa-solid fa-flag-checkered"></i></span></div>
+    {{#if isGM}}<div class="nudge"><button type="button" data-action="nudge" data-delta="-1">−1</button><button type="button" data-action="nudge" data-delta="1">+1</button></div>{{/if}}
+  </div>
+
+  <div class="pursuit-sides">
+    {{#each sides as |col|}}
+    <section class="side side-{{col.side}}" data-side="{{col.side}}">
+      <h4><i class="fa-solid {{col.icon}}"></i> {{localize col.label}}
+        {{#if ../isGM}}<a data-action="addSelected" data-side="{{col.side}}" data-tooltip="{{localize 'LAUNDRY.Pursuit.AddSelected'}}"><i class="fa-solid fa-plus"></i></a>{{/if}}</h4>
+      <ol>
+        {{#each col.list as |p|}}
+        <li class="participant {{#if p.caught}}caught{{/if}}" data-pid="{{p.id}}" data-uuid="{{p.uuid}}">
+          <img src="{{p.img}}" data-action="open" alt="">
+          <div class="p-body">
+            <strong>{{p.name}}</strong>
+            {{#if ../../isGM}}
+            <select data-field="approach" data-pid="{{p.id}}">{{selectOptions ../../approaches selected=p.approach localize=true}}</select>
+            {{else}}<small><i class="fa-solid {{p.approachIcon}}"></i> {{p.testLabel}}</small>{{/if}}
+          </div>
+          {{#if p.caught}}<span class="badge red"><i class="fa-solid fa-handcuffs"></i></span>
+          {{else if p.rolled}}<span class="badge">{{p.successes}}</span>
+          {{else if p.canRoll}}{{#if ../../s.active}}<button type="button" data-action="roll" data-tooltip="{{p.testLabel}} DN 4:1"><i class="fa-solid fa-dice"></i></button>{{/if}}
+          {{else}}<span class="badge wait">…</span>{{/if}}
+          {{#if ../../isGM}}<a data-action="swapSide" data-tooltip="{{localize 'LAUNDRY.Pursuit.SwapSide'}}"><i class="fa-solid fa-right-left"></i></a>
+          <a data-action="remove"><i class="fa-solid fa-xmark"></i></a>{{/if}}
+        </li>
+        {{else}}<li class="empty">{{localize "LAUNDRY.Pursuit.DropHint"}}</li>
+        {{/each}}
+      </ol>
+    </section>
+    {{/each}}
+  </div>
+
+  {{#if isGM}}
+  <footer class="pursuit-foot">
+    {{#if s.active}}
+      <button type="button" data-action="callTests"><i class="fa-solid fa-bullhorn"></i> {{localize "LAUNDRY.Pursuit.CallTests"}}</button>
+      <button type="button" class="primary" data-action="resolve" {{#unless allRolled}}data-tooltip="{{localize 'LAUNDRY.Pursuit.NotAllRolled'}}"{{/unless}}><i class="fa-solid fa-forward-step"></i> {{localize "LAUNDRY.Pursuit.Resolve"}}</button>
+      <button type="button" data-action="end"><i class="fa-solid fa-stop"></i> {{localize "LAUNDRY.Pursuit.End"}}</button>
+    {{else}}
+      <button type="button" class="primary" data-action="start"><i class="fa-solid fa-flag"></i> {{localize "LAUNDRY.Pursuit.Start"}}</button>
+    {{/if}}
+  </footer>
+  {{/if}}
+
+  {{#if log.length}}
+  <ol class="pursuit-log">
+    {{#each log}}<li><span class="r">R{{round}}</span> {{slowest}} vs {{fastest}} <span class="d">{{before}} → {{after}}</span>{{#if caught}} <i class="fa-solid fa-handcuffs"></i> {{caught}}{{/if}}</li>{{/each}}
+  </ol>
+  {{/if}}
+</div>

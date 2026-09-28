@@ -1,0 +1,28 @@
+<div class="luck-hud-inner {{#if collapsed}}collapsed{{/if}} threat-{{threatLevel}}">
+  <div class="hud-row luck-row" data-tooltip="{{localize 'LAUNDRY.LuckThreat.LuckTooltip'}}">
+    <i class="fa-solid fa-clover"></i>
+    <span class="hud-label">{{localize "LAUNDRY.LuckThreat.Luck"}}</span>
+    {{#unless collapsed}}<span class="pips">{{#each luckPips}}<span class="pip {{#if filled}}filled{{/if}}"></span>{{/each}}</span>{{/unless}}
+    <strong>{{luck}}/{{luckMax}}</strong>
+    {{#if isGM}}{{#unless collapsed}}
+      <a data-action="luck" data-delta="-1"><i class="fa-solid fa-minus"></i></a>
+      <a data-action="luck" data-delta="1"><i class="fa-solid fa-plus"></i></a>
+      <a data-action="luck" data-delta="refill" data-tooltip="{{localize 'LAUNDRY.LuckThreat.Refill'}}"><i class="fa-solid fa-rotate-left"></i></a>
+    {{/unless}}{{/if}}
+  </div>
+  <div class="hud-row threat-row" data-tooltip="{{localize 'LAUNDRY.LuckThreat.ThreatTooltip'}}">
+    <i class="fa-solid fa-eye"></i>
+    <span class="hud-label">{{localize "LAUNDRY.LuckThreat.Threat"}}</span>
+    {{#unless collapsed}}<span class="pips threat">{{#each threatPips}}<span class="pip {{#if filled}}filled{{/if}} {{level}}"></span>{{/each}}</span>{{/unless}}
+    <strong>{{threat}}</strong>
+    {{#if isGM}}{{#unless collapsed}}
+      <a data-action="threat" data-delta="-1"><i class="fa-solid fa-minus"></i></a>
+      <a data-action="threat" data-delta="1"><i class="fa-solid fa-plus"></i></a>
+    {{/unless}}{{/if}}
+  </div>
+  <div class="hud-tools">
+    <a data-action="luckTest" data-tooltip="{{localize 'LAUNDRY.GM.LuckTest'}}"><i class="fa-solid fa-dice"></i></a>
+    {{#if isGM}}<a data-action="toolkit" data-tooltip="{{localize 'LAUNDRY.GM.Toolkit'}}"><i class="fa-solid fa-briefcase"></i></a>{{/if}}
+    <a data-action="collapse" data-tooltip="{{localize 'LAUNDRY.LuckThreat.Collapse'}}"><i class="fa-solid {{#if collapsed}}fa-expand{{else}}fa-compress{{/if}}"></i></a>
+  </div>
+</div>

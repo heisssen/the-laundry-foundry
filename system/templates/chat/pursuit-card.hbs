@@ -1,0 +1,19 @@
+<div class="laundry-card pursuit-card status-{{status}}">
+  <header class="card-header">
+    <div class="card-title">
+      <h3><i class="fa-solid fa-person-running"></i> {{localize "LAUNDRY.GM.Pursuit"}}</h3>
+      <div class="card-subtitle">{{localize "LAUNDRY.GM.PursuitHint"}}</div>
+    </div>
+  </header>
+  <div class="pursuit-track">
+    {{#each cells}}<span class="cell {{#if current}}current{{/if}}">{{n}}</span>{{/each}}
+  </div>
+  {{#if (laundry-eq status "caught")}}<div class="outcome fail"><i class="fa-solid fa-handcuffs"></i> {{localize "LAUNDRY.GM.Caught"}}</div>{{/if}}
+  {{#if (laundry-eq status "escaped")}}<div class="outcome pass"><i class="fa-solid fa-door-open"></i> {{localize "LAUNDRY.GM.Escaped"}}</div>{{/if}}
+  <ul class="pursuit-log">{{#each log}}<li>Q {{quarry}} / P {{pursuer}} → {{distance}}</li>{{/each}}</ul>
+  <footer class="card-controls" data-gm-only>
+    <label>{{localize "LAUNDRY.GM.Quarry"}} <input type="number" name="quarry" value="0" min="0"></label>
+    <label>{{localize "LAUNDRY.GM.Pursuer"}} <input type="number" name="pursuer" value="0" min="0"></label>
+    <button type="button" data-action="pursuit-update"><i class="fa-solid fa-forward-step"></i></button>
+  </footer>
+</div>

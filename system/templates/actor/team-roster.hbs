@@ -1,0 +1,40 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="roster">
+  <h3 class="section-title">{{localize "LAUNDRY.Team.Members"}} <small>{{localize "LAUNDRY.Team.DropHint"}}</small></h3>
+  <div class="roster-grid">
+    {{#each members}}
+    <article class="operative {{#if critical}}critical{{/if}} {{#if dead}}dead{{/if}}">
+      <img class="portrait" src="{{img}}" data-action="openMember" data-uuid="{{uuid}}" alt="">
+      <div class="op-body">
+        <header>
+          <a data-action="openMember" data-uuid="{{uuid}}"><strong>{{name}}</strong></a>
+          {{#if ../editable}}<a class="remove" data-action="removeMember" data-uuid="{{uuid}}" data-tooltip="{{localize 'LAUNDRY.Team.Remove'}}"><i class="fa-solid fa-xmark"></i></a>{{/if}}
+        </header>
+        <small class="assignment">{{assignment}}</small>
+        <div class="bar toughness" data-tooltip="{{localize 'LAUNDRY.Stat.toughness'}}"><span style="width: {{toughnessPct}}%"></span><em>{{toughness.value}}/{{toughness.max}}</em></div>
+        <div class="op-stats">
+          <span class="injuries" data-tooltip="{{localize 'LAUNDRY.Stat.injuries'}}">{{#each injuryPips}}<i class="box {{#if filled}}filled{{/if}}"></i>{{/each}}</span>
+          <span data-tooltip="{{localize 'LAUNDRY.Stat.adrenaline'}}"><i class="fa-solid fa-bolt"></i> {{adrenaline.value}}/{{adrenaline.max}}</span>
+          {{#if kStage}}<span class="k" data-tooltip="{{localize 'LAUNDRY.KSyndrome.Title'}}"><i class="fa-solid fa-brain"></i> {{kStage}}/6</span>{{/if}}
+          {{#if xp}}<span class="xp" data-tooltip="{{localize 'LAUNDRY.XP.Available'}}">{{xp}} XP</span>{{/if}}
+        </div>
+        {{#if conditions.length}}<div class="op-conditions">{{#each conditions}}<img src="{{img}}" data-tooltip="{{name}}" alt="">{{/each}}</div>{{/if}}
+      </div>
+    </article>
+    {{else}}
+    <div class="empty-state"><i class="fa-solid fa-user-plus"></i><p>{{localize "LAUNDRY.Team.NoMembers"}}</p></div>
+    {{/each}}
+  </div>
+
+  {{#if members.length}}
+  <h3 class="section-title">{{localize "LAUNDRY.Team.SkillMatrix"}} <small>{{localize "LAUNDRY.Team.SkillMatrixHint"}}</small></h3>
+  <div class="skill-matrix">
+    {{#each skillMatrix}}
+    <div class="sm-cell {{#unless trained}}untrained{{/unless}}">
+      <span class="sm-skill">{{localize label}}</span>
+      <span class="sm-best">{{best.name}}</span>
+      <span class="sm-pool">{{best.pool}}d6{{#if best.focus}} · F{{best.focus}}{{/if}}</span>
+    </div>
+    {{/each}}
+  </div>
+  {{/if}}
+</section>

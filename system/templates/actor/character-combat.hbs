@@ -1,0 +1,89 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="combat">
+  <h3 class="section-title">{{localize "LAUNDRY.Sheet.Attacks"}}
+    {{#if editable}}<a class="create" data-action="itemCreate" data-type="weapon"><i class="fa-solid fa-plus"></i></a>{{/if}}
+  </h3>
+  <table class="item-table weapons">
+    <thead><tr><th></th><th>{{localize "LAUNDRY.Sheet.Weapon"}}</th><th>{{localize "LAUNDRY.Sheet.Pool"}}</th><th>F</th><th>{{localize "LAUNDRY.Sheet.Step"}}</th><th>{{localize "LAUNDRY.Sheet.Damage"}}</th><th>{{localize "LAUNDRY.Sheet.Range"}}</th><th>{{localize "LAUNDRY.Sheet.Traits"}}</th><th></th></tr></thead>
+    <tbody>
+    {{#each weapons}}
+      <tr class="item draggable {{#unless system.equipped}}unequipped{{/unless}}" data-item-id="{{id}}">
+        <td><img src="{{img}}" class="item-img" data-action="itemUse"></td>
+        <td><a data-action="itemUse" class="rollable">{{name}}</a></td>
+        <td>{{pool}}d6</td>
+        <td>{{focus}}</td>
+        <td>{{localize stepLabel}}</td>
+        <td>{{damageLabel}}</td>
+        <td>{{#if rangeLabel}}{{localize rangeLabel}}{{/if}}</td>
+        <td class="traits">{{traits}}</td>
+        <td class="controls">
+          <a data-action="itemToggle" data-field="equipped" data-tooltip="{{localize 'LAUNDRY.Sheet.Equip'}}"><i class="fa-solid {{#if system.equipped}}fa-hand-fist{{else}}fa-hand{{/if}}"></i></a>
+          <a data-action="itemEdit"><i class="fa-solid fa-pen"></i></a>
+          <a data-action="itemDelete"><i class="fa-solid fa-trash"></i></a>
+        </td>
+      </tr>
+    {{/each}}
+    </tbody>
+  </table>
+  <p class="hint">{{localize "LAUNDRY.Sheet.AttackHint"}}</p>
+
+  <h3 class="section-title">{{localize "LAUNDRY.Sheet.Armour"}}
+    {{#if editable}}<a class="create" data-action="itemCreate" data-type="armour"><i class="fa-solid fa-plus"></i></a>{{/if}}
+  </h3>
+  <ol class="item-list">
+    {{#each armour}}
+    <li class="item draggable {{#unless system.equipped}}unequipped{{/unless}}" data-item-id="{{id}}">
+      <img src="{{img}}" class="item-img">
+      <span class="item-name">{{name}}</span>
+      <span class="stat"><i class="fa-solid fa-shield"></i> {{system.value}}{{#if system.damage}} (−{{system.damage}}){{/if}}</span>
+      <span class="traits">{{traits}}</span>
+      <span class="controls">
+        <a data-action="itemToggle" data-field="equipped"><i class="fa-solid {{#if system.equipped}}fa-shirt{{else}}fa-box{{/if}}"></i></a>
+        <a data-action="itemEdit"><i class="fa-solid fa-pen"></i></a>
+        <a data-action="itemDelete"><i class="fa-solid fa-trash"></i></a>
+      </span>
+    </li>
+    {{/each}}
+  </ol>
+
+  <h3 class="section-title">{{localize "LAUNDRY.Sheet.Injuries"}}
+    {{#if editable}}<a class="create" data-action="addInjury" data-tooltip="{{localize 'LAUNDRY.Sheet.AddInjury'}}"><i class="fa-solid fa-plus"></i></a>
+    <a class="create" data-action="applyDamage" data-tooltip="{{localize 'LAUNDRY.Sheet.ApplyDamage'}}"><i class="fa-solid fa-heart-crack"></i></a>{{/if}}
+  </h3>
+  <ol class="item-list injuries">
+    {{#each injuries}}
+    <li class="item injury severity-{{system.severity}}" data-item-id="{{id}}">
+      <img src="{{img}}" class="item-img">
+      <div class="item-name">
+        <strong>{{name}}</strong> <small>{{localize severityLabel}} · {{localize kindLabel}} · {{system.spaces}} ☐</small>
+        <div class="effect">{{effect}}</div>
+      </div>
+      <span class="controls">
+        <a data-action="healInjury" data-tooltip="{{localize 'LAUNDRY.Recovery.Downtime'}}"><i class="fa-solid fa-calendar-check"></i></a>
+        <a data-action="treatInjury" data-tooltip="{{localize 'LAUNDRY.Recovery.Treat'}}"><i class="fa-solid fa-kit-medical"></i></a>
+        <a data-action="itemDelete"><i class="fa-solid fa-trash"></i></a>
+      </span>
+    </li>
+    {{else}}
+    <li class="empty">{{localize "LAUNDRY.Sheet.NoInjuries"}}</li>
+    {{/each}}
+  </ol>
+
+  {{#if system.injuries.critical}}
+  <div class="critical-panel">
+    <h3><i class="fa-solid fa-skull-crossbones"></i> {{localize "LAUNDRY.Death.Critical"}} — DN {{system.injuries.deathDN}}:{{system.injuries.deathComplexity}}</h3>
+    <div class="button-grid">
+      <button type="button" data-action="death" data-kind="test"><i class="fa-solid fa-heart-pulse"></i> {{localize "LAUNDRY.Death.Test"}}</button>
+      <button type="button" data-action="death" data-kind="lastStand"><i class="fa-solid fa-fire"></i> {{localize "LAUNDRY.Death.LastStand"}}</button>
+      <button type="button" data-action="death" data-kind="cheat"><i class="fa-solid fa-clover"></i> {{localize "LAUNDRY.Death.CheatDeath"}}</button>
+      {{#if isGM}}<button type="button" data-action="death" data-kind="stabilise"><i class="fa-solid fa-kit-medical"></i> {{localize "LAUNDRY.Death.Stabilise"}}</button>{{/if}}
+    </div>
+  </div>
+  {{/if}}
+
+  {{#if editMode}}
+  <div class="form-group">
+    <label>{{localize "LAUNDRY.Sheet.ExtraInjurySpaces"}}</label>
+    <input type="number" name="system.injuries.value" value="{{system.injuries.value}}" min="0">
+  </div>
+  {{/if}}
+</section>

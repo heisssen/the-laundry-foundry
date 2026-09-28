@@ -1,0 +1,57 @@
+<header class="sheet-header">
+  <img class="profile" src="{{actor.img}}" data-edit="img" data-action="editImage" alt="{{actor.name}}">
+  <div class="header-main">
+    <div class="name-row">
+      <input class="actor-name" type="text" name="name" value="{{actor.name}}" placeholder="{{localize 'Name'}}">
+      {{#if system.details.codename}}<span class="codename">{{system.details.codename}}</span>{{/if}}
+      <a class="mode-toggle" data-action="toggleMode" data-tooltip="{{localize 'LAUNDRY.Sheet.EditMode'}}"><i class="fa-solid {{#if editMode}}fa-lock-open{{else}}fa-lock{{/if}}"></i></a>
+    </div>
+    <div class="assignment-row">
+      <span class="stamp">{{#if system.details.assignment}}{{system.details.assignment}}{{else}}{{localize "LAUNDRY.Sheet.NoAssignment"}}{{/if}}</span>
+      {{#if system.details.department}}<span class="muted">{{localize (concat "LAUNDRY.Department." system.details.department)}}</span>{{/if}}
+      {{#if editable}}<a class="creator-link" data-action="openCreator"><i class="fa-solid fa-id-badge"></i> {{localize "LAUNDRY.Creator.Open"}}</a>{{/if}}
+    </div>
+
+    <div class="attributes">
+      {{#each attributes}}
+      <div class="attribute {{#if modified}}modified{{/if}}">
+        <a class="attr-roll" data-action="rollAttribute" data-attribute="{{key}}">{{localize label}}</a>
+        {{#if ../editMode}}
+          <input type="number" name="system.attributes.{{key}}.value" value="{{source}}" min="0" max="8">
+        {{else}}
+          <span class="attr-value" {{#if modified}}data-tooltip="{{localize 'LAUNDRY.KSyndrome.MindReduced'}}"{{/if}}>{{value}}</span>
+        {{/if}}
+      </div>
+      {{/each}}
+    </div>
+  </div>
+
+  <div class="header-vitals">
+    <div class="vital toughness">
+      <label>{{localize "LAUNDRY.Stat.toughness"}}</label>
+      <div class="bar"><div class="fill" style="width: {{toughnessPct}}%"></div></div>
+      <div class="vital-controls">
+        <a data-action="resource" data-path="system.toughness.value" data-delta="-1"><i class="fa-solid fa-minus"></i></a>
+        <input type="number" name="system.toughness.value" value="{{system.toughness.value}}" min="0">
+        <span>/ {{system.toughness.max}}</span>
+        <a data-action="resource" data-path="system.toughness.value" data-delta="1"><i class="fa-solid fa-plus"></i></a>
+      </div>
+    </div>
+    <div class="vital adrenaline">
+      <label><i class="fa-solid fa-bolt"></i> {{localize "LAUNDRY.Stat.adrenaline"}}</label>
+      <div class="pips">
+        {{#each adrenalinePips}}<span class="pip {{#if filled}}filled{{/if}}"></span>{{/each}}
+      </div>
+      <div class="vital-controls">
+        <a data-action="resource" data-path="system.adrenaline.value" data-delta="-1"><i class="fa-solid fa-minus"></i></a>
+        <span>{{system.adrenaline.value}} / {{system.adrenaline.max}}</span>
+        <a data-action="resource" data-path="system.adrenaline.value" data-delta="1"><i class="fa-solid fa-plus"></i></a>
+      </div>
+    </div>
+    <div class="vital injuries {{#if system.injuries.critical}}critical{{/if}}">
+      <label>{{localize "LAUNDRY.Stat.injuries"}}</label>
+      <div class="injury-track">{{#each injuryTrack}}<span class="box {{#if filled}}filled{{/if}}"></span>{{/each}}</div>
+      {{#if system.injuries.critical}}<span class="critical-tag"><i class="fa-solid fa-skull-crossbones"></i> {{localize "LAUNDRY.Death.Critical"}}</span>{{/if}}
+    </div>
+  </div>
+</header>

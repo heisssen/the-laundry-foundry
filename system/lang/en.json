@@ -1,0 +1,1258 @@
+{
+  "TYPES": {
+    "Actor": {
+      "character": "Operative",
+      "npc": "NPC",
+      "team": "Team",
+      "vehicle": "Vehicle"
+    },
+    "Item": {
+      "talent": "Talent",
+      "weapon": "Weapon",
+      "armour": "Armour",
+      "gear": "Gear",
+      "spell": "Spell",
+      "app": "Occult App",
+      "assignment": "Assignment",
+      "injury": "Injury"
+    },
+    "RegionBehavior": {
+      "zone": "Laundry Zone",
+      "the-laundry.zone": "Laundry Zone"
+    }
+  },
+  "LAUNDRY": {
+    "Attribute": {
+      "body": "Body",
+      "mind": "Mind",
+      "spirit": "Spirit"
+    },
+    "AttributeAbbr": {
+      "body": "B",
+      "mind": "M",
+      "spirit": "S"
+    },
+    "Skill": {
+      "academics": "Academics",
+      "athletics": "Athletics",
+      "awareness": "Awareness",
+      "bureaucracy": "Bureaucracy",
+      "closeCombat": "Close Combat",
+      "computers": "Computers",
+      "dexterity": "Dexterity",
+      "engineering": "Engineering",
+      "fastTalk": "Fast Talk",
+      "fortitude": "Fortitude",
+      "intuition": "Intuition",
+      "magic": "Magic",
+      "medicine": "Medicine",
+      "might": "Might",
+      "occult": "Occult",
+      "presence": "Presence",
+      "ranged": "Ranged",
+      "reflexes": "Reflexes",
+      "resolve": "Resolve",
+      "science": "Science",
+      "stealth": "Stealth",
+      "survival": "Survival",
+      "technology": "Technology",
+      "zeal": "Zeal",
+      "training": "Training",
+      "focus": "Focus"
+    },
+    "Ladder": {
+      "poor": "Poor",
+      "average": "Average",
+      "good": "Good",
+      "great": "Great",
+      "superb": "Superb",
+      "extraordinary": "Extraordinary",
+      "unprecedented": "Unprecedented"
+    },
+    "Stat": {
+      "melee": "Melee",
+      "accuracy": "Accuracy",
+      "defence": "Defence",
+      "armour": "Armour",
+      "toughness": "Toughness",
+      "injuries": "Injuries",
+      "adrenaline": "Adrenaline",
+      "initiative": "Initiative",
+      "naturalAwareness": "Natural Awareness",
+      "speed": "Speed",
+      "size": "Size"
+    },
+    "Trait": {
+      "blast": "Blast",
+      "brutal": "Brutal",
+      "cleave": "Cleave",
+      "close": "Close",
+      "crushing": "Crushing",
+      "defensive": "Defensive",
+      "ineffective": "Ineffective",
+      "loud": "Loud",
+      "penetrating": "Penetrating",
+      "piercing": "Piercing",
+      "range": "Range",
+      "reach": "Reach",
+      "reload": "Reload",
+      "rend": "Rend",
+      "restraining": "Restraining",
+      "slashing": "Slashing",
+      "spread": "Spread",
+      "stunning": "Stunning",
+      "subtle": "Subtle",
+      "thrown": "Thrown",
+      "twoHanded": "Two-handed",
+      "bulky": "Bulky"
+    },
+    "TraitHint": {
+      "blast": "Damages every creature in the Zone (value in parentheses).",
+      "brutal": "Minor Injuries become Serious Injuries.",
+      "cleave": "Each 6 deals 1 Damage to all enemies within Close Range.",
+      "close": "No Accuracy penalty at Close Range.",
+      "crushing": "Heavy bludgeon; used by Crushing Blow.",
+      "defensive": "Defence +1 step while wielded.",
+      "ineffective": "Target Armour doubled; only Minor Injuries.",
+      "loud": "Alerts everyone within Long Range.",
+      "penetrating": "Ignores 1 point of Armour.",
+      "piercing": "Sharp point; used by Talents.",
+      "range": "Can make ranged attacks.",
+      "reach": "Attack any target in your Zone.",
+      "reload": "Reloading takes an Action.",
+      "rend": "Each 6 destroys 1 point of Armour after the attack.",
+      "restraining": "Damage restrains Large or smaller targets.",
+      "slashing": "Bladed; used by Talents such as Sever.",
+      "spread": "Creatures within Close Range of the target take half Damage.",
+      "stunning": "Any 6 on the attack Stuns the target.",
+      "subtle": "Easily concealed; works with Backstab.",
+      "thrown": "Can be thrown without penalty.",
+      "twoHanded": "Requires two hands.",
+      "bulky": "Hard to conceal."
+    },
+    "Range": {
+      "close": "Close",
+      "short": "Short",
+      "medium": "Medium",
+      "long": "Long",
+      "extreme": "Extreme"
+    },
+    "Speed": {
+      "slow": "Slow",
+      "normal": "Normal",
+      "fast": "Fast"
+    },
+    "Size": {
+      "tiny": "Tiny",
+      "small": "Small",
+      "medium": "Medium",
+      "large": "Large",
+      "enormous": "Enormous",
+      "monstrous": "Monstrous"
+    },
+    "NPCCategory": {
+      "human": "Human",
+      "exonome": "Exonome",
+      "autonome": "Autonome",
+      "hybrid": "Hybrid"
+    },
+    "Presence": {
+      "none": "None",
+      "frightening": "Frightening Presence",
+      "terrifying": "Terrifying Presence",
+      "devastating": "Devastating Presence",
+      "frighteningEffect": "Spirit (Resolve) DN 4:X (X = number of these creatures in the Zone) or become Frightened for 1d6 rounds.",
+      "terrifyingEffect": "You become Frightened for 1d6 rounds; fail Spirit (Resolve) DN 4:X and become Terrified instead.",
+      "devastatingEffect": "You become Terrified for 1d6 rounds; fail Spirit (Resolve) DN 4:X and take Psychological Damage equal to your Mind.",
+      "Resist": "Resist (Spirit/Resolve)",
+      "Failed": "overwhelmed",
+      "Resisted": "held firm"
+    },
+    "DamageType": {
+      "label": "Damage type",
+      "physical": "Physical",
+      "psychological": "Psychological"
+    },
+    "Severity": {
+      "label": "Severity",
+      "minor": "Minor",
+      "serious": "Serious",
+      "deadly": "Deadly"
+    },
+    "InjuryKind": {
+      "label": "Injury type",
+      "physical": "Physical Injury",
+      "psychological": "Psychological Injury"
+    },
+    "CastMethod": {
+      "computational": "Computational Sorcery",
+      "traditional": "Traditional Magic",
+      "mental": "Mental Magic"
+    },
+    "Tech": {
+      "calculator": "Calculator / BBC Micro (×2)",
+      "smartphone": "PDA / Smartphone (×1)",
+      "laptop": "Laptop / Desktop (×0.75)",
+      "supercomputer": "Supercomputer (×0.5)"
+    },
+    "SpellGroup": {
+      "protection": "Proactive Protection",
+      "divination": "Divination & Detection",
+      "manipulation": "Manipulation & Control",
+      "entity": "Advanced Entity Control"
+    },
+    "GearCategory": {
+      "conventional": "Conventional Spy Gear",
+      "advanced": "Advanced Technology",
+      "occult": "Occult Item",
+      "personal": "Personal / Assigned"
+    },
+    "TalentCategory": {
+      "talent": "Talent",
+      "trait": "Trait (NPC)"
+    },
+    "Department": {
+      "auditing": "Department of Auditing",
+      "arcana": "Department of Arcana Analysis",
+      "fieldSupport": "Department of Field Support",
+      "humanResources": "Department of Human Resources",
+      "internalLogistics": "Department of Internal Logistics",
+      "internalSecurity": "Department of Internal Security",
+      "legalAffairs": "Department of Legal Affairs",
+      "records": "Department of Records",
+      "researchDevelopment": "Department of Research & Development",
+      "other": "Other"
+    },
+    "TimeUnit": {
+      "instant": "Instant",
+      "rounds": "rounds",
+      "minutes": "minutes",
+      "hours": "hours",
+      "days": "days",
+      "permanent": "Permanent",
+      "special": "Special"
+    },
+    "Condition": {
+      "blinded": "Blinded",
+      "charmed": "Charmed",
+      "deafened": "Deafened",
+      "frightened": "Frightened",
+      "terrified": "Terrified",
+      "incapacitated": "Incapacitated",
+      "prone": "Prone",
+      "restrained": "Restrained",
+      "stunned": "Stunned",
+      "unconscious": "Unconscious",
+      "weakened": "Weakened",
+      "critical": "Critically Injured",
+      "hidden": "Hidden",
+      "dodging": "Dodging",
+      "charging": "Charging",
+      "lastStand": "Last Stand",
+      "dead": "Dead"
+    },
+    "ConditionHint": {
+      "blinded": "Cannot see. Sight-based Awareness DN +2; Melee, Accuracy and Defence −1 step.",
+      "charmed": "Cannot attack the charmer; charmer has Advantage socially.",
+      "deafened": "Cannot hear. Hearing-based Awareness DN +2.",
+      "frightened": "−1 die on all Tests while the source is in sight. +1 Adrenaline when gained.",
+      "terrified": "−2 dice on all Tests while the source is in sight. +1 Adrenaline each turn. Leaves a Minor Psychological Injury.",
+      "incapacitated": "No Move, Actions or Adrenaline. Attacks against you are DN 2.",
+      "prone": "Crawl only. Melee and Accuracy −1 step.",
+      "restrained": "Cannot move. Melee, Accuracy and Defence −1 step.",
+      "stunned": "Action or Move, not both; no extra Actions; Slow; Defence −1 step.",
+      "unconscious": "Drops held items, Prone and Incapacitated.",
+      "weakened": "Dice pool −1 for all Tests.",
+      "critical": "Death Test at the start of each turn.",
+      "hidden": "Attacks treat the target's Defence as Poor.",
+      "dodging": "Defence +1 step until your next turn.",
+      "charging": "Defence −1 step until your next turn.",
+      "lastStand": "Immune to Damage, Melee/Accuracy +1 step, armour-piercing. You die at the end of the turn."
+    },
+    "Outcome": {
+      "fail": "Failure",
+      "pass": "Success",
+      "minor": "Minor Benefit",
+      "major": "Major Benefit"
+    },
+    "Tab": {
+      "main": "Main",
+      "combat": "Combat",
+      "talents": "Talents",
+      "equipment": "Equipment",
+      "magic": "Magic",
+      "bio": "Dossier",
+      "xp": "Advancement",
+      "details": "Details",
+      "description": "Description",
+      "effects": "Effects"
+    },
+    "Test": {
+      "Title": "Test",
+      "Roll": "Roll",
+      "Attribute": "Attribute",
+      "Skill": "Skill",
+      "NoSkill": "— no skill —",
+      "DN": "Difficulty : Complexity",
+      "DNTooltip": "Difficulty : Complexity — each die ≥ Difficulty is a success; you need Complexity successes.",
+      "AdvantageLabel": "Advantage",
+      "Advantage": "Advantage",
+      "Disadvantage": "Disadvantage",
+      "GreaterAdvantage": "Greater Advantage",
+      "GreaterDisadvantage": "Greater Disadvantage",
+      "Normal": "Normal",
+      "BonusDice": "Bonus dice",
+      "PenaltyDice": "Penalty dice",
+      "FixedPool": "Fixed pool",
+      "Conditions": "Conditions",
+      "ApplyConditions": "Apply condition penalties",
+      "DoubleTraining": "Adrenaline: double Training",
+      "DoubledTraining": "Training doubled",
+      "DoubleFocus": "Adrenaline: double Focus (combat)",
+      "DoubledFocus": "Focus doubled",
+      "MaximiseLabel": "Luck: maximise (all 6s)",
+      "Maximised": "Maximised by Luck",
+      "AutoSuccess": "Automatic success possible",
+      "AutoSuccessHint": "Pool exceeds DN × Complexity — the GM may grant success without rolling.",
+      "InjuryDN": "Injury / condition DN modifier",
+      "FocusTooltip": "Click a die to add +1 Focus, right-click to remove.",
+      "FocusAuto": "Optimal Focus",
+      "FocusClear": "Clear Focus",
+      "Left": "left",
+      "Successes": "successes",
+      "Extended": "Extended Test",
+      "RerollFailures": "Luck: reroll all failed dice",
+      "SelectReroll": "Select dice to reroll with Luck",
+      "RerollSelected": "Reroll selected dice (1 Luck)",
+      "Reroll": "Reroll",
+      "History": "History",
+      "TalentMods": "Talents",
+      "TalentDice": "Talent dice",
+      "InlineHint": "Click: roll for your selected token / character. GM Shift-click: ask the players to roll.",
+      "DegreesHint": "Extra successes above the Complexity (OH p.91): 0 Pass, +1-2 Minor Benefit, +3 or more Major Benefit. The GM decides the benefit."
+    },
+    "Attack": {
+      "Title": "Attack",
+      "Attack": "Attack",
+      "Target": "Target",
+      "NoTarget": "No target",
+      "ManualDefence": "Target Defence",
+      "TargetHint": "Target tokens (T) to calculate DN automatically.",
+      "Range": "Range to target",
+      "Cover": "Cover",
+      "NoCover": "No cover",
+      "PartialCover": "Partial cover (+1)",
+      "TotalCover": "Total cover (+2)",
+      "CalledShot": "Called Shot",
+      "NoCalledShot": "None",
+      "Head": "Head (+2, Stunned)",
+      "Arms": "Arms (+1, drops item)",
+      "Legs": "Legs (+1, Prone)",
+      "Throw": "Throw",
+      "Charge": "Charge (+1d6, Defence −1)",
+      "Hidden": "Attacking while hidden",
+      "StepMods": "Step modifiers (attack / defence)",
+      "AttackMod": "Attacker steps",
+      "DefenceMod": "Defence steps",
+      "Melee": "Melee Attack",
+      "Ranged": "Ranged Attack",
+      "ApplyDamage": "Apply Damage",
+      "ApplyHalf": "Apply half (Spread)",
+      "Backstab": "Backstab: double Damage, ignore Armour",
+      "DamageBeforeArmour": "Damage before Armour",
+      "Miss": "Miss",
+      "StunnedNote": "A 6 was rolled — target Stunned (Stunning).",
+      "DualWield": "Dual wielding"
+    },
+    "Cast": {
+      "Title": "Cast Spell",
+      "Cast": "Cast",
+      "Method": "Casting method",
+      "Methods": "Casting methods",
+      "NoMethods": "None — requires Computational Sorcerer or Traditional Magician",
+      "Device": "Device",
+      "Level": "Spell Level",
+      "LevelN": "Level {n}",
+      "Modifications": "Modifications",
+      "Mod": {
+        "doubleDuration": "Double Duration",
+        "extraTarget": "Additional target",
+        "increaseRange": "Increase Range one step",
+        "halveCastingTime": "Halve Casting Time",
+        "affectZone": "Affect a Zone"
+      },
+      "Empowered": "Source of Power",
+      "EmpoweredHint": "Adds dice equal to your Occult Training.",
+      "FastCast": "Just a Minute (fast cast)",
+      "FastCastHint": "Extended Test: Complexity ×3, one Action per roll, 1s > 6s mishaps, a round with no successes fails.",
+      "MentalWarning": "Mental magic: Complexity +2 and always triggers a mishap.",
+      "OverheatWarning": "Device overheated — every cast triggers a complication.",
+      "Continue": "Next attempt (Action)",
+      "ApplySpellDamage": "Apply spell Damage",
+      "TargetHint": "Target tokens before casting to apply Damage from the card.",
+      "IgnoresArmour": "ignores Armour"
+    },
+    "Mishap": {
+      "Title": "Magical Mishap",
+      "Triggered": "Magical mishap!",
+      "Roll": "Roll Magical Mishap",
+      "Resolved": "Mishap resolved.",
+      "HazardNote": "Hazard: Psychological Damage {level}.",
+      "NpcDread": "NPC: Dread instead (Threat +1).",
+      "incursion": {
+        "name": "Incursion",
+        "effect": "A Level 4 Dimensional Gateway opens to an unknown dimension; an exonome of the spell's Level enters the Zone. More may follow unless it is sealed."
+      },
+      "outbreak": {
+        "name": "Outbreak",
+        "effect": "All Zones within Medium Range become a Hazard inflicting Psychological Damage equal to the spell's Level."
+      },
+      "summons": {
+        "name": "Summons",
+        "effect": "An exonome of the spell's Level is summoned into the Zone. Without a body it attempts Possession immediately; with one it lashes out and tries to escape."
+      },
+      "groundZero": {
+        "name": "Ground Zero",
+        "effect": "The caster's Zone becomes a Hazard inflicting Psychological Damage equal to the spell's Level."
+      },
+      "psychologicalInjury": {
+        "name": "Psychological Injury",
+        "effect": "The caster suffers a Psychological Injury: Level 1 Minor, Level 2–3 Serious, Level 4+ Deadly."
+      },
+      "warping": {
+        "name": "Warping",
+        "effect": "The GM warps the Environmental Traits of the caster's Zone, scaled to the spell's Level."
+      },
+      "miscast": {
+        "name": "Miscast",
+        "effect": "A second spell fires at the same Level: Astral Projection (self), Destiny Entanglement Geas (creature) or Energy Transference (Zone/object)."
+      },
+      "dread": {
+        "name": "Dread",
+        "effect": "Nothing happens... for now. Threat +1."
+      },
+      "darkFuture": {
+        "name": "Dark Future",
+        "effect": "Visions of CASE NIGHTMARE GREEN: the caster gains a successful Prognostication at the spell's Level."
+      }
+    },
+    "Complication": {
+      "Title": "Computational Complication",
+      "Triggered": "Computational complication!",
+      "Roll": "Roll Complication",
+      "RollInstead": "Use Computational Complication (once per mission)",
+      "Available": "Complication available",
+      "OncePerMission": "Computational sorcery: once per mission you may roll on the Computational Complications table instead of the Mishap table.",
+      "Used": "Complication used this mission",
+      "SurgeNote": "Everything in the Zone takes {damage} Damage.",
+      "surge": {
+        "name": "Surge",
+        "effect": "Eldritch lightning fries the device for good. All creatures in the Zone take 3 Damage and electrical devices are damaged; a saturated Zone becomes a Major Hazard."
+      },
+      "bricked": {
+        "name": "Bricked",
+        "effect": "The device dies permanently."
+      },
+      "fault": {
+        "name": "Fault",
+        "effect": "The device crashes. Repair: IT, or DN 4:3 Mind (Technology) with an hour spare."
+      },
+      "reboot": {
+        "name": "Reboot",
+        "effect": "Switch it off and on again (Free Action); unavailable until the end of your next Turn."
+      },
+      "bugged": {
+        "name": "Bugged",
+        "effect": "Spells cast with the device get +1 Complexity. Debug: IT, or DN 4:2 Mind (Technology) over 1 hour."
+      },
+      "popUp": {
+        "name": "Pop-Up",
+        "effect": "Spam floods the screen. Spend an Action clearing it before using the device again."
+      },
+      "lowPower": {
+        "name": "Low Power",
+        "effect": "Battery drained (or fuse tripped). Unusable until recharged / reset."
+      },
+      "overheat": {
+        "name": "Overheat",
+        "effect": "Until cooled for a minute, every spell cast through the device triggers a complication."
+      },
+      "hack": {
+        "name": "Hack",
+        "effect": "A low-Level extra-dimensional parasite possesses the device."
+      }
+    },
+    "KSyndrome": {
+      "Title": "Krantzberg Syndrome",
+      "Resist": "Resist K-Syndrome",
+      "Resisted": "K-Syndrome resisted.",
+      "Failed": "K-Syndrome progresses!",
+      "Mishaps": "Mishaps suffered",
+      "Fails": "Failed tests",
+      "NextResist": "Next resistance",
+      "MindReduced": "Mind reduced by K-Syndrome",
+      "Stage": {
+        "magicDisadvantage": "Disadvantage on Magic Tests",
+        "mindDisadvantage": "Disadvantage on all Mind Tests",
+        "mindLoss": "Mind −1",
+        "mindLoss2": "Mind −2",
+        "weakened": "Permanently Weakened",
+        "hospitalised": "Hospitalised permanently"
+      },
+      "StageN": {
+        "1": "1: Disadvantage on Magic Tests",
+        "2": "2: Disadvantage on all Mind Tests",
+        "3": "3: Mind −1",
+        "4": "4: Mind −1 again",
+        "5": "5: Permanent Weakened",
+        "6": "6: Hospitalised"
+      }
+    },
+    "Injury": {
+      "Key": "Table key",
+      "Spaces": "Track spaces",
+      "Cause": "Cause",
+      "armWound": {
+        "name": "Arm Wound",
+        "effect": "You drop an object. Body (Dexterity) DN +1 until healed."
+      },
+      "legWound": {
+        "name": "Leg Wound",
+        "effect": "You are knocked Prone. Body (Athletics) DN +1 until healed."
+      },
+      "headWound": {
+        "name": "Head Wound",
+        "effect": "Stunned until the end of your next turn. Body (Reflexes) DN +1 until healed."
+      },
+      "internalInjury": {
+        "name": "Internal Injury",
+        "effect": "Incapacitated until the end of your next turn. Body (Fortitude, Might) DN +1 until healed."
+      },
+      "brokenArm": {
+        "name": "Broken Arm",
+        "effect": "You drop an object. Melee and Accuracy −1 step; two-armed Tests DN +1 until healed."
+      },
+      "brokenLeg": {
+        "name": "Broken Leg",
+        "effect": "Knocked Prone. Speed −1 step; Body (Athletics, Stealth) DN +1 until healed."
+      },
+      "brainInjury": {
+        "name": "Brain Injury",
+        "effect": "Unconscious until the end of your next turn. You always act last; all Body Tests DN +1 until healed."
+      },
+      "instantDeath": {
+        "name": "Instant Death",
+        "effect": "You instantly die a gruesome death!"
+      },
+      "shocked": {
+        "name": "Shocked",
+        "effect": "You scream. Mind (Intuition) DN +1 until healed."
+      },
+      "phobia": {
+        "name": "Phobia",
+        "effect": "Frightened of the cause of this Injury until healed."
+      },
+      "confused": {
+        "name": "Confused",
+        "effect": "Stunned until the end of your next turn. Mind (Awareness) DN +1 until healed."
+      },
+      "existentialDread": {
+        "name": "Existential Dread",
+        "effect": "Incapacitated until the end of your next turn. Spirit (Resolve) DN +1 until healed."
+      },
+      "realityDenial": {
+        "name": "Reality Denial",
+        "effect": "Blinded and Deafened until the end of your next turn. Spirit (Zeal) and Mind (Magic) DN +1 until healed."
+      },
+      "traumatised": {
+        "name": "Traumatised",
+        "effect": "Terrified of the cause of this Injury until healed."
+      },
+      "hallucinations": {
+        "name": "Hallucinations",
+        "effect": "Unconscious until the end of your next turn. No Extended Tests; all Mind and Spirit Tests DN +1 until healed."
+      },
+      "brokenMind": {
+        "name": "Broken Mind",
+        "effect": "Your mind crumbles into an unwaking coma."
+      }
+    },
+    "Fault": {
+      "closeCall": {
+        "name": "Close Call",
+        "effect": "A minor feature (lights, radio, mirror) is damaged."
+      },
+      "bangedUp": {
+        "name": "Banged Up",
+        "effect": "Armour −1 until repaired."
+      },
+      "shriekingEngine": {
+        "name": "Shrieking Engine",
+        "effect": "Everyone within Medium Range while it runs is Deafened."
+      },
+      "bustedSteering": {
+        "name": "Busted Steering",
+        "effect": "Body (Reflexes) Tests to control the vehicle DN +1."
+      },
+      "damagedLocomotion": {
+        "name": "Damaged Locomotion",
+        "effect": "Speed −1 step."
+      },
+      "smoke": {
+        "name": "Smoke!",
+        "effect": "Everyone aboard while it runs is Blinded."
+      },
+      "fire": {
+        "name": "Fire!",
+        "effect": "Everyone aboard suffers a Minor Physical Injury; +1d6 on further Fault rolls."
+      },
+      "catastrophe": {
+        "name": "Catastrophe",
+        "effect": "Something vital comes apart. The vehicle is Wrecked."
+      }
+    },
+    "Vehicle": {
+      "Faults": "Fault Track",
+      "FaultMax": "Fault track size",
+      "Passengers": "Passengers",
+      "Weapons": "Mounted weapons",
+      "RepairBtn": "Repair (Mind/Engineering 5:1)",
+      "RamBtn": "Ram target",
+      "RamTitle": "Ram",
+      "ZonesMoved": "Zones moved",
+      "Ram": "{name} rams!",
+      "Repair": "Repair {name}",
+      "RepairFault": "Fault repaired",
+      "Damaged": "{name} takes {damage} Damage (Toughness {toughness}).",
+      "Wrecked": "WRECKED!",
+      "Hint": "Vehicles are immune to Psychological Damage; overflow Damage becomes Faults.",
+      "CoverAboard": "Cover aboard",
+      "Crew": "Driver & passengers",
+      "CrewHint": "drop characters here",
+      "Driver": "Driver",
+      "MakeDriver": "Make driver",
+      "NoCrew": "Nobody aboard — drop a character.",
+      "Overloaded": "Overloaded: +1 Difficulty to the driver's Body (Reflexes) Tests.",
+      "DrivingDN": "Driving Difficulty",
+      "ToPursuit": "Join pursuit",
+      "AboardCover": "Aboard {name}"
+    },
+    "Damage": {
+      "Amount": "Damage",
+      "IgnoreArmour": "Ignore Armour",
+      "Overflow": "Overflow",
+      "Immune": "Immune (Last Stand)",
+      "Critical": "Critically Injured! Death Test at the start of next turn.",
+      "Defeated": "Reduced to 0 Toughness — defeated.",
+      "DeathComplexityUp": "Death Test Complexity rises to {c}."
+    },
+    "Death": {
+      "Test": "Death Test",
+      "Critical": "Critically Injured",
+      "Stable": "Clings to life — stable.",
+      "Dying": "Slipping away",
+      "Dead": "Dead.",
+      "Died": "{name} has died.",
+      "Failed": "failed Death Test",
+      "Impossible": "Death Test impossible",
+      "LastStand": "Last Stand",
+      "CheatDeath": "Cheat Death (Luck)",
+      "Stabilise": "Stabilise",
+      "LastStandDeclared": "{name} makes a Last Stand! Immune to damage until the end of the turn.",
+      "LastStandEnds": "{name}'s Last Stand is over. The team's Luck is refilled by the sacrifice.",
+      "PromptText": "Critically Injured at the start of the turn: make a Death Test, declare a Last Stand, or spend Luck."
+    },
+    "Recovery": {
+      "Breather": "Take a Breather",
+      "BreatherHint": "1 hour: recover half your maximum Toughness.",
+      "Rest": "Rest",
+      "RestHint": "6 hours: Toughness to maximum; a medic may treat one Injury.",
+      "Downtime": "Downtime: clear one space",
+      "Treat": "Treat (remove Injury)"
+    },
+    "LuckThreat": {
+      "Title": "Luck & Threat",
+      "Luck": "Luck",
+      "Threat": "Threat",
+      "Refill": "Refill",
+      "Collapse": "Collapse",
+      "LuckTooltip": "Team Luck: maximise, reroll, regain Adrenaline, recover Toughness, cheat death.",
+      "ThreatTooltip": "Threat 1–10: how close the world is to CASE NIGHTMARE GREEN.",
+      "IncreaseMax": "Max +1",
+      "IncreaseMaxHint": "A great deed: maximum Luck +1, Luck refilled, Threat −1.",
+      "ConsentTitle": "Spend team Luck",
+      "ConsentQuestion": "Luck is a team resource. Did the team agree?",
+      "ConsentYes": "Team agrees",
+      "ConsentNo": "Spend anyway (Threat +1)",
+      "Spent": "Luck spent. Luck {luck}.",
+      "SpentMaximise": "Luck spent to maximise a Test. Luck {luck}.",
+      "SpentReroll": "Luck spent to reroll dice. Luck {luck}.",
+      "SpentToughness": "Luck spent to recover Toughness. Luck {luck}.",
+      "SpentAdrenaline": "Luck spent to regain Adrenaline. Luck {luck}.",
+      "SpentCheatDeath": "Luck spent to cheat death! Luck {luck}.",
+      "SpentCarefulCasting": "Careful Casting: Luck spent to reroll. Luck {luck}.",
+      "SpentWithoutConsent": "Luck spent without the team's consent! Luck {luck}, Threat {threat}.",
+      "LuckChanged": "Luck is now {luck}.",
+      "ThreatChanged": "Threat is now {threat}.",
+      "Refilled": "Luck refilled to {luck}.",
+      "MaxIncreased": "The team's bond strengthens: Luck {luck}, Threat {threat}.",
+      "ThreatDeath": "An operative has died. Threat {threat}.",
+      "ThreatMishap": "Dread creeps closer. Threat {threat}.",
+      "ThreatReset": "The adventure ends. Threat resets to {threat}.",
+      "LastStandRefill": "A heroic sacrifice! Luck refilled to {luck}.",
+      "KPIShort": "Short-term KPI achieved! Luck {luck}.",
+      "KPILong": "Long-term KPI achieved! Luck refilled to {luck}.",
+      "RecoverToughness": "Recover Toughness",
+      "RecoverToughnessHint": "Action: spend 1 Luck to recover all Toughness.",
+      "RegainAdrenaline": "Regain Adrenaline",
+      "RegainAdrenalineHint": "Spend 1 Luck to regain all Adrenaline.",
+      "ThreatSpell": "The forecasts darken — CASE NIGHTMARE GREEN draws closer. Threat {threat}."
+    },
+    "Team": {
+      "LineManager": "Line Manager",
+      "Members": "Team members",
+      "DropHint": "drop Operatives here",
+      "NoMembers": "No operatives assigned.",
+      "KPIs": "Key Performance Indicators",
+      "ShortKPI": "Short-term KPI",
+      "LongKPI": "Long-term KPI",
+      "CompleteShortHint": "Complete: +1 XP each, +1 Luck",
+      "CompleteLongHint": "Complete: +10 XP each, Luck refilled",
+      "KPIComplete": {
+        "short": "Short-term KPI achieved: {text}. +{xp} XP each.",
+        "long": "Long-term KPI achieved: {text}. +{xp} XP each!"
+      },
+      "Mission": "Mission",
+      "MissionName": "Mission name",
+      "Budget": "Budget (allocated / spent)",
+      "Requisitions": "Requisitions",
+      "Item": "Item",
+      "Status": "Status",
+      "By": "By",
+      "Allies": "Allies",
+      "Rumours": "Work rumours",
+      "Tab": {
+        "roster": "Team",
+        "mission": "Mission",
+        "stash": "Stash",
+        "intel": "Intel",
+        "log": "Log"
+      },
+      "NamePlaceholder": "Team name",
+      "Remove": "Remove from team",
+      "SkillMatrix": "Who's best at what",
+      "SkillMatrixHint": "highest dice pool in the team (Attribute + Training), then Focus",
+      "Briefing": "Briefing",
+      "Objectives": "Objectives",
+      "AddObjectiveHint": "Add objective (Shift-click: secret, GM only)",
+      "ObjectivePlaceholder": "Recover the ledger from the vicarage…",
+      "SecretHint": "Secret objective — hidden from players",
+      "NoObjectives": "No objectives yet.",
+      "Spent": "Spent",
+      "NewMission": "New mission",
+      "NewMissionHint": "Reset once-per-mission resources for all operatives, clear objectives and clues, zero the spend and list requisitioned kit that must be returned?",
+      "Stash": "Team stash",
+      "StashHint": "drag items here from a character sheet or the sidebar; hand them out with the hand icon",
+      "StashEmpty": "The lock-up is empty. Drop items here.",
+      "Give": "Hand over",
+      "GiveTitle": "Hand over {item}",
+      "GiveTo": "To",
+      "Given": "{item} handed to {name}.",
+      "OnLoan": "On loan from Internal Logistics",
+      "ReqStatus": {
+        "pending": "pending",
+        "approved": "approved",
+        "denied": "denied"
+      },
+      "Contacts": "Contacts",
+      "ContactsHint": "drop NPCs here",
+      "ContactName": "Name",
+      "ContactNote": "Who they are, what they owe you…",
+      "NoContacts": "No contacts yet — drop an NPC.",
+      "Attitude": {
+        "hostile": "Hostile",
+        "unfriendly": "Unfriendly",
+        "neutral": "Neutral",
+        "friendly": "Friendly",
+        "ally": "Ally"
+      },
+      "Evidence": "Evidence board",
+      "EvidenceHint": "drop journal entries or pages to pin them",
+      "ClueFound": "Mark as found / confirmed",
+      "OpenSource": "open",
+      "NoClues": "Nothing pinned yet.",
+      "Log": "Operations log",
+      "KPIHistory": "Completed KPIs"
+    },
+    "Requisition": {
+      "Label": "Requisition DN",
+      "Test": "Requisition: {item}",
+      "Hint": "Mind (Bureaucracy) for paperwork, Mind (Presence) to sweet-talk the boffins in person. If denied, you can't ask for it again this mission.",
+      "Title": "Requisition: {item}",
+      "Paperwork": "Fill in the forms (Bureaucracy)",
+      "InPerson": "Visit Q Division (Presence)",
+      "IssueDirectly": "Issue without a Test",
+      "AlreadyDenied": "Your request for {item} was denied this mission — circumstances must change before you ask again.",
+      "Approved": "Request approved.",
+      "Collect": "Collect item",
+      "Issued": "Issued — return it at the end of the mission.",
+      "Denied": "Request denied. Not again this mission.",
+      "ReturnTitle": "Mission over — Internal Logistics wants its kit back",
+      "ReturnHint": "Return these items in working order, or file a report on what happened to them."
+    },
+    "GM": {
+      "Toolkit": "GM Toolkit",
+      "RequestTest": "Request Test",
+      "TestRequested": "Test requested",
+      "RollIt": "Roll",
+      "GroupTest": "Group Test",
+      "GroupRequired": "Successes required (group)",
+      "GroupProgress": "Progress",
+      "Contribute": "Contribute",
+      "Label": "Label",
+      "LuckTest": "Luck Test",
+      "Mission": "Mission",
+      "NewMission": "New mission",
+      "EndAdventure": "End adventure (Threat → 1)",
+      "MissionReset": "Once-per-mission resources reset.",
+      "Pursuit": "Pursuit",
+      "PursuitHint": "0 = caught, 10 = escaped",
+      "StartDistance": "Starting Distance",
+      "StartPursuit": "Start Pursuit",
+      "Quarry": "Quarry",
+      "Pursuer": "Pursuer",
+      "Caught": "The quarry is caught!",
+      "Escaped": "The quarry escapes!",
+      "PresenceCheck": "Presence check",
+      "Creature": "Creature",
+      "Count": "Number",
+      "PostPresence": "Post Presence card",
+      "OpposedRespond": "Respond (Opposed Test)",
+      "OpposedResponse": "Opposed Test response",
+      "OpposedWinA": "The initiator wins!",
+      "OpposedWinB": "wins!",
+      "OpposedReroll": "Tie — roll again."
+    },
+    "Sheet": {
+      "Skills": "Skills",
+      "SkillsHint": "□ Training · ◇ Focus",
+      "RollSkillHint": "Click to Test (Shift: skip dialog)",
+      "Attributes": "Attributes",
+      "Combat": "Combat",
+      "Conditions": "Conditions",
+      "Recovery": "Recovery",
+      "Attacks": "Attacks",
+      "Weapon": "Weapon",
+      "Pool": "Pool",
+      "Step": "Rating",
+      "Damage": "Damage",
+      "Range": "Range",
+      "Traits": "Traits",
+      "AttackHint": "Target an enemy token, then click the weapon to attack.",
+      "Armour": "Armour",
+      "Injuries": "Injuries",
+      "NoInjuries": "No injuries — for now.",
+      "AddInjury": "Add Injury (roll table)",
+      "ApplyDamage": "Apply Damage",
+      "Talents": "Talents",
+      "DropTalents": "Drag Talents here from the compendium.",
+      "Gear": "Gear & Equipment",
+      "NoGear": "Nothing requisitioned yet.",
+      "Spells": "Spells",
+      "NoSpells": "No spells known.",
+      "Apps": "Occult Apps",
+      "NoApps": "No apps installed.",
+      "EditMode": "Toggle edit mode",
+      "NoAssignment": "Unassigned",
+      "Equip": "Equipped",
+      "Use": "Use",
+      "ExtraInjurySpaces": "Extra filled Injury spaces (suffocation etc.)"
+    },
+    "SheetLabel": {
+      "Character": "Laundry Operative",
+      "NPC": "Laundry NPC (statblock)",
+      "Team": "Laundry Team",
+      "Vehicle": "Laundry Vehicle",
+      "Item": "Laundry Item"
+    },
+    "Details": {
+      "codename": "Codename",
+      "nickname": "Nickname",
+      "assignment": "Assignment",
+      "department": "Department",
+      "age": "Age",
+      "eyes": "Eyes",
+      "hair": "Hair",
+      "features": "Distinguishing features",
+      "goals": "Goals",
+      "shortGoal": "Short-term Goal",
+      "longGoal": "Long-term Goal",
+      "connections": "Connections",
+      "training": "Training courses & certifications",
+      "biography": "Personal history",
+      "notes": "Notes"
+    },
+    "XP": {
+      "Total": "XP earned",
+      "Spent": "XP spent",
+      "Available": "Available",
+      "Hint": "Attributes: 1→2 3 XP, 2→3 5 XP, 3→4 10 XP. Training/Focus: level N costs N XP. Talent: 4 XP.",
+      "TalentHint": "Drag a Talent onto the sheet to buy it",
+      "Log": "Advancement log",
+      "Undo": "Undo purchase"
+    },
+    "Creator": {
+      "Title": "Induction",
+      "Open": "Induction wizard",
+      "Name": "Name",
+      "Mode": "Creation mode",
+      "ModeAssignment": "Assignment package",
+      "ModeCustom": "Custom operative",
+      "Assignment": "Assignment",
+      "Attributes": "Attributes",
+      "Swap": "Swap two Attributes",
+      "NoSwap": "No swap",
+      "SwapBodyMind": "Swap Body ↔ Mind",
+      "SwapBodySpirit": "Swap Body ↔ Spirit",
+      "SwapMindSpirit": "Swap Mind ↔ Spirit",
+      "Skills": "Skills",
+      "SkillsHint": "Your Core Skill starts at Training 1 / Focus 1. Spend the Assignment XP on the listed Skills: level N costs N XP.",
+      "CoreSkill": "Core Skill",
+      "Talents": "Talents",
+      "CoreTalents": "Core Talents",
+      "ChooseTalents": "Choose optional Talents",
+      "CustomTalents": "Each Talent costs 4 XP.",
+      "Spells": "Spells",
+      "SpellsHint": "Casters choose 4 spells.",
+      "Equipment": "Equipment",
+      "Reset": "Reset",
+      "Finish": "Stamp & file",
+      "OverBudget": "You have spent more XP than allowed.",
+      "Done": "{name} has been inducted into the Laundry.",
+      "Step": {
+        "briefing": "Briefing",
+        "assignment": "Assignment",
+        "attributes": "Attributes",
+        "skills": "Skills",
+        "talents": "Talents",
+        "spells": "Spells",
+        "equipment": "Equipment",
+        "details": "Personal Details",
+        "background": "Questionnaire",
+        "review": "File & Stamp"
+      },
+      "MemoRe": "Your induction paperwork (Form HR-7/b)",
+      "MemoBody": "Welcome to Capital Laundry Services. Before you receive your Assignment, please complete the following induction. Choose a standard Assignment package — a typical employee of that role — or build a custom operative from scratch. Use a pencil: you may go back and change anything until the file is stamped.",
+      "ModeAssignmentHint": "Pick one of 27 roles. Starting Attributes, Core Skill, Core Talent, equipment and XP for listed Skills come with it. Fast and by the book.",
+      "ModeCustomHint": "Body, Mind and Spirit start at 1 and you get 40 XP to spend on Attributes, Skills and Talents (4 XP each).",
+      "AssignmentLead": "Your day job defines your starting Attributes, Skills and Talents. Filter by department and click a file to read it.",
+      "PickAssignment": "Select an Assignment to read its file.",
+      "AttrLeadSwap": "These are the typical Attributes for your Assignment. You may swap the values of two Attributes — click two cards.",
+      "AttrLeadCustom": "Raise Body, Mind and Spirit with XP: 1→2 costs 3, 2→3 costs 5, 3→4 costs 10.",
+      "AttrHint": {
+        "body": "Melee, Defence, Toughness. Strength, reflexes, coordination.",
+        "mind": "Accuracy, Initiative, Natural Awareness. Reasoning and perception.",
+        "spirit": "Adrenaline and force of will. Leaders, faces, sorcerers."
+      },
+      "ClickToSwap": "click to swap",
+      "UndoSwap": "Undo swap",
+      "OneSwap": "Only one swap is allowed — undo it first.",
+      "SkillsHintCustom": "Buy Training (extra dice) and Focus (+1 to dice after the roll) in any Skill: level N costs N XP.",
+      "Search": "Search talents…",
+      "ShowAllTalents": "Show all talents (GM permission)",
+      "Automated": "Automated in rolls",
+      "Recommended": "Listed for your Assignment",
+      "NoTalentsFound": "No talents match.",
+      "SpellLimit": "You already know as many spells as your Talents allow.",
+      "EquipmentLead": "Standard issue for your Assignment. Anything else must be requisitioned (and justified in triplicate).",
+      "FromCompendium": "compendium",
+      "Generic": "generic",
+      "NoEquipment": "Custom operatives start with a phone, a warrant card and a personal ward — ask your GM.",
+      "DetailsLead": "Name, appearance and goals. Dice buttons roll on the book's tables; everything can be edited.",
+      "ChangePortrait": "Change portrait",
+      "Feature": {
+        "eyes": "Eyes",
+        "hair": "Hair",
+        "scars": "Scar",
+        "tattoos": "Tattoo",
+        "affectations": "Affectation"
+      },
+      "BackgroundLead": "The Inductee Questionnaire. Answer, roll, or write UNKNOWN — HR will return to it later.",
+      "RollAll": "Roll unanswered",
+      "ConnectionsHint": "How you know the operatives sitting either side of you…",
+      "Appearance": "Appearance",
+      "Left": "left",
+      "Back": "Back",
+      "Next": "Next",
+      "XPLeft": "Unspent XP will be kept for later advancement.",
+      "FewTalents": "You have not chosen all your optional Talents.",
+      "FewSpells": "Casters normally start with 4 spells.",
+      "NoAssignmentChosen": "Choose an Assignment first.",
+      "Inducted": "Induction complete"
+    },
+    "Talent": {
+      "Requirements": "Requirements",
+      "RequirementsMissing": "Requirements not met",
+      "StructuredRequirements": "Checked requirements",
+      "SkillKeysHint": "Skill keys, comma separated (any one satisfies)",
+      "Either": "Training OR Focus",
+      "AssignmentReq": "Assignment requirement",
+      "Activation": "Activation",
+      "ActivationType": "Type",
+      "Test": "Attached Test",
+      "Uses": "Limited uses",
+      "Repeatable": "Can be taken multiple times",
+      "Core": "Core Talent",
+      "Rank": "Rank",
+      "Category": "Category",
+      "ToggleUsed": "Mark used / refresh",
+      "CarefulCastingReroll": "Careful Casting: reroll (1 Luck)",
+      "SeverNote": "{name} is severed: it takes 1 Damage (ignoring Armour) whenever it Moves for the rest of the combat.",
+      "PressingAttackNote": "Pressing Attack: {name} rolled a 6 and may Shove the target as a Free Action (knocking it Prone on success).",
+      "ModderNote": "Modder: the first Computational Complication this mission is ignored.",
+      "NaturallyLuckyNote": "Naturally Lucky: {mine} vs GM {gm}.",
+      "PropheticDreams": "Prophetic Dreams",
+      "BackupPlanHint": "Backup Plan: reroll this failed Test with Complexity +1 (once per rest)",
+      "Dream": {
+        "d2": "Nightmares of CASE NIGHTMARE GREEN — no benefit from the Rest, Threat +1.",
+        "d3": "A clue about another operative's Long-term Goal.",
+        "d45": "A clue about another operative's Short-term Goal.",
+        "d69": "No dreams.",
+        "d1011": "A clue about your Short-term Goal or KPI.",
+        "d12": "A clue about your Long-term Goal or KPI."
+      }
+    },
+    "Activation": {
+      "passive": "Passive",
+      "action": "Action",
+      "free": "Free Action",
+      "reaction": "Reaction"
+    },
+    "Uses": {
+      "none": "Unlimited",
+      "mission": "Once per mission",
+      "day": "Once per day",
+      "rest": "Once per rest"
+    },
+    "Weapon": {
+      "Kind": "Kind",
+      "ThrownRange": "Thrown range",
+      "NPCOverrides": "Statblock overrides (NPC)"
+    },
+    "Armour": {
+      "Damaged": "Points destroyed (Rend)"
+    },
+    "Gear": {
+      "Category": "Category",
+      "Certification": "Certification required",
+      "Uses": "Uses",
+      "Device": "Computing device (apps / computational sorcery)",
+      "DeviceState": "Device state",
+      "ResetDevice": "Fix device"
+    },
+    "DeviceState": {
+      "ok": "Working"
+    },
+    "Spell": {
+      "Group": "Spell group",
+      "CastingTime": "Casting Time",
+      "Target": "Target",
+      "Duration": "Duration",
+      "Levels": "Effects by Level"
+    },
+    "App": {
+      "Spell": "Spell"
+    },
+    "Assignment": {
+      "Division": "Division",
+      "SkillOptions": "Skill options",
+      "OptionalTalents": "Optional Talents",
+      "TalentChoices": "Optional Talents to choose"
+    },
+    "Item": {
+      "identifier": "Identifier",
+      "source": "Source",
+      "Quantity": "Quantity",
+      "EffectsHint": "Active Effects apply to the owner. Useful keys: system.bonuses.initiative, toughness, injuries, adrenaline, armour, damage, pool, meleeStep, accuracyStep, defenceStep, naturalAwareness.",
+      "AddEffect": "Add effect",
+      "Disabled": "disabled"
+    },
+    "Combat": {
+      "Seize": "Seize the Initiative",
+      "Seized": "{name} seizes the Initiative!"
+    },
+    "NPC": {
+      "presence": "Presence",
+      "spellcaster": "Spellcaster",
+      "Description": "Description",
+      "ThreatScaling": "Threat scaling",
+      "EditSkills": "Skills (Training / Focus)"
+    },
+    "Setting": {
+      "LuckMaxOverride": {
+        "Name": "Maximum Luck override",
+        "Hint": "0 = number of player-owned Operatives (by the book)."
+      },
+      "ShowHud": {
+        "Name": "Show Luck & Threat tracker",
+        "Hint": "Floating tracker in the bottom-left corner."
+      },
+      "AutoDeath": {
+        "Name": "Death Test prompts",
+        "Hint": "Post a Death Test prompt when a Critically Injured combatant's turn starts."
+      },
+      "AutoZones": {
+        "Name": "Regions become Laundry Zones",
+        "Hint": "Any Region drawn with the Regions tool automatically gets a Laundry Zone behaviour (range bands, Environmental Traits)."
+      },
+      "ZoneLabels": {
+        "Name": "Show Zone labels",
+        "Hint": "Zone names, traits and the range from your selected token on the canvas."
+      }
+    },
+    "Notify": {
+      "NoGM": "No GM is connected to process this action.",
+      "NoLuck": "The team has no Luck left.",
+      "NoAdrenaline": "Not enough Adrenaline.",
+      "NoFocusLeft": "No Focus left to assign.",
+      "SelectDice": "Select dice to reroll first.",
+      "NoLuckOnLuckTest": "You cannot spend Luck on a Luck Test.",
+      "NoTarget": "No valid target.",
+      "NoCharacter": "Select a token or assign a character first.",
+      "NoCastingTalent": "You need Computational Sorcerer or Traditional Magician.",
+      "ComplicationUsed": "Computational Complication already used this mission.",
+      "DeviceUnavailable": "{device} is unavailable ({state}).",
+      "CriticalNoRecovery": "Cannot recover Toughness while Critically Injured.",
+      "TalentUsed": "{name} has already been used.",
+      "NoRequisition": "This item has no requisition DN.",
+      "RequirementsNotMet": "{name}: requirements not met ({missing}).",
+      "MaxLevel": "Maximum level reached.",
+      "NotEnoughXP": "Not enough XP ({cost} needed, {available} available). Shift-click to override.",
+      "RamNeeds": "Select a driver token and target the victim."
+    },
+    "ModType": {
+      "advantage": "Advantage",
+      "doubleTraining": "double Training",
+      "doubleFocus": "double Focus",
+      "bonusDice": "+dice",
+      "complexity": "Complexity",
+      "attackStep": "+step",
+      "damage": "+Damage",
+      "trait": "Trait"
+    },
+    "Zone": {
+      "Name": "Laundry Zone",
+      "DefaultName": "Zone {n}",
+      "ToggleLabels": "Laundry Zones: labels & ranges",
+      "FromZone": "Zone",
+      "Hazard": {
+        "none": "No Hazard",
+        "minor": "Minor Hazard (1)",
+        "major": "Major Hazard (3)",
+        "deadly": "Deadly Hazard (5)"
+      },
+      "Cover": {
+        "none": "No cover",
+        "partial": "Partial Cover",
+        "total": "Total Cover"
+      },
+      "Lighting": {
+        "normal": "Normal light",
+        "poorlyLit": "Poorly Lit",
+        "dark": "Dark"
+      },
+      "Obscured": {
+        "none": "Clear",
+        "light": "Lightly Obscured",
+        "heavy": "Heavily Obscured"
+      },
+      "FIELDS": {
+        "hazard": {
+          "label": "Hazard",
+          "hint": "Damage when a creature first enters the Zone in an encounter or starts its turn there (OH p.103)."
+        },
+        "damageType": {
+          "label": "Hazard Damage type",
+          "hint": ""
+        },
+        "ignoreArmour": {
+          "label": "Hazard ignores Armour",
+          "hint": "E.g. extreme temperatures, unless the armour is built for it."
+        },
+        "cover": {
+          "label": "Cover",
+          "hint": "Ranged attacks against creatures in the Zone: Defence +1 (Partial) or +2 (Total) steps."
+        },
+        "lighting": {
+          "label": "Lighting",
+          "hint": "Poorly Lit / Dark: can Hide; Mind (Awareness) and ranged attacks into the Zone at Disadvantage. Dark: Advantage on Stealth."
+        },
+        "obscured": {
+          "label": "Obscured",
+          "hint": "Lightly: Awareness Difficulty +1. Heavily: creatures in the Zone are effectively Blinded."
+        },
+        "difficult": {
+          "label": "Difficult Terrain",
+          "hint": "Speed one step lower; Body (Reflexes) Difficulty +1."
+        },
+        "barrier": {
+          "label": "Barrier",
+          "hint": "Getting in or out needs an Action and a Test set by the GM; the turn then ends."
+        },
+        "autoAdjacent": {
+          "label": "Auto-detect neighbours",
+          "hint": "Zones that touch (within half a grid square) are adjacent."
+        },
+        "links": {
+          "label": "Also adjacent to",
+          "hint": "Link Zones that don't touch (stairs, a corridor, a hatch)."
+        },
+        "note": {
+          "label": "Features / notes",
+          "hint": "Doors, vats of alien isopods, tables to flip…"
+        }
+      }
+    },
+    "Pursuit": {
+      "Title": "Pursuit",
+      "NamePlaceholder": "What's going on? (\"Legging it down Whitehall\")",
+      "Distance": "Distance",
+      "Round": "Round",
+      "Setup": "Setting up",
+      "CaughtLabel": "0 — caught",
+      "EscapeLabel": "10 — escaped",
+      "Escaped": "The Quarry escaped!",
+      "CaughtEnd": "Caught!",
+      "Quarry": "Quarry",
+      "Pursuers": "Pursuers",
+      "AddSelected": "Add selected tokens (or drop actors here)",
+      "DropHint": "Drop actors or add selected tokens.",
+      "SwapSide": "Switch side",
+      "SelectTokens": "Select one or more tokens first.",
+      "Approach": {
+        "foot": "On foot (Athletics)",
+        "drive": "Driving (Reflexes)",
+        "stealth": "Shake a tail (Stealth)",
+        "wits": "Short-cuts (Survival)"
+      },
+      "Start": "Start the pursuit",
+      "Started": "Pursuit!",
+      "DistanceN": "Distance {n}",
+      "CallTests": "Call for Tests",
+      "CallHint": "Everyone rolls DN 4:1 from the Pursuit tracker:",
+      "Resolve": "Resolve round",
+      "NotAllRolled": "Not everyone has rolled — missing results count as 0 successes.",
+      "End": "End pursuit",
+      "EndHint": "Clear the tracker?",
+      "RoundN": "Pursuit — round {n}",
+      "TestLabel": "Pursuit: {name}",
+      "NoDriver": "This vehicle has no driver — set one on the vehicle sheet.",
+      "NeedBothSides": "You need at least one Quarry and one Pursuer still in the chase.",
+      "PullAway": "the Quarry pulls away by {n}.",
+      "CloseIn": "the Pursuers close in by {n}.",
+      "NoChange": "neck and neck.",
+      "Caught": "{name} is caught!",
+      "Sacrificed": "{name} falls behind and is caught — the others keep running."
+    }
+  }
+}

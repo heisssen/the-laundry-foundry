@@ -1,0 +1,316 @@
+<div class="induction-shell">
+  <nav class="induction-steps">
+    {{#each steps}}
+    <a class="step {{#if active}}active{{/if}} {{#if done}}done{{/if}} {{#unless reachable}}locked{{/unless}} {{#if skipped}}skipped{{/if}}"
+       data-action="goto" data-index="{{index}}" data-tooltip="{{localize label}}">
+      <span class="step-num">{{#if done}}<i class="fa-solid fa-check"></i>{{else}}<i class="{{icon}}"></i>{{/if}}</span>
+      <span class="step-label">{{localize label}}</span>
+    </a>
+    {{/each}}
+  </nav>
+
+  <div class="induction-main">
+    <section class="induction-body step-{{stepId}}">
+
+      {{!-- 0. BRIEFING --}}
+      {{#if (eq stepId "briefing")}}
+      <div class="memo">
+        <img class="memo-seal" src="systems/the-laundry/assets/ui/seal.svg">
+        <div class="memo-head">
+          <div><span>TO:</span> {{s.name}}</div>
+          <div><span>FROM:</span> Human Resources, New Annex</div>
+          <div><span>RE:</span> {{localize "LAUNDRY.Creator.MemoRe"}}</div>
+        </div>
+        <p>{{localize "LAUNDRY.Creator.MemoBody"}}</p>
+        <div class="mode-cards">
+          <a class="mode-card {{#if (eq s.mode 'assignment')}}selected{{/if}}" data-action="mode" data-mode="assignment">
+            <i class="fa-solid fa-sitemap"></i>
+            <h3>{{localize "LAUNDRY.Creator.ModeAssignment"}}</h3>
+            <p>{{localize "LAUNDRY.Creator.ModeAssignmentHint"}}</p>
+          </a>
+          <a class="mode-card {{#if (eq s.mode 'custom')}}selected{{/if}}" data-action="mode" data-mode="custom">
+            <i class="fa-solid fa-flask"></i>
+            <h3>{{localize "LAUNDRY.Creator.ModeCustom"}}</h3>
+            <p>{{localize "LAUNDRY.Creator.ModeCustomHint"}}</p>
+          </a>
+        </div>
+      </div>
+      {{/if}}
+
+      {{!-- 1. ASSIGNMENT --}}
+      {{#if (eq stepId "assignment")}}
+      <header class="step-head">
+        <h2>{{localize "LAUNDRY.Creator.Step.assignment"}}</h2>
+        <p class="lead">{{localize "LAUNDRY.Creator.AssignmentLead"}}</p>
+        <div class="chip-row">
+          {{#each deptOptions}}<a class="chip {{#if active}}active{{/if}}" data-action="dept" data-dept="{{key}}">{{localize label}}</a>{{/each}}
+        </div>
+      </header>
+      <div class="assignment-layout">
+        <div class="assignment-grid">
+          {{#each departments}}
+          <h4 class="dept-title">{{localize label}}</h4>
+          <div class="card-grid">
+            {{#each list}}
+            <a class="assign-card {{#if selected}}selected{{/if}}" data-action="pickAssignment" data-uuid="{{uuid}}">
+              <div class="assign-name">{{name}}</div>
+              <div class="assign-division">{{system.division}}</div>
+              <div class="assign-attrs"><span>B {{lookup attrs 0}}</span><span>M {{lookup attrs 1}}</span><span>S {{lookup attrs 2}}</span></div>
+              <div class="assign-core"><i class="fa-solid fa-star"></i> {{localize coreLabel}} · {{#each system.coreTalents}}{{this}}{{/each}}</div>
+            </a>
+            {{/each}}
+          </div>
+          {{/each}}
+        </div>
+        <aside class="assignment-detail">
+          {{#if selected}}
+          <div class="file-card">
+            <div class="file-tab">{{localize (concat "LAUNDRY.Department." selected.system.department)}}</div>
+            <h3>{{selected.name}}</h3>
+            <div class="muted">{{selected.system.division}}</div>
+            <div class="desc">{{{selectedDescription}}}</div>
+            <dl>
+              <dt>{{localize "LAUNDRY.Creator.CoreSkill"}}</dt><dd>{{localize (concat "LAUNDRY.Skill." selected.system.coreSkill)}} (T1/F1)</dd>
+              <dt>{{localize "LAUNDRY.Assignment.SkillOptions"}} ({{selected.system.xp}} XP)</dt><dd>{{#each selected.system.skillOptions}}<span class="tag">{{localize (concat "LAUNDRY.Skill." this)}}</span>{{/each}}</dd>
+              <dt>{{localize "LAUNDRY.Creator.CoreTalents"}}</dt><dd>{{#each selected.system.coreTalents}}<span class="tag gold">{{this}}</span>{{/each}}</dd>
+              <dt>{{localize "LAUNDRY.Assignment.OptionalTalents"}}</dt><dd>{{#each selected.system.optionalTalents}}<span class="tag">{{this}}</span>{{/each}}</dd>
+              <dt>{{localize "LAUNDRY.Creator.Equipment"}}</dt><dd>{{#each selected.system.equipment}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}</dd>
+            </dl>
+          </div>
+          {{else}}
+          <div class="empty-state"><i class="fa-solid fa-hand-pointer"></i><p>{{localize "LAUNDRY.Creator.PickAssignment"}}</p></div>
+          {{/if}}
+        </aside>
+      </div>
+      {{/if}}
+
+      {{!-- 2. ATTRIBUTES --}}
+      {{#if (eq stepId "attributes")}}
+      <header class="step-head">
+        <h2>{{localize "LAUNDRY.Creator.Step.attributes"}}</h2>
+        <p class="lead">{{#if (eq s.mode "custom")}}{{localize "LAUNDRY.Creator.AttrLeadCustom"}}{{else}}{{localize "LAUNDRY.Creator.AttrLeadSwap"}}{{/if}}</p>
+      </header>
+      <div class="attr-cards">
+        {{#each attrCards}}
+        <div class="attr-card {{#if swapping}}swapping{{/if}}" {{#if (eq ../s.mode "assignment")}}data-action="swapAttr" data-key="{{key}}"{{/if}}>
+          <h3>{{localize label}}</h3>
+          <div class="big-value">{{value}}</div>
+          <div class="pips big">{{#each pips}}<span class="pip {{#if filled}}filled{{/if}}"></span>{{/each}}</div>
+          <p class="hint">{{localize hint}}</p>
+          {{#if (eq ../s.mode "custom")}}
+          <div class="stepper">
+            <a data-action="attr" data-key="{{key}}" data-delta="-1"><i class="fa-solid fa-minus"></i></a>
+            <span class="cost">{{#if (lt value 4)}}+1 = {{nextCost}} XP{{else}}max{{/if}}</span>
+            <a data-action="attr" data-key="{{key}}" data-delta="1"><i class="fa-solid fa-plus"></i></a>
+          </div>
+          {{else}}
+          <div class="swap-hint"><i class="fa-solid fa-right-left"></i> {{localize "LAUNDRY.Creator.ClickToSwap"}}</div>
+          {{/if}}
+        </div>
+        {{/each}}
+      </div>
+      {{#if swapped}}<div class="center"><button type="button" data-action="resetSwap"><i class="fa-solid fa-rotate-left"></i> {{localize "LAUNDRY.Creator.UndoSwap"}}</button></div>{{/if}}
+      {{/if}}
+
+      {{!-- 3. SKILLS --}}
+      {{#if (eq stepId "skills")}}
+      <header class="step-head">
+        <h2>{{localize "LAUNDRY.Creator.Step.skills"}}</h2>
+        <p class="lead">{{#if c.a}}{{localize "LAUNDRY.Creator.SkillsHint"}}{{else}}{{localize "LAUNDRY.Creator.SkillsHintCustom"}}{{/if}}</p>
+      </header>
+      <div class="skill-grid">
+        {{#each skillRows}}
+        <div class="skill-card {{#if core}}core{{/if}} {{#unless allowed}}disallowed{{/unless}}">
+          <div class="skill-title">{{localize label}} <small>{{localize attr}}</small>{{#if core}} <i class="fa-solid fa-star" data-tooltip="{{localize 'LAUNDRY.Creator.CoreSkill'}}"></i>{{/if}}</div>
+          <div class="skill-controls">
+            <div class="tf-block">
+              <span class="tf-label">T</span>
+              {{#if canDownT}}<a data-action="skill" data-key="{{key}}" data-kind="training" data-delta="-1"><i class="fa-solid fa-minus"></i></a>{{else}}<span class="ph"></span>{{/if}}
+              <span class="pips">{{#each tPips}}<span class="pip square {{#if filled}}filled{{/if}} {{#if base}}base{{/if}}"></span>{{/each}}</span>
+              {{#if canUpT}}<a data-action="skill" data-key="{{key}}" data-kind="training" data-delta="1" data-tooltip="{{tCost}} XP"><i class="fa-solid fa-plus"></i></a>{{else}}<span class="ph"></span>{{/if}}
+            </div>
+            <div class="tf-block">
+              <span class="tf-label">F</span>
+              {{#if canDownF}}<a data-action="skill" data-key="{{key}}" data-kind="focus" data-delta="-1"><i class="fa-solid fa-minus"></i></a>{{else}}<span class="ph"></span>{{/if}}
+              <span class="pips">{{#each fPips}}<span class="pip diamond {{#if filled}}filled{{/if}} {{#if base}}base{{/if}}"></span>{{/each}}</span>
+              {{#if canUpF}}<a data-action="skill" data-key="{{key}}" data-kind="focus" data-delta="1" data-tooltip="{{fCost}} XP"><i class="fa-solid fa-plus"></i></a>{{else}}<span class="ph"></span>{{/if}}
+            </div>
+          </div>
+          <div class="skill-pool">{{pool}}d6</div>
+        </div>
+        {{/each}}
+      </div>
+      {{/if}}
+
+      {{!-- 4. TALENTS --}}
+      {{#if (eq stepId "talents")}}
+      <header class="step-head">
+        <h2>{{localize "LAUNDRY.Creator.Step.talents"}}</h2>
+        <p class="lead">{{#if c.a}}{{localize "LAUNDRY.Creator.ChooseTalents"}}: <strong class="{{#if tooMany}}bad{{/if}}">{{chosenCount}} / {{choices}}</strong>{{else}}{{localize "LAUNDRY.Creator.CustomTalents"}}{{/if}}</p>
+        <div class="toolbar">
+          <input type="search" data-search placeholder="{{localize 'LAUNDRY.Creator.Search'}}" value="{{s.talentFilter}}">
+          {{#if c.a}}<a class="chip {{#if s.showAllTalents}}active{{/if}}" data-action="allTalents">{{localize "LAUNDRY.Creator.ShowAllTalents"}}</a>{{/if}}
+        </div>
+      </header>
+      {{#if coreCards.length}}
+      <h4 class="dept-title">{{localize "LAUNDRY.Creator.CoreTalents"}}</h4>
+      <div class="talent-cards">
+        {{#each coreCards}}
+        <div class="talent-card core locked"><div class="tc-head"><i class="fa-solid fa-lock"></i> {{name}}</div><div class="tc-body">{{{system.description}}}</div></div>
+        {{/each}}
+      </div>
+      {{/if}}
+      <h4 class="dept-title">{{#if c.a}}{{localize "LAUNDRY.Assignment.OptionalTalents"}}{{else}}{{localize "LAUNDRY.Sheet.Talents"}}{{/if}}</h4>
+      <div class="talent-cards">
+        {{#each talentCards}}
+        <a class="talent-card {{#if selected}}selected{{/if}} {{#unless req.met}}unmet{{/unless}}" data-action="toggleTalent" data-uuid="{{uuid}}">
+          <div class="tc-head">
+            <span class="tc-check"><i class="fa-solid {{#if selected}}fa-square-check{{else}}fa-square{{/if}}"></i></span>
+            {{name}}
+            {{#if hasMods}}<i class="fa-solid fa-bolt auto" data-tooltip="{{localize 'LAUNDRY.Creator.Automated'}}"></i>{{/if}}
+            {{#if recommended}}<i class="fa-solid fa-thumbs-up rec" data-tooltip="{{localize 'LAUNDRY.Creator.Recommended'}}"></i>{{/if}}
+          </div>
+          <div class="tc-req {{#if req.met}}ok{{else}}bad{{/if}}">
+            <i class="fa-solid {{#if req.met}}fa-circle-check{{else}}fa-triangle-exclamation{{/if}}"></i> {{reqText}}
+          </div>
+          <div class="tc-body">{{{description}}}</div>
+        </a>
+        {{else}}<div class="empty-state"><p>{{localize "LAUNDRY.Creator.NoTalentsFound"}}</p></div>
+        {{/each}}
+      </div>
+      {{/if}}
+
+      {{!-- 5. SPELLS --}}
+      {{#if (eq stepId "spells")}}
+      <header class="step-head">
+        <h2>{{localize "LAUNDRY.Creator.Step.spells"}}</h2>
+        <p class="lead">{{localize "LAUNDRY.Creator.SpellsHint"}} <strong>{{spellCount}} / {{spellLimit}}</strong>{{#if spellNote}} — {{spellNote}}{{/if}}</p>
+      </header>
+      {{#each spellGroups}}
+      <h4 class="dept-title">{{localize label}}</h4>
+      <div class="talent-cards">
+        {{#each list}}
+        <a class="talent-card spell {{#if selected}}selected{{/if}}" data-action="toggleSpell" data-uuid="{{uuid}}">
+          <div class="tc-head"><span class="tc-check"><i class="fa-solid {{#if selected}}fa-square-check{{else}}fa-square{{/if}}"></i></span> {{name}} <span class="dn">DN {{dn}}:L</span></div>
+          <div class="tc-body">{{{description}}}</div>
+        </a>
+        {{/each}}
+      </div>
+      {{/each}}
+      {{/if}}
+
+      {{!-- 6. EQUIPMENT --}}
+      {{#if (eq stepId "equipment")}}
+      <header class="step-head">
+        <h2>{{localize "LAUNDRY.Creator.Step.equipment"}}</h2>
+        <p class="lead">{{localize "LAUNDRY.Creator.EquipmentLead"}}</p>
+      </header>
+      <div class="equipment-list">
+        {{#each equipment}}
+        <div class="equip-row {{#unless found}}generic{{/unless}}">
+          <img src="{{img}}"><div><strong>{{name}}</strong><div class="desc">{{{description}}}</div></div>
+          <span class="tag {{#if found}}gold{{/if}}">{{#if found}}{{localize "LAUNDRY.Creator.FromCompendium"}}{{else}}{{localize "LAUNDRY.Creator.Generic"}}{{/if}}</span>
+        </div>
+        {{else}}<div class="empty-state"><p>{{localize "LAUNDRY.Creator.NoEquipment"}}</p></div>
+        {{/each}}
+      </div>
+      {{/if}}
+
+      {{!-- 7. DETAILS --}}
+      {{#if (eq stepId "details")}}
+      <header class="step-head">
+        <h2>{{localize "LAUNDRY.Creator.Step.details"}}</h2>
+        <p class="lead">{{localize "LAUNDRY.Creator.DetailsLead"}}</p>
+      </header>
+      <div class="details-layout">
+        <div class="portrait-slot" data-action="pickImage" data-tooltip="{{localize 'LAUNDRY.Creator.ChangePortrait'}}">
+          <img src="{{s.img}}"><span class="clip"></span>
+        </div>
+        <div class="details-form">
+          <label>{{localize "LAUNDRY.Creator.Name"}}<input type="text" data-field="name" data-rerender value="{{s.name}}"></label>
+          <label>{{localize "LAUNDRY.Details.codename"}}<input type="text" data-field="codename" value="{{s.codename}}" placeholder="BASHFUL INCENDIARY"></label>
+          <label>{{localize "LAUNDRY.Details.nickname"}}<input type="text" data-field="nickname" value="{{s.nickname}}"></label>
+          <label>{{localize "LAUNDRY.Details.age"}}<span class="with-roll"><input type="text" data-field="age" value="{{s.age}}"><a data-action="rollAge" data-tooltip="3d6+15"><i class="fa-solid fa-dice"></i></a></span></label>
+          <label>{{localize "LAUNDRY.Details.eyes"}}<span class="with-roll"><input type="text" data-field="eyes" value="{{s.eyes}}"><a data-action="rollFeature" data-key="eyes"><i class="fa-solid fa-dice"></i></a></span></label>
+          <label>{{localize "LAUNDRY.Details.hair"}}<span class="with-roll"><input type="text" data-field="hair" value="{{s.hair}}"><a data-action="rollFeature" data-key="hair"><i class="fa-solid fa-dice"></i></a></span></label>
+          <label class="wide">{{localize "LAUNDRY.Details.features"}}<span class="with-roll"><input type="text" data-field="features" value="{{s.features}}">
+            <a data-action="rollFeature" data-key="scars" data-tooltip="{{localize 'LAUNDRY.Creator.Feature.scars'}}"><i class="fa-solid fa-bandage"></i></a>
+            <a data-action="rollFeature" data-key="tattoos" data-tooltip="{{localize 'LAUNDRY.Creator.Feature.tattoos'}}"><i class="fa-solid fa-pen-nib"></i></a>
+            <a data-action="rollFeature" data-key="affectations" data-tooltip="{{localize 'LAUNDRY.Creator.Feature.affectations'}}"><i class="fa-solid fa-face-grin-tongue"></i></a></span></label>
+          <label class="wide">{{localize "LAUNDRY.Details.shortGoal"}}<span class="with-roll"><input type="text" data-field="goalShort" value="{{s.goalShort}}"><a data-action="rollGoal" data-kind="short"><i class="fa-solid fa-lightbulb"></i></a></span></label>
+          <label class="wide">{{localize "LAUNDRY.Details.longGoal"}}<span class="with-roll"><input type="text" data-field="goalLong" value="{{s.goalLong}}"><a data-action="rollGoal" data-kind="long"><i class="fa-solid fa-lightbulb"></i></a></span></label>
+        </div>
+      </div>
+      {{/if}}
+
+      {{!-- 8. BACKGROUND --}}
+      {{#if (eq stepId "background")}}
+      <header class="step-head">
+        <h2>{{localize "LAUNDRY.Creator.Step.background"}}</h2>
+        <p class="lead">{{localize "LAUNDRY.Creator.BackgroundLead"}}</p>
+        <div class="toolbar"><button type="button" data-action="rollAll"><i class="fa-solid fa-dice"></i> {{localize "LAUNDRY.Creator.RollAll"}}</button></div>
+      </header>
+      <ol class="questionnaire">
+        {{#each questions}}
+        <li>
+          <div class="q"><span class="qn">{{n}}.</span> {{q}}</div>
+          <div class="with-roll">
+            <input type="text" data-field="answers.{{key}}" value="{{answer}}" placeholder="UNKNOWN">
+            <a data-action="rollQuestion" data-key="{{key}}" data-tooltip="{{dice}}"><i class="fa-solid fa-dice"></i></a>
+          </div>
+        </li>
+        {{/each}}
+      </ol>
+      <label class="wide stacked">{{localize "LAUNDRY.Details.connections"}}<textarea data-field="connections" rows="3" placeholder="{{localize 'LAUNDRY.Creator.ConnectionsHint'}}">{{s.connections}}</textarea></label>
+      {{/if}}
+
+      {{!-- 9. REVIEW --}}
+      {{#if (eq stepId "review")}}
+      <div class="review-file">
+        <img class="stamp-img" src="systems/the-laundry/assets/ui/stamp-classified.svg">
+        <h2>{{s.name}} {{#if s.codename}}<span class="codename">{{s.codename}}</span>{{/if}}</h2>
+        <div class="muted">{{#if c.a}}{{c.a.name}} · {{localize (concat "LAUNDRY.Department." c.a.system.department)}}{{else}}{{localize "LAUNDRY.Creator.ModeCustom"}}{{/if}}</div>
+        {{#each warnings}}<div class="warning-line"><i class="fa-solid fa-triangle-exclamation"></i> {{localize this}}</div>{{/each}}
+        <div class="review-grid">
+          <div><h4>{{localize "LAUNDRY.Details.goals"}}</h4><p>▸ {{s.goalShort}}</p><p>▸ {{s.goalLong}}</p></div>
+          <div><h4>{{localize "LAUNDRY.Creator.Appearance"}}</h4><p>{{s.age}} · {{s.eyes}} · {{s.hair}}</p><p>{{s.features}}</p></div>
+          {{#if spellsChosen.length}}<div><h4>{{localize "LAUNDRY.Creator.Spells"}}</h4><p>{{#each spellsChosen}}<span class="tag">{{this}}</span>{{/each}}</p></div>{{/if}}
+          {{#if answers.length}}<div class="wide"><h4>{{localize "LAUNDRY.Creator.Step.background"}}</h4>{{#each answers}}<p><em>{{q}}</em> — {{a}}</p>{{/each}}</div>{{/if}}
+        </div>
+      </div>
+      {{/if}}
+    </section>
+
+    {{!-- Live dossier --}}
+    <aside class="dossier">
+      <div class="dossier-photo"><img src="{{s.img}}"><span class="clip"></span></div>
+      <div class="dossier-name">{{s.name}}</div>
+      <div class="dossier-sub">{{#if c.a}}{{c.a.name}}{{else if (eq s.mode "custom")}}{{localize "LAUNDRY.Creator.ModeCustom"}}{{else}}—{{/if}}</div>
+      <div class="xp-meter {{#if overBudget}}over{{/if}}">
+        <div class="xp-bar"><div class="xp-fill" style="width: {{xpPct}}%"></div></div>
+        <span>XP {{c.spent}} / {{c.budget}} · <strong>{{c.remaining}}</strong> {{localize "LAUNDRY.Creator.Left"}}</span>
+      </div>
+      <div class="dossier-attrs">{{#each dossier.attrs}}<div><label>{{localize label}}</label><span>{{value}}</span></div>{{/each}}</div>
+      <dl class="dossier-stats">{{#each dossier.stats}}<dt>{{localize label}}</dt><dd>{{value}}</dd>{{/each}}</dl>
+      {{#if dossier.skills.length}}
+      <h5>{{localize "LAUNDRY.Sheet.Skills"}}</h5>
+      <ul class="dossier-list">{{#each dossier.skills}}<li class="{{#if core}}core{{/if}}">{{localize label}} <span>T{{training}}{{#if focus}} F{{focus}}{{/if}}</span></li>{{/each}}</ul>
+      {{/if}}
+      {{#if dossier.talents.length}}
+      <h5>{{localize "LAUNDRY.Sheet.Talents"}}</h5>
+      <ul class="dossier-list">{{#each dossier.talents}}<li class="{{#if core}}core{{/if}}">{{#if core}}<i class="fa-solid fa-star"></i> {{/if}}{{name}}</li>{{/each}}</ul>
+      {{/if}}
+    </aside>
+  </div>
+
+  <footer class="induction-footer">
+    <button type="button" data-action="reset" class="subtle"><i class="fa-solid fa-rotate-left"></i> {{localize "LAUNDRY.Creator.Reset"}}</button>
+    <div class="spacer"></div>
+    {{#unless isFirst}}<button type="button" data-action="back"><i class="fa-solid fa-arrow-left"></i> {{localize "LAUNDRY.Creator.Back"}}</button>{{/unless}}
+    {{#if isLast}}
+    <button type="button" class="primary big" data-action="finish" {{#if overBudget}}disabled{{/if}}><i class="fa-solid fa-stamp"></i> {{localize "LAUNDRY.Creator.Finish"}}</button>
+    {{else}}
+    <button type="button" class="primary" data-action="next">{{localize "LAUNDRY.Creator.Next"}} <i class="fa-solid fa-arrow-right"></i></button>
+    {{/if}}
+  </footer>
+</div>

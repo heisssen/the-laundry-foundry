@@ -1,0 +1,55 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="main">
+  <div class="main-grid">
+    <div class="skills-panel">
+      <h3 class="section-title">{{localize "LAUNDRY.Sheet.Skills"}} <small>{{localize "LAUNDRY.Sheet.SkillsHint"}}</small></h3>
+      <ol class="skill-list">
+        {{#each skills}}
+        <li class="skill {{#if core}}core{{/if}} {{#if trained}}trained{{/if}}">
+          <a class="skill-name" data-action="rollSkill" data-skill="{{key}}" data-tooltip="{{localize 'LAUNDRY.Sheet.RollSkillHint'}}">
+            {{localize label}} <span class="attr-abbr">{{localize attrAbbr}}</span>
+          </a>
+          <span class="pips training" data-tooltip="{{localize 'LAUNDRY.Skill.training'}}">
+            {{#each trainingPips}}<a class="pip square {{#if filled}}filled{{/if}}" data-action="setPip" data-skill="{{../key}}" data-kind="training" data-n="{{n}}"></a>{{/each}}
+          </span>
+          <span class="pips focus" data-tooltip="{{localize 'LAUNDRY.Skill.focus'}}">
+            {{#each focusPips}}<a class="pip diamond {{#if filled}}filled{{/if}}" data-action="setPip" data-skill="{{../key}}" data-kind="focus" data-n="{{n}}"></a>{{/each}}
+          </span>
+          <span class="pool">{{pool}}d6</span>
+        </li>
+        {{/each}}
+      </ol>
+    </div>
+
+    <div class="side-panel">
+      <h3 class="section-title">{{localize "LAUNDRY.Sheet.Combat"}}</h3>
+      <div class="ladder-stats">
+        <div class="ladder-stat"><label>M</label><span>{{localize combat.melee.label}}</span></div>
+        <div class="ladder-stat"><label>A</label><span>{{localize combat.accuracy.label}}</span></div>
+        <div class="ladder-stat"><label>D</label><span>{{localize combat.defence.label}}</span></div>
+        <div class="ladder-stat"><label><i class="fa-solid fa-shield"></i></label><span>{{combat.armour}}</span></div>
+      </div>
+      <div class="derived-list">
+        <div><label>{{localize "LAUNDRY.Stat.initiative"}}</label><span>{{system.initiative}}</span></div>
+        <div><label>{{localize "LAUNDRY.Stat.naturalAwareness"}}</label><span>{{system.naturalAwareness}}</span></div>
+        <div><label>{{localize "LAUNDRY.Stat.speed"}}</label><span>{{localize (concat "LAUNDRY.Speed." system.speed)}}</span></div>
+      </div>
+
+      <h3 class="section-title">{{localize "LAUNDRY.Sheet.Conditions"}}</h3>
+      <div class="condition-grid">
+        {{#each conditions}}
+        <a class="condition {{#if active}}active{{/if}}" data-action="toggleCondition" data-condition="{{id}}" data-tooltip="{{localize (concat 'LAUNDRY.ConditionHint.' id)}}">
+          <img src="{{img}}"> <span>{{localize label}}</span>
+        </a>
+        {{/each}}
+      </div>
+
+      <h3 class="section-title">{{localize "LAUNDRY.Sheet.Recovery"}}</h3>
+      <div class="button-grid">
+        <button type="button" data-action="recovery" data-kind="breather" data-tooltip="{{localize 'LAUNDRY.Recovery.BreatherHint'}}"><i class="fa-solid fa-mug-hot"></i> {{localize "LAUNDRY.Recovery.Breather"}}</button>
+        <button type="button" data-action="recovery" data-kind="rest" data-tooltip="{{localize 'LAUNDRY.Recovery.RestHint'}}"><i class="fa-solid fa-bed"></i> {{localize "LAUNDRY.Recovery.Rest"}}</button>
+        <button type="button" data-action="luck" data-kind="toughness" data-tooltip="{{localize 'LAUNDRY.LuckThreat.RecoverToughnessHint'}}"><i class="fa-solid fa-clover"></i> {{localize "LAUNDRY.LuckThreat.RecoverToughness"}}</button>
+        <button type="button" data-action="luck" data-kind="adrenaline" data-tooltip="{{localize 'LAUNDRY.LuckThreat.RegainAdrenalineHint'}}"><i class="fa-solid fa-clover"></i> {{localize "LAUNDRY.LuckThreat.RegainAdrenaline"}}</button>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,20 @@
+<li class="item draggable {{#if expanded}}expanded{{/if}}" data-item-id="{{id}}">
+  <div class="item-row">
+    <img src="{{img}}" class="item-img" data-action="itemUse">
+    <a class="item-name" data-action="itemExpand">{{name}}
+      {{#if system.core}}<i class="fa-solid fa-star core" data-tooltip="{{localize 'LAUNDRY.Talent.Core'}}"></i>{{/if}}
+      {{#if req}}{{#unless req.met}}<i class="fa-solid fa-triangle-exclamation warn" data-tooltip="{{localize 'LAUNDRY.Talent.RequirementsMissing'}}: {{#each req.missing}}{{this}}; {{/each}}"></i>{{/unless}}{{/if}}
+      {{#if automated}}<i class="fa-solid fa-gears auto" data-tooltip="{{localize 'LAUNDRY.Creator.Automated'}}"></i>{{/if}}
+      {{#if blurb}}{{#unless expanded}}<span class="blurb">{{blurb}}</span>{{/unless}}{{/if}}
+    </a>
+    {{#if system.activation.adrenaline}}<span class="cost"><i class="fa-solid fa-bolt"></i>{{system.activation.adrenaline}}</span>{{/if}}
+    {{#if system.activation.uses}}<span class="uses {{#if system.used}}used{{/if}}">{{localize (concat "LAUNDRY.Uses." system.activation.uses)}}</span>{{/if}}
+    <span class="controls">
+      <a data-action="itemChat"><i class="fa-solid fa-comment"></i></a>
+      {{#if system.activation.uses}}<a data-action="itemToggle" data-field="used" data-tooltip="{{localize 'LAUNDRY.Talent.ToggleUsed'}}"><i class="fa-solid fa-rotate"></i></a>{{/if}}
+      <a data-action="itemEdit"><i class="fa-solid fa-pen"></i></a>
+      <a data-action="itemDelete"><i class="fa-solid fa-trash"></i></a>
+    </span>
+  </div>
+  {{#if expanded}}<div class="item-summary">{{#if system.requirements.text}}<p class="req"><strong>{{localize "LAUNDRY.Talent.Requirements"}}:</strong> {{system.requirements.text}}</p>{{/if}}{{{system.description}}}</div>{{/if}}
+</li>

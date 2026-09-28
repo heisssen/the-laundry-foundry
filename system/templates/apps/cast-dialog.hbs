@@ -1,0 +1,66 @@
+<div class="laundry-form">
+  <div class="attack-summary">
+    <img src="{{spell.img}}" class="card-icon">
+    <div>
+      <strong>{{spell.name}}</strong>
+      <div class="muted">Mind (Magic) · DN <strong>{{comp.dn}}:{{comp.complexity}}</strong> · <i class="fa-regular fa-clock"></i> {{comp.timeLabel}}</div>
+    </div>
+  </div>
+  {{#if comp.forcedMishap}}<p class="warn"><i class="fa-solid fa-triangle-exclamation"></i> {{localize "LAUNDRY.Cast.MentalWarning"}}</p>{{/if}}
+  {{#if comp.overheat}}<p class="warn"><i class="fa-solid fa-fire"></i> {{localize "LAUNDRY.Cast.OverheatWarning"}}</p>{{/if}}
+
+  <div class="form-group">
+    <label>{{localize "LAUNDRY.Cast.Method"}}</label>
+    <select name="method">{{selectOptions methods selected=config.method localize=true}}</select>
+  </div>
+  {{#if (laundry-eq config.method "computational")}}
+  <div class="form-group">
+    <label>{{localize "LAUNDRY.Cast.Device"}}</label>
+    <select name="device">{{selectOptions devices selected=config.device}}</select>
+  </div>
+  {{/if}}
+  <div class="form-group">
+    <label>{{localize "LAUNDRY.Cast.Level"}}</label>
+    <select name="level">{{selectOptions levels selected=config.level}}</select>
+  </div>
+  {{#if comp.levelEffect}}<div class="spell-effect preview">{{{comp.levelEffect}}}</div>{{/if}}
+
+  <fieldset>
+    <legend>{{localize "LAUNDRY.Cast.Modifications"}}</legend>
+    {{#each genericMods}}
+    <div class="form-group">
+      <label>{{localize label}} (+{{complexity}})</label>
+      <input type="number" name="mods.{{key}}" value="{{value}}" min="0" max="5">
+    </div>
+    {{/each}}
+    {{#each specialMods}}
+    <div class="form-group">
+      <label>{{label}} (+{{complexity}})</label>
+      <input type="number" name="special.{{index}}" value="{{value}}" min="0" max="{{#if repeatable}}5{{else}}1{{/if}}">
+    </div>
+    {{/each}}
+  </fieldset>
+
+  <div class="form-row checks">
+    <label data-tooltip="{{localize 'LAUNDRY.Cast.EmpoweredHint'}}"><input type="checkbox" name="empowered" {{checked config.empowered}}> {{localize "LAUNDRY.Cast.Empowered"}} (+{{comp.empoweredDice}}d6)</label>
+    <label data-tooltip="{{localize 'LAUNDRY.Cast.FastCastHint'}}"><input type="checkbox" name="fastCast" {{checked config.fastCast}}> {{localize "LAUNDRY.Cast.FastCast"}}</label>
+  </div>
+  <div class="form-group">
+    <label>{{localize "LAUNDRY.Test.AdvantageLabel"}}</label>
+    <select name="advantage">{{selectOptions advantages selected=config.advantage localize=true}}</select>
+  </div>
+  <div class="form-group">
+    <label>{{localize "LAUNDRY.Test.BonusDice"}}</label>
+    <input type="number" name="bonusDice" value="{{config.bonusDice}}" min="0">
+  </div>
+  {{#if canDouble}}<div class="form-group adrenaline"><label><i class="fa-solid fa-bolt"></i> {{localize "LAUNDRY.Test.DoubleTraining"}}</label><input type="checkbox" name="doubleTraining" {{checked config.doubleTraining}}></div>{{/if}}
+  {{#if canMaximise}}<div class="form-group luck"><label><i class="fa-solid fa-clover"></i> {{localize "LAUNDRY.Test.MaximiseLabel"}}</label><input type="checkbox" name="maximise" {{checked config.maximise}}></div>{{/if}}
+  <div class="form-group">
+    <label>{{localize "CHAT.RollVisibility"}}</label>
+    <select name="rollMode">{{selectOptions rollModes selected=config.rollMode localize=true}}</select>
+  </div>
+  <footer class="form-footer">
+    <button type="submit" class="primary"><i class="fa-solid fa-hat-wizard"></i> {{localize "LAUNDRY.Cast.Cast"}}</button>
+    <button type="button" data-action="cancel">{{localize "Cancel"}}</button>
+  </footer>
+</div>

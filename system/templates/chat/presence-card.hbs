@@ -1,0 +1,12 @@
+<div class="laundry-card presence-card presence-{{presence}}">
+  <header class="card-header">
+    <div class="card-title">
+      <h3><i class="fa-solid fa-ghost"></i> {{name}}{{#if (laundry-gt count 1)}} ×{{count}}{{/if}}</h3>
+      <div class="card-subtitle">{{localize presenceLabel}} · Spirit (Resolve) DN 4:{{count}}</div>
+    </div>
+  </header>
+  <p>{{localize effectLabel}}</p>
+  <footer class="card-controls">
+    <button type="button" data-action="presence-resist"><i class="fa-solid fa-shield-heart"></i> {{localize "LAUNDRY.Presence.Resist"}}</button>
+  </footer>
+</div>

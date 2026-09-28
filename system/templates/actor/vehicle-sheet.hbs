@@ -1,0 +1,58 @@
+<div class="vehicle-body">
+  <header class="sheet-header">
+    <img class="profile" src="{{actor.img}}" data-edit="img" data-action="editImage">
+    <div class="header-main">
+      <input class="actor-name" type="text" name="name" value="{{actor.name}}">
+      <div class="stat-row numbers">
+        <div><label>{{localize "LAUNDRY.Stat.size"}}</label><select name="system.size">{{selectOptions config.sizes selected=system.size localize=true}}</select></div>
+        <div><label>{{localize "LAUNDRY.Stat.speed"}}</label><select name="system.speed">{{selectOptions config.speeds selected=system.speed localize=true}}</select></div>
+        <div><label>{{localize "LAUNDRY.Stat.defence"}}</label><select name="system.defence">{{selectOptions ladderOptions selected=system.defence localize=true}}</select></div>
+        <div><label>{{localize "LAUNDRY.Stat.armour"}}</label><input type="number" name="system.armour" value="{{system.armour}}" min="0"></div>
+      </div>
+    </div>
+  </header>
+  <div class="stat-row numbers">
+    <div><label>{{localize "LAUNDRY.Stat.toughness"}}</label><span class="res"><input type="number" name="system.toughness.value" value="{{system.toughness.value}}"> / <input type="number" name="system.toughness.max" value="{{system.toughness.max}}"></span></div>
+    <div><label>{{localize "LAUNDRY.Vehicle.Faults"}}</label><div class="injury-track">{{#each faultTrack}}<span class="box {{#if filled}}filled{{/if}}"></span>{{/each}}</div>
+      <input type="number" name="system.faults.max" value="{{system.faults.max}}" min="1" data-tooltip="{{localize 'LAUNDRY.Vehicle.FaultMax'}}"></div>
+    <div><label>{{localize "LAUNDRY.Vehicle.Passengers"}}</label><input type="number" name="system.passengers" value="{{system.passengers}}" min="0"></div>
+    <div><label>{{localize "LAUNDRY.Vehicle.CoverAboard"}}</label><select name="system.cover">{{selectOptions coverOptions selected=system.cover localize=true}}</select></div>
+  </div>
+  {{#if eff.wrecked}}<div class="wrecked-banner"><i class="fa-solid fa-car-burst"></i> {{localize "LAUNDRY.Vehicle.Wrecked"}}</div>{{/if}}
+  <div class="eff-row">
+    {{#if (laundry-gt eff.reflexesDN 0)}}<span class="tag warn">{{localize "LAUNDRY.Vehicle.DrivingDN"}} +{{eff.reflexesDN}}</span>{{/if}}
+    {{#unless (laundry-eq eff.speed system.speed)}}<span class="tag warn">{{localize "LAUNDRY.Stat.speed"}}: {{localize (concat "LAUNDRY.Speed." eff.speed)}}</span>{{/unless}}
+    {{#unless (laundry-eq eff.armour system.armour)}}<span class="tag warn">{{localize "LAUNDRY.Stat.armour"}}: {{eff.armour}}</span>{{/unless}}
+  </div>
+
+  <h3 class="section-title">{{localize "LAUNDRY.Vehicle.Crew"}} <small>{{crew.length}}/{{seats}} · {{localize "LAUNDRY.Vehicle.CrewHint"}}</small></h3>
+  <ol class="crew-list">
+    {{#each crew}}
+    <li data-uuid="{{uuid}}" class="{{#if driver}}driver{{/if}}">
+      <img src="{{img}}" data-action="openCrew" alt=""><span>{{name}}</span>
+      {{#if driver}}<span class="tag gold"><i class="fa-solid fa-steering-wheel"></i> {{localize "LAUNDRY.Vehicle.Driver"}}</span>
+      {{else}}<a data-action="setDriver" data-tooltip="{{localize 'LAUNDRY.Vehicle.MakeDriver'}}"><i class="fa-solid fa-id-card"></i></a>{{/if}}
+      <a data-action="removeCrew"><i class="fa-solid fa-xmark"></i></a>
+    </li>
+    {{else}}<li class="empty">{{localize "LAUNDRY.Vehicle.NoCrew"}}</li>
+    {{/each}}
+  </ol>
+  {{#if system.overloaded}}<p class="hint warn"><i class="fa-solid fa-weight-hanging"></i> {{localize "LAUNDRY.Vehicle.Overloaded"}}</p>{{/if}}
+  <div class="button-grid">
+    <button type="button" data-action="repair"><i class="fa-solid fa-wrench"></i> {{localize "LAUNDRY.Vehicle.RepairBtn"}}</button>
+    <button type="button" data-action="ram"><i class="fa-solid fa-car-burst"></i> {{localize "LAUNDRY.Vehicle.RamBtn"}}</button>
+    <button type="button" data-action="toPursuit"><i class="fa-solid fa-person-running"></i> {{localize "LAUNDRY.Vehicle.ToPursuit"}}</button>
+  </div>
+  <p class="hint">{{localize "LAUNDRY.Vehicle.Hint"}}</p>
+  <h3 class="section-title">{{localize "LAUNDRY.Vehicle.Faults"}}</h3>
+  <ol class="item-list">
+    {{#each faults}}
+    <li class="item"><div class="item-row"><span class="item-name"><strong>{{localize name}}</strong> <small>{{localize effect}}</small></span>
+      <span class="controls"><a data-action="removeFault" data-index="{{index}}" data-tooltip="{{localize 'LAUNDRY.Vehicle.RepairFault'}}"><i class="fa-solid fa-screwdriver-wrench"></i></a></span></div></li>
+    {{else}}<li class="empty">—</li>
+    {{/each}}
+  </ol>
+  <h3 class="section-title">{{localize "LAUNDRY.Vehicle.Weapons"}}</h3>
+  <ol class="item-list">{{#each weapons}}<li class="item" data-item-id="{{id}}"><div class="item-row"><img src="{{img}}" class="item-img"><a class="item-name" data-action="itemUse">{{name}}</a></div></li>{{/each}}</ol>
+  <prose-mirror name="system.description" value="{{system.description}}" toggled="true">{{{description}}}</prose-mirror>
+</div>

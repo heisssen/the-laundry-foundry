@@ -1,0 +1,32 @@
+<header class="sheet-header team-header">
+  <img class="profile" src="{{actor.img}}" data-edit="img" data-action="editImage" alt="">
+  <div class="header-main">
+    <input class="actor-name" type="text" name="name" value="{{actor.name}}" placeholder="{{localize 'LAUNDRY.Team.NamePlaceholder'}}">
+    <div class="team-meta">
+      <label>{{localize "LAUNDRY.Team.LineManager"}}<input type="text" name="system.lineManager" value="{{system.lineManager}}"></label>
+      <label>{{localize "LAUNDRY.Team.MissionName"}}<input type="text" name="system.mission.name" value="{{system.mission.name}}"></label>
+      <label>{{localize "LAUNDRY.Details.codename"}}<input type="text" name="system.mission.codename" value="{{system.mission.codename}}"></label>
+    </div>
+  </div>
+  <div class="luck-threat-panel compact">
+    <div class="lt luck">
+      <h3><i class="fa-solid fa-clover"></i> {{localize "LAUNDRY.LuckThreat.Luck"}} <strong>{{luck.luck}}/{{luck.luckMax}}</strong></h3>
+      <div class="pips">{{#each luckPips}}<span class="pip {{#if filled}}filled{{/if}}"></span>{{/each}}</div>
+      {{#if isGM}}<div class="buttons">
+        <button type="button" data-action="luck" data-delta="-1">−1</button>
+        <button type="button" data-action="luck" data-delta="1">+1</button>
+        <button type="button" data-action="luck" data-delta="refill" data-tooltip="{{localize 'LAUNDRY.LuckThreat.Refill'}}"><i class="fa-solid fa-rotate-left"></i></button>
+        <button type="button" data-action="luck" data-delta="max" data-tooltip="{{localize 'LAUNDRY.LuckThreat.IncreaseMaxHint'}}"><i class="fa-solid fa-arrow-up"></i></button>
+      </div>{{/if}}
+    </div>
+    <div class="lt threat">
+      <h3><i class="fa-solid fa-eye"></i> {{localize "LAUNDRY.LuckThreat.Threat"}} <strong>{{luck.threat}}/10</strong></h3>
+      <div class="pips threat">{{#each threatPips}}<span class="pip {{#if filled}}filled{{/if}}">{{n}}</span>{{/each}}</div>
+      {{#if isGM}}<div class="buttons">
+        <button type="button" data-action="threat" data-delta="-1">−1</button>
+        <button type="button" data-action="threat" data-delta="1">+1</button>
+        <button type="button" data-action="threat" data-delta="reset" data-tooltip="{{localize 'LAUNDRY.GM.EndAdventure'}}"><i class="fa-solid fa-flag-checkered"></i></button>
+      </div>{{/if}}
+    </div>
+  </div>
+</header>

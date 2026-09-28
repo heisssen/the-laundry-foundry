@@ -1,0 +1,40 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="stash">
+  <h3 class="section-title">{{localize "LAUNDRY.Team.Stash"}} <small>{{localize "LAUNDRY.Team.StashHint"}}</small></h3>
+  <ol class="item-list stash">
+    {{#each stash}}
+    <li class="item" data-item-id="{{id}}">
+      <div class="item-row">
+        <img src="{{img}}" class="item-img" alt="">
+        <span class="item-name">{{name}} <small>{{type}}{{#if qty}} ×{{qty}}{{/if}}</small></span>
+        <span class="controls">
+          <a data-action="giveItem" data-tooltip="{{localize 'LAUNDRY.Team.Give'}}"><i class="fa-solid fa-hand-holding"></i></a>
+          <a data-action="chatItem"><i class="fa-solid fa-comment"></i></a>
+          {{#if ../editable}}<a data-action="editItem"><i class="fa-solid fa-pen"></i></a>
+          <a data-action="deleteItem"><i class="fa-solid fa-trash"></i></a>{{/if}}
+        </span>
+      </div>
+    </li>
+    {{else}}<li class="empty drop-zone"><i class="fa-solid fa-box-open"></i> {{localize "LAUNDRY.Team.StashEmpty"}}</li>
+    {{/each}}
+  </ol>
+
+  <h3 class="section-title">{{localize "LAUNDRY.Team.Requisitions"}}
+    {{#if editable}}<a class="create" data-action="addRow" data-array="requisitions"><i class="fa-solid fa-plus"></i></a>{{/if}}</h3>
+  <ol class="req-list">
+    {{#each requisitions}}
+    <li class="status-{{status}}">
+      <input type="text" value="{{item}}" data-array="requisitions" data-index="{{index}}" data-key="item" placeholder="{{localize 'LAUNDRY.Team.Item'}}">
+      <input type="text" class="dn" value="{{dn}}" data-array="requisitions" data-index="{{index}}" data-key="dn">
+      <span class="status">{{localize statusLabel}}{{#if by}} · {{by}}{{/if}}</span>
+      <a data-action="rollRequisition" data-index="{{index}}" data-tooltip="{{localize 'LAUNDRY.Requisition.Hint'}}"><i class="fa-solid fa-file-signature"></i></a>
+      {{#if ../editable}}<a data-action="removeRow" data-array="requisitions" data-index="{{index}}"><i class="fa-solid fa-trash"></i></a>{{/if}}
+    </li>
+    {{else}}<li class="empty">—</li>
+    {{/each}}
+  </ol>
+
+  {{#if issued.length}}
+  <h3 class="section-title">{{localize "LAUNDRY.Team.OnLoan"}} <small>{{localize "LAUNDRY.Requisition.ReturnHint"}}</small></h3>
+  <ul class="on-loan">{{#each issued}}<li><img src="{{img}}" alt=""> {{name}} <small>— {{member}}</small></li>{{/each}}</ul>
+  {{/if}}
+</section>

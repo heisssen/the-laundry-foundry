@@ -1,0 +1,28 @@
+<div class="laundry-card damage-card {{#if res.becameCritical}}critical{{/if}}">
+  <header class="card-header">
+    <img src="{{actor.img}}" class="card-icon">
+    <div class="card-title">
+      <h3>{{actor.name}}</h3>
+      <div class="card-subtitle">{{localize (concat "LAUNDRY.DamageType." res.type)}}{{#if hit.cause}} · {{hit.cause}}{{/if}}</div>
+    </div>
+  </header>
+  {{#if res.immune}}
+    <div class="outcome pass"><i class="fa-solid fa-fire"></i> {{localize "LAUNDRY.Damage.Immune"}}</div>
+  {{else}}
+  <div class="damage-line">
+    <span class="dmg">{{hit.damage}}</span>
+    {{#if res.armourApplied}}<span class="armour">− {{res.armourApplied}} <i class="fa-solid fa-shield"></i></span>{{/if}}
+    <span class="eq">=</span>
+    <span class="dmg total">{{res.damage}}</span>
+  </div>
+  <div class="toughness-line">
+    <i class="fa-solid fa-heart"></i> {{localize "LAUNDRY.Stat.toughness"}}: {{res.toughnessBefore}} → <strong>{{res.toughnessAfter}}</strong>
+  </div>
+  {{#if res.severity}}
+  <div class="injury-line severity-{{res.severity}}">
+    <i class="fa-solid fa-user-injured"></i> {{localize "LAUNDRY.Damage.Overflow"}} {{res.overflow}} → {{localize (concat "LAUNDRY.Severity." res.severity)}} ({{res.spaces}})
+  </div>
+  {{/if}}
+  {{#each res.notes}}<div class="note">{{this}}</div>{{/each}}
+  {{/if}}
+</div>

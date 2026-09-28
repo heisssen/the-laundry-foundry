@@ -1,0 +1,35 @@
+<div class="laundry-form">
+  <fieldset>
+    <legend><i class="fa-solid fa-clipboard-question"></i> {{localize "LAUNDRY.GM.RequestTest"}}</legend>
+    <div class="form-group"><label>{{localize "LAUNDRY.Test.Attribute"}}</label><select name="attribute">{{selectOptions attributes selected=state.attribute localize=true}}</select></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.Test.Skill"}}</label><select name="skill">{{selectOptions skills selected=state.skill localize=true}}</select></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.Test.DN"}}</label>
+      <div class="form-fields"><select name="dn">{{selectOptions dns selected=state.dn}}</select><span>:</span><input type="number" name="complexity" value="{{state.complexity}}" min="1"></div></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.GM.Label"}}</label><input type="text" name="label" value="{{state.label}}"></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.GM.GroupRequired"}}</label><input type="number" name="required" value="{{state.required}}" min="1"></div>
+    <div class="button-row">
+      <button type="button" data-action="request"><i class="fa-solid fa-dice-six"></i> {{localize "LAUNDRY.GM.RequestTest"}}</button>
+      <button type="button" data-action="group"><i class="fa-solid fa-people-group"></i> {{localize "LAUNDRY.GM.GroupTest"}}</button>
+    </div>
+  </fieldset>
+  <fieldset>
+    <legend><i class="fa-solid fa-ghost"></i> {{localize "LAUNDRY.GM.PresenceCheck"}}</legend>
+    <div class="form-group"><label>{{localize "LAUNDRY.GM.Creature"}}</label><input type="text" name="presenceName" value="{{state.presenceName}}"></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.NPC.presence"}}</label><select name="presence">{{selectOptions presence selected=state.presence localize=true}}</select></div>
+    <div class="form-group"><label>{{localize "LAUNDRY.GM.Count"}}</label><input type="number" name="presenceCount" value="{{state.presenceCount}}" min="1"></div>
+    <div class="button-row"><button type="button" data-action="presence"><i class="fa-solid fa-ghost"></i> {{localize "LAUNDRY.GM.PostPresence"}}</button></div>
+  </fieldset>
+  <fieldset>
+    <legend><i class="fa-solid fa-person-running"></i> {{localize "LAUNDRY.GM.Pursuit"}}</legend>
+    <div class="form-group"><label>{{localize "LAUNDRY.GM.StartDistance"}}</label><input type="number" name="pursuit" value="{{state.pursuit}}" min="0" max="10"></div>
+    <div class="button-row"><button type="button" data-action="pursuit"><i class="fa-solid fa-flag-checkered"></i> {{localize "LAUNDRY.GM.StartPursuit"}}</button></div>
+  </fieldset>
+  <fieldset>
+    <legend><i class="fa-solid fa-briefcase"></i> {{localize "LAUNDRY.GM.Mission"}}</legend>
+    <div class="button-row">
+      <button type="button" data-action="luckTest"><i class="fa-solid fa-clover"></i> {{localize "LAUNDRY.GM.LuckTest"}}</button>
+      <button type="button" data-action="newMission"><i class="fa-solid fa-folder-plus"></i> {{localize "LAUNDRY.GM.NewMission"}}</button>
+      <button type="button" data-action="endAdventure"><i class="fa-solid fa-flag"></i> {{localize "LAUNDRY.GM.EndAdventure"}}</button>
+    </div>
+  </fieldset>
+</div>

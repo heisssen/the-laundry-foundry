@@ -1,0 +1,112 @@
+<div class="npc-body statblock">
+  <header class="npc-header">
+    <img class="profile" src="{{actor.img}}" data-edit="img" data-action="editImage">
+    <div class="npc-title">
+      <input class="actor-name" type="text" name="name" value="{{actor.name}}">
+      <div class="npc-type">
+        {{#if editMode}}
+          <select name="system.size">{{selectOptions config.sizes selected=system.size localize=true}}</select>
+          <input type="text" name="system.species" value="{{system.species}}" placeholder="Human">
+          <select name="system.category">{{selectOptions config.npcCategories selected=system.category localize=true}}</select>
+          <input type="text" name="system.affiliation" value="{{system.affiliation}}" placeholder="(Laundry)">
+        {{else}}
+          {{localize (concat "LAUNDRY.Size." system.size)}} {{system.species}}{{#if system.affiliation}} ({{system.affiliation}}){{/if}} · {{localize (concat "LAUNDRY.NPCCategory." system.category)}}
+        {{/if}}
+      </div>
+    </div>
+    <a class="mode-toggle" data-action="toggleMode" data-tooltip="{{localize 'LAUNDRY.Sheet.EditMode'}}"><i class="fa-solid {{#if editMode}}fa-lock-open{{else}}fa-lock{{/if}}"></i></a>
+  </header>
+
+  <div class="stat-row ladder">
+    <div><label>(M)</label>{{#if editMode}}<select name="system.overrides.melee">{{selectOptions ladderOptions selected=system.overrides.melee localize=true blank="auto"}}</select>{{else}}<span>{{localize combat.melee.label}}</span>{{/if}}</div>
+    <div><label>(A)</label>{{#if editMode}}<select name="system.overrides.accuracy">{{selectOptions ladderOptions selected=system.overrides.accuracy localize=true blank="auto"}}</select>{{else}}<span>{{localize combat.accuracy.label}}</span>{{/if}}</div>
+    <div><label>(D)</label>{{#if editMode}}<select name="system.overrides.defence">{{selectOptions ladderOptions selected=system.overrides.defence localize=true blank="auto"}}</select>{{else}}<span>{{localize combat.defence.label}}</span>{{/if}}</div>
+  </div>
+
+  <div class="stat-row numbers">
+    <div><label>{{localize "LAUNDRY.Stat.armour"}}</label>{{#if editMode}}<input type="number" name="system.overrides.armour" value="{{system.overrides.armour}}" placeholder="{{combat.armour}}">{{else}}<span>{{combat.armour}}</span>{{/if}}</div>
+    <div><label>{{localize "LAUNDRY.Stat.toughness"}}</label>
+      <span class="res"><input type="number" name="system.toughness.value" value="{{system.toughness.value}}" min="0"> / {{#if editMode}}<input type="number" name="system.overrides.toughness" value="{{system.overrides.toughness}}" placeholder="{{system.toughness.max}}">{{else}}{{system.toughness.max}}{{/if}}</span>
+    </div>
+    <div><label>{{localize "LAUNDRY.Stat.injuries"}}</label>
+      {{#if editMode}}<label class="inline"><input type="checkbox" name="system.useInjuries" {{checked system.useInjuries}}></label>{{/if}}
+      {{#if system.useInjuries}}<div class="injury-track">{{#each injuryTrack}}<span class="box {{#if filled}}filled{{/if}}"></span>{{/each}}</div>{{else}}<span>—</span>{{/if}}
+    </div>
+    <div><label>{{localize "LAUNDRY.Stat.adrenaline"}}</label>
+      <span class="res"><input type="number" name="system.adrenaline.value" value="{{system.adrenaline.value}}" min="0"> / {{#if editMode}}<input type="number" name="system.overrides.adrenaline" value="{{system.overrides.adrenaline}}" placeholder="0">{{else}}{{system.adrenaline.max}}{{/if}}</span>
+    </div>
+  </div>
+
+  <div class="stat-lines">
+    <div><strong>{{localize "LAUNDRY.Stat.speed"}}:</strong> {{#if editMode}}<select name="system.speed">{{selectOptions config.speeds selected=system.speed localize=true}}</select>{{else}}{{localize (concat "LAUNDRY.Speed." system.speed)}}{{/if}}</div>
+    <div><strong>{{localize "LAUNDRY.Stat.initiative"}}:</strong> {{#if editMode}}<input type="number" name="system.overrides.initiative" value="{{system.overrides.initiative}}" placeholder="{{system.initiative}}">{{else}}{{system.initiative}}{{/if}}</div>
+    <div><strong>{{localize "LAUNDRY.Stat.naturalAwareness"}}:</strong> {{#if editMode}}<input type="number" name="system.overrides.naturalAwareness" value="{{system.overrides.naturalAwareness}}" placeholder="{{system.naturalAwareness}}">{{else}}{{system.naturalAwareness}}{{/if}}</div>
+    <div><strong>{{localize "LAUNDRY.NPC.presence"}}:</strong> {{#if editMode}}<select name="system.presence">{{selectOptions config.presence selected=system.presence localize=true}}</select>{{else}}{{localize presenceLabel}}{{/if}}</div>
+    <div><strong>{{localize "LAUNDRY.NPC.spellcaster"}}:</strong> {{#if editMode}}<input type="text" name="system.spellcaster" value="{{system.spellcaster}}">{{else}}{{system.spellcaster}}{{/if}}</div>
+    <div class="skills-line"><strong>{{localize "LAUNDRY.Sheet.Skills"}}:</strong>
+      {{#each statSkills}}<a class="rollable" data-action="rollSkill" data-skill="{{key}}">{{text}}</a>{{#unless @last}}, {{/unless}}{{else}}—{{/each}}
+    </div>
+  </div>
+
+  {{#if editMode}}
+  <details class="skill-editor" open>
+    <summary>{{localize "LAUNDRY.NPC.EditSkills"}}</summary>
+    <div class="skill-edit-grid">
+      {{#each skills}}
+      <div><span>{{localize label}}</span>
+        <input type="number" name="system.skills.{{key}}.training" value="{{training}}" min="0" max="4" data-tooltip="Training">
+        <input type="number" name="system.skills.{{key}}.focus" value="{{focus}}" min="0" max="4" data-tooltip="Focus">
+      </div>
+      {{/each}}
+    </div>
+  </details>
+  {{/if}}
+
+  <h3 class="section-title">{{localize "LAUNDRY.Sheet.Traits"}} {{#if editable}}<a class="create" data-action="itemCreate" data-type="talent" data-category="trait"><i class="fa-solid fa-plus"></i></a>{{/if}}</h3>
+  <ol class="item-list traits">
+    {{#each traits}}{{> laundry.item-row}}{{/each}}
+    {{#each talents}}{{> laundry.item-row}}{{/each}}
+  </ol>
+
+  <h3 class="section-title">{{localize "LAUNDRY.Sheet.Attacks"}} {{#if editable}}<a class="create" data-action="itemCreate" data-type="weapon"><i class="fa-solid fa-plus"></i></a>{{/if}}</h3>
+  <ol class="item-list attacks">
+    {{#each weapons}}
+    <li class="item draggable" data-item-id="{{id}}">
+      <div class="item-row">
+        <img src="{{img}}" class="item-img" data-action="itemUse">
+        <a class="item-name rollable" data-action="itemUse">{{name}}</a>
+        <span class="stat">{{#if (laundry-eq system.kind "ranged")}}{{localize "LAUNDRY.Attack.Ranged"}}{{else}}{{localize "LAUNDRY.Attack.Melee"}}{{/if}} ({{localize stepLabel}}), {{pool}}d6{{#if focus}}, +{{focus}}F{{/if}}, {{damageLabel}}</span>
+        <span class="traits">{{traits}}</span>
+        <span class="controls"><a data-action="itemEdit"><i class="fa-solid fa-pen"></i></a><a data-action="itemDelete"><i class="fa-solid fa-trash"></i></a></span>
+      </div>
+    </li>
+    {{/each}}
+  </ol>
+
+  {{#if spells.length}}
+  <h3 class="section-title">{{localize "LAUNDRY.Sheet.Spells"}}</h3>
+  <ol class="item-list">{{#each spells}}<li class="item" data-item-id="{{id}}"><div class="item-row"><img src="{{img}}" class="item-img" data-action="itemUse"><a class="item-name rollable" data-action="itemUse">{{name}}</a><span class="stat">DN {{system.dn}}:{{system.complexity}}</span><span class="controls"><a data-action="itemEdit"><i class="fa-solid fa-pen"></i></a><a data-action="itemDelete"><i class="fa-solid fa-trash"></i></a></span></div></li>{{/each}}</ol>
+  {{/if}}
+
+  {{#if injuries.length}}
+  <h3 class="section-title">{{localize "LAUNDRY.Sheet.Injuries"}}</h3>
+  <ol class="item-list injuries">{{#each injuries}}<li class="item injury severity-{{system.severity}}" data-item-id="{{id}}"><div class="item-row"><img src="{{img}}" class="item-img"><span class="item-name">{{name}} <small>{{effect}}</small></span><span class="controls"><a data-action="treatInjury"><i class="fa-solid fa-kit-medical"></i></a><a data-action="itemDelete"><i class="fa-solid fa-trash"></i></a></span></div></li>{{/each}}</ol>
+  {{/if}}
+
+  <div class="attr-footer">
+    {{#each attributes}}
+    <div><a class="rollable" data-action="rollAttribute" data-attribute="{{key}}">{{localize label}}</a>
+      {{#if ../editMode}}<input type="number" name="system.attributes.{{key}}.value" value="{{source}}" min="0">{{else}}<span>{{value}}</span>{{/if}}</div>
+    {{/each}}
+  </div>
+
+  <div class="condition-grid compact">
+    {{#each conditions}}<a class="condition {{#if active}}active{{/if}}" data-action="toggleCondition" data-condition="{{id}}" data-tooltip="{{localize label}}"><img src="{{img}}"></a>{{/each}}
+    <a class="condition" data-action="applyDamage" data-tooltip="{{localize 'LAUNDRY.Sheet.ApplyDamage'}}"><i class="fa-solid fa-heart-crack"></i></a>
+  </div>
+
+  <h3 class="section-title">{{localize "LAUNDRY.NPC.Description"}}</h3>
+  <prose-mirror name="system.description" value="{{system.description}}" toggled="true">{{{enriched.description}}}</prose-mirror>
+  <h3 class="section-title">{{localize "LAUNDRY.NPC.ThreatScaling"}} <small>({{localize "LAUNDRY.LuckThreat.Threat"}} {{threat}})</small></h3>
+  <prose-mirror name="system.threatScaling" value="{{system.threatScaling}}" toggled="true">{{{enriched.threatScaling}}}</prose-mirror>
+</div>

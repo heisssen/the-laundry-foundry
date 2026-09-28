@@ -1,0 +1,21 @@
+{
+  "name": "the-laundry-rpg",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "The Laundry RPG system for Foundry VTT v14 (fan-made, personal use)",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "pack": "node tools/pack.mjs",
+    "unpack": "node tools/unpack.mjs",
+    "dice": "python tools/make-dice.py",
+    "release": "node tools/release.mjs"
+  },
+  "devDependencies": {
+    "@foundryvtt/foundryvtt-cli": "^1.0.3",
+    "playwright-core": "^1.63.0",
+    "socket.io-client": "^4.8.4",
+    "vitest": "^3.2.4"
+  }
+}

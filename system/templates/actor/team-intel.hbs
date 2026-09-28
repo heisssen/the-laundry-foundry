@@ -1,0 +1,45 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="intel">
+  <h3 class="section-title">{{localize "LAUNDRY.Team.Contacts"}} <small>{{localize "LAUNDRY.Team.ContactsHint"}}</small>
+    {{#if editable}}<a class="create" data-action="addRow" data-array="contacts"><i class="fa-solid fa-plus"></i></a>{{/if}}</h3>
+  <div class="contact-grid">
+    {{#each contacts}}
+    <article class="contact attitude-{{attitude}}">
+      <img src="{{img}}" {{#if uuid}}data-action="openLink" data-uuid="{{uuid}}"{{/if}} alt="">
+      <div class="contact-body">
+        <input type="text" class="contact-name" value="{{name}}" data-array="contacts" data-index="{{index}}" data-key="name" placeholder="{{localize 'LAUNDRY.Team.ContactName'}}">
+        <select data-array="contacts" data-index="{{index}}" data-key="attitude">{{selectOptions ../attitudes selected=attitude localize=true}}</select>
+        <input type="text" value="{{note}}" data-array="contacts" data-index="{{index}}" data-key="note" placeholder="{{localize 'LAUNDRY.Team.ContactNote'}}">
+      </div>
+      {{#if ../editable}}<a class="remove" data-action="removeRow" data-array="contacts" data-index="{{index}}"><i class="fa-solid fa-xmark"></i></a>{{/if}}
+    </article>
+    {{else}}<div class="empty-state small"><i class="fa-solid fa-address-book"></i> {{localize "LAUNDRY.Team.NoContacts"}}</div>
+    {{/each}}
+  </div>
+
+  <h3 class="section-title">{{localize "LAUNDRY.Team.Evidence"}} <small>{{cluesFound}}/{{clues.length}} · {{localize "LAUNDRY.Team.EvidenceHint"}}</small>
+    {{#if editable}}<a class="create" data-action="addRow" data-array="clues"><i class="fa-solid fa-plus"></i></a>{{/if}}</h3>
+  <div class="evidence-board">
+    {{#each clues}}
+    <div class="clue {{#if found}}found{{/if}}">
+      <a class="pin" data-action="toggleRow" data-array="clues" data-index="{{index}}" data-key="found" data-tooltip="{{localize 'LAUNDRY.Team.ClueFound'}}"><i class="fa-solid fa-thumbtack"></i></a>
+      <textarea rows="2" data-array="clues" data-index="{{index}}" data-key="text">{{text}}</textarea>
+      <footer>
+        {{#if uuid}}<a data-action="openLink" data-uuid="{{uuid}}"><i class="fa-solid fa-link"></i> {{localize "LAUNDRY.Team.OpenSource"}}</a>{{/if}}
+        {{#if ../editable}}<a data-action="removeRow" data-array="clues" data-index="{{index}}"><i class="fa-solid fa-trash"></i></a>{{/if}}
+      </footer>
+    </div>
+    {{else}}<div class="empty-state small"><i class="fa-solid fa-thumbtack"></i> {{localize "LAUNDRY.Team.NoClues"}}</div>
+    {{/each}}
+  </div>
+
+  <div class="two-col">
+    <div>
+      <h3 class="section-title">{{localize "LAUNDRY.Team.Allies"}}</h3>
+      <prose-mirror name="system.allies" value="{{system.allies}}" toggled="true">{{{enriched.allies}}}</prose-mirror>
+    </div>
+    <div>
+      <h3 class="section-title">{{localize "LAUNDRY.Team.Rumours"}}</h3>
+      <prose-mirror name="system.rumours" value="{{system.rumours}}" toggled="true">{{{enriched.rumours}}}</prose-mirror>
+    </div>
+  </div>
+</section>

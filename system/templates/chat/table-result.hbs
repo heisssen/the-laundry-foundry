@@ -1,0 +1,18 @@
+<div class="laundry-card table-card">
+  <header class="card-header">
+    <div class="card-title">
+      <h3>{{heading}}</h3>
+      <div class="card-subtitle"><i class="fa-solid fa-dice"></i> 2d6 = {{total}}</div>
+    </div>
+  </header>
+  <div class="table-result">
+    <strong>{{name}}</strong>
+    <p>{{effect}}</p>
+    {{#if extraHtml}}<p class="note">{{{extraHtml}}}</p>{{/if}}
+  </div>
+  {{#if rerollAction}}
+  <footer class="card-controls" data-owner-only>
+    <button type="button" data-action="{{rerollAction}}"><i class="fa-solid fa-clover"></i> {{localize "LAUNDRY.Talent.CarefulCastingReroll"}}</button>
+  </footer>
+  {{/if}}
+</div>

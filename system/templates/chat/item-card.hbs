@@ -1,0 +1,22 @@
+<div class="laundry-card item-card type-{{item.type}}">
+  <header class="card-header">
+    <img src="{{item.img}}" class="card-icon">
+    <div class="card-title">
+      <h3>{{item.name}}</h3>
+      <div class="card-subtitle">{{localize (concat "TYPES.Item." item.type)}}{{#if system.source}} · {{system.source}}{{/if}}</div>
+    </div>
+  </header>
+  <div class="item-facts">
+    {{#if (laundry-eq item.type "weapon")}}
+      <span><i class="fa-solid fa-burst"></i> {{#if system.blast}}Blast ({{system.blast}}){{else}}{{system.damage}}{{#if system.addSuccesses}} + S{{/if}}{{/if}}</span>
+      {{#if system.range}}<span><i class="fa-solid fa-ruler"></i> {{localize (concat "LAUNDRY.Range." system.range)}}</span>{{/if}}
+    {{/if}}
+    {{#if (laundry-eq item.type "armour")}}<span><i class="fa-solid fa-shield"></i> {{system.value}}</span>{{/if}}
+    {{#if (laundry-eq item.type "spell")}}<span>DN {{system.dn}}:{{system.complexity}}</span><span>{{system.castingTime.value}} {{localize (concat "LAUNDRY.TimeUnit." system.castingTime.unit)}}</span>{{#if system.range}}<span>{{system.range}}</span>{{/if}}{{#if system.duration}}<span>{{system.duration}}</span>{{/if}}{{/if}}
+    {{#if (laundry-eq item.type "app")}}<span>DN {{system.dn}}:{{system.complexity}} Mind (Technology)</span><span>L{{system.level}}</span>{{/if}}
+    {{#if (laundry-eq item.type "talent")}}{{#if system.requirements.text}}<span class="req">{{localize "LAUNDRY.Talent.Requirements"}}: {{system.requirements.text}}</span>{{/if}}{{/if}}
+    {{#if traits}}<span class="traits">{{traits}}</span>{{/if}}
+    {{#if requisition}}<span><i class="fa-solid fa-file-signature"></i> {{localize "LAUNDRY.Requisition.Label"}} {{requisition.dn}}:{{requisition.complexity}}</span>{{/if}}
+  </div>
+  <div class="item-description">{{{description}}}</div>
+</div>
