@@ -38,6 +38,14 @@ export class LaundryItem extends Item {
   async #useTalent(event) {
     const a = this.system.activation;
     const actor = this.actor;
+    if (actor && ["studiedDefence", "eyeInTheSky"].includes(this.system.identifier)) {
+      const h = await import("../helpers/help.mjs");
+      return this.system.identifier === "studiedDefence" ? h.studiedDefence(actor, this) : h.eyeInTheSky(actor, this);
+    }
+    if (actor && ["medicalTraining", "counsellor"].includes(this.system.identifier)) {
+      const { healingTalent } = await import("../helpers/talent-effects.mjs");
+      return healingTalent(actor, this);
+    }
     if (actor && a.type !== "passive") {
       if (a.uses && this.system.used) {
         return ui.notifications.warn(game.i18n.format("LAUNDRY.Notify.TalentUsed", { name: this.name }));

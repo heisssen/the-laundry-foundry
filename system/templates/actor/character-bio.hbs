@@ -12,8 +12,22 @@
 
   <h3 class="section-title">{{localize "LAUNDRY.Details.goals"}}</h3>
   <div class="goals">
-    <div class="form-group"><label>{{localize "LAUNDRY.Details.shortGoal"}}</label><input type="text" name="system.details.goals.short" value="{{system.details.goals.short}}"><input type="checkbox" name="system.details.goals.shortDone" {{checked system.details.goals.shortDone}}></div>
-    <div class="form-group"><label>{{localize "LAUNDRY.Details.longGoal"}}</label><input type="text" name="system.details.goals.long" value="{{system.details.goals.long}}"><input type="checkbox" name="system.details.goals.longDone" {{checked system.details.goals.longDone}}></div>
+    <div class="goal-row">
+      <label>{{localize "LAUNDRY.Details.shortGoal"}} <small>+1 XP</small></label>
+      <input type="text" name="system.details.goals.short" value="{{system.details.goals.short}}" placeholder="{{localize 'LAUNDRY.Goals.ShortPlaceholder'}}">
+      {{#if editable}}<button type="button" data-action="achieveGoal" data-kind="short" {{#unless system.details.goals.short}}disabled{{/unless}} data-tooltip="{{localize 'LAUNDRY.Goals.AchieveHint'}}"><i class="fa-solid fa-check"></i> {{localize "LAUNDRY.Goals.Achieved"}}</button>{{/if}}
+    </div>
+    <div class="goal-row">
+      <label>{{localize "LAUNDRY.Details.longGoal"}} <small>+10 XP</small></label>
+      <input type="text" name="system.details.goals.long" value="{{system.details.goals.long}}" placeholder="{{localize 'LAUNDRY.Goals.LongPlaceholder'}}">
+      {{#if editable}}<button type="button" data-action="achieveGoal" data-kind="long" {{#unless system.details.goals.long}}disabled{{/unless}} data-tooltip="{{localize 'LAUNDRY.Goals.AchieveHint'}}"><i class="fa-solid fa-check"></i> {{localize "LAUNDRY.Goals.Achieved"}}</button>{{/if}}
+    </div>
+    {{#if system.details.goals.achieved.length}}
+    <ol class="goals-achieved">
+      <li class="head">{{localize "LAUNDRY.Goals.History"}}</li>
+      {{#each system.details.goals.achieved}}<li><s>{{text}}</s> <span class="tag">{{#if (laundry-eq kind "long")}}{{localize "LAUNDRY.Details.longGoal"}}{{else}}{{localize "LAUNDRY.Details.shortGoal"}}{{/if}}</span> <span class="xp">+{{xp}} XP</span> <span class="date">{{date}}</span></li>{{/each}}
+    </ol>
+    {{/if}}
   </div>
 
   <div class="form-group stacked">

@@ -123,13 +123,20 @@ export class LaundryActor extends Actor {
    */
   async addCondition(id, { turns = 0, origin = null } = {}) {
     if (this.statuses.has(id)) return;
+    // Collected / Fearless: DN 6:1 Mind (Resolve) to shrug it off. OH p.69, 72
+    if (["stunned", "frightened"].includes(id) && !origin?.startsWith?.("self")) {
+      const { resistCondition } = await import("../helpers/talent-effects.mjs");
+      if (await resistCondition(this, id)) return;
+    }
     const status = CONFIG.statusEffects.find(s => s.id === id);
     if (!status) return;
     const effect = await ActiveEffect.implementation.fromStatusEffect(id);
     const data = effect.toObject();
     if (turns > 0) {
       data.duration = { value: turns, units: "turns", expiry: "turnEnd" };
-      if (game.combat?.started) data.start = { combat: game.combat.id, round: game.combat.round, turn: game.combat.turn };
+      // v14: start.time is required; combat position is optional.
+      data.start = { time: game.time.worldTime };
+      if (game.combat?.started) Object.assign(data.start, { combat: game.combat.id, round: game.combat.round, turn: game.combat.turn });
     }
     if (origin) data.origin = origin;
     await this.createEmbeddedDocuments("ActiveEffect", [data]);
@@ -344,6 +351,8 @@ export class LaundryActor extends Actor {
     if (this.system.injuries?.critical) return ui.notifications.warn("LAUNDRY.Notify.CriticalNoRecovery", { localize: true });
     await this.update({ "system.toughness.value": t.max, "system.mission.backupPlanUsed": false });
     await this.#refreshTalents("rest");
+    // Studied Defence lasts until your next Rest. OH p.82
+    if (this.getFlag("the-laundry", "studied")) await this.unsetFlag("the-laundry", "studied");
     // Naturally Lucky: 2d6 vs GM 1d6 -> +2 Luck, otherwise Threat +1. OH p.77
     if (this.items.some(i => i.system.identifier === "naturallyLucky")) {
       const mine = await new Roll("2d6").evaluate();

@@ -20,6 +20,8 @@ export class LaundryActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) 
     form: { submitOnChange: true },
     actions: {
       rollSkill: LaundryActorSheet.#onRollSkill,
+      achieveGoal: LaundryActorSheet.#onAchieveGoal,
+      helpAlly: LaundryActorSheet.#onHelpAlly,
       rollAttribute: LaundryActorSheet.#onRollAttribute,
       setPip: LaundryActorSheet.#onSetPip,
       itemUse: LaundryActorSheet.#onItemUse,
@@ -340,6 +342,35 @@ export class LaundryActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) 
   static async #onKResist() {
     const { resistKSyndrome } = await import("../workflows/magic.mjs");
     return resistKSyndrome(this.actor);
+  }
+
+  static async #onHelpAlly() {
+    const { takeHelpAction } = await import("../helpers/help.mjs");
+    return takeHelpAction(this.actor);
+  }
+
+  /** Achieving a Goal: +1 XP (short) / +10 XP (long), goal moves to the achieved list. OH p.34 */
+  static async #onAchieveGoal(event, target) {
+    const kind = target.dataset.kind;
+    const g = this.actor.system.details.goals;
+    const text = g[kind];
+    if (!text) return;
+    const xp = kind === "long" ? 10 : 1;
+    const ok = await foundry.applications.api.DialogV2.confirm({
+      window: { title: "LAUNDRY.Goals.Achieved" },
+      content: `<p>${game.i18n.format("LAUNDRY.Goals.Confirm", { goal: foundry.utils.escapeHTML(text), xp })}</p>`
+    });
+    if (!ok) return;
+    const achieved = [...g.achieved, { kind, text, xp, date: new Date().toISOString().slice(0, 10) }];
+    await this.actor.update({
+      "system.xp.total": this.actor.system.xp.total + xp,
+      [`system.details.goals.${kind}`]: "", [`system.details.goals.${kind}Done`]: false,
+      "system.details.goals.achieved": achieved
+    });
+    await ChatMessage.create({
+      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+      content: `<div class="laundry-note kpi"><i class="fa-solid fa-flag-checkered"></i> ${game.i18n.format("LAUNDRY.Goals.Chat", { name: this.actor.name, goal: foundry.utils.escapeHTML(text), xp })}</div>`
+    });
   }
 
   static #onRequisition(event, target) {

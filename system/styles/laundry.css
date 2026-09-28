@@ -1053,3 +1053,24 @@ a.laundry-inline-test:hover strong { color: #f1d27a; }
 .laundry .item-summary-strip { display: flex; flex-wrap: wrap; gap: 4px; margin: 4px 0 8px; }
 
 .laundry-card .outcome .extra { margin-left: 6px; font-family: var(--l-mono); font-size: 12px; opacity: 0.8; }
+
+/* Tabbed sheets (character, team, items): header and tab bar stay put, the active tab scrolls. */
+.laundry.sheet .window-content:has(> section.tab) { display: flex; flex-direction: column; overflow: hidden; }
+.laundry.sheet .window-content:has(> section.tab) > :not(section.tab) { flex: 0 0 auto; }
+.laundry.sheet .window-content > section.tab { flex: 1 1 auto; min-height: 0; overflow-y: auto; overflow-x: hidden; }
+.laundry.sheet .window-content > section.tab:not(.active) { display: none; }
+
+/* Every Laundry window: never taller than the screen, content scrolls (dialogs, GM Toolkit, pursuit, item sheets…). */
+.laundry.application { max-height: calc(100vh - 16px); }
+.laundry.application .window-content { overflow-y: auto; min-height: 0; }
+
+/* personal goals */
+.laundry .goals .goal-row { display: grid; grid-template-columns: 150px 1fr auto; gap: 6px; align-items: center; margin-bottom: 4px; }
+.laundry .goals .goal-row label small { color: var(--l-gold); font-family: var(--l-mono); }
+.laundry .goals .goal-row button { flex: 0 0 auto; padding: 0 10px; height: 28px; line-height: 26px; }
+.laundry .goals-achieved { list-style: none; padding: 0; margin: 6px 0 0; font-size: 12.5px; color: var(--l-ink-2); }
+.laundry .goals-achieved li { display: flex; gap: 6px; align-items: center; border-bottom: 1px dotted var(--l-edge-soft); padding: 2px 0; }
+.laundry .goals-achieved li.head { font-family: var(--l-type); text-transform: uppercase; letter-spacing: 1px; font-size: 11px; border: none; }
+.laundry .goals-achieved s { flex: 1; color: var(--l-muted); }
+.laundry .goals-achieved .xp { font-family: var(--l-mono); color: var(--l-gold); }
+.laundry .goals-achieved .date { font-family: var(--l-mono); font-size: 11px; color: var(--l-muted); }

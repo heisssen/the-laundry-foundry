@@ -188,6 +188,7 @@
     {{else}}
       <div>{{opposed.responder}}: {{opposed.responderSuccesses}} ({{opposed.responderPool}}d6, DN {{opposed.responderDN}})</div>
       <strong>{{#if (laundry-eq opposed.winner "a")}}{{localize "LAUNDRY.GM.OpposedWinA"}}{{else if (laundry-eq opposed.winner "b")}}{{opposed.responder}} {{localize "LAUNDRY.GM.OpposedWinB"}}{{else}}{{localize "LAUNDRY.GM.OpposedReroll"}}{{/if}}</strong>
+      {{#if opposed.ruthless}}<small class="ruthless"><i class="fa-solid fa-skull"></i> Ruthless +{{opposed.ruthless.bonus}} — margin {{opposed.ruthless.margin}}</small>{{/if}}
     {{/if}}
   </div>
   {{/if}}

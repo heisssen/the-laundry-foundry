@@ -10,7 +10,8 @@
     "pack": "node tools/pack.mjs",
     "unpack": "node tools/unpack.mjs",
     "dice": "python tools/make-dice.py",
-    "release": "node tools/release.mjs"
+    "release": "node tools/release.mjs",
+    "smoke": "node tools/smoke-all.mjs"
   },
   "devDependencies": {
     "@foundryvtt/foundryvtt-cli": "^1.0.3",

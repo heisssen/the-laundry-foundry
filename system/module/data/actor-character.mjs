@@ -50,7 +50,8 @@ export class CharacterData extends CreatureData {
         hair: str(),
         features: str(),
         goals: new fields.SchemaField({
-          short: str(), shortDone: bool(), long: str(), longDone: bool()
+          short: str(), shortDone: bool(), long: str(), longDone: bool(),
+          achieved: new fields.ArrayField(new fields.SchemaField({ kind: str(), text: str(), date: str(), xp: int(0) }))
         }),
         connections: str(),
         training: str(),

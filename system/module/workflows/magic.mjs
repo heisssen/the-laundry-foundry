@@ -14,7 +14,7 @@ const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 /** "1 action" / "10 minutes" / "2 hours" for a casting time in minutes. */
 export function formatCastingTime(min) {
   const L = k => game.i18n.localize(k);
-  if (min < 1) return `${Math.max(1, Math.round(min * 10))} ${L("LAUNDRY.TimeUnit.rounds")}`;
+  if (min < 1) { const n = Math.max(1, Math.round(min * 10)); return `${n} ${L(n === 1 ? "LAUNDRY.TimeUnit.action" : "LAUNDRY.TimeUnit.actions")}`; }
   if (min < 60) return `${+min.toFixed(1)} ${L("LAUNDRY.TimeUnit.minutes")}`;
   if (min < 1440) return `${+(min / 60).toFixed(1)} ${L("LAUNDRY.TimeUnit.hours")}`;
   return `${+(min / 1440).toFixed(1)} ${L("LAUNDRY.TimeUnit.days")}`;

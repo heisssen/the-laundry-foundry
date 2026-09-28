@@ -8,6 +8,7 @@ import { Luck } from "../helpers/luck.mjs";
 import { collectMods, summarise, hasTalent } from "../helpers/talent-mods.mjs";
 import { zoneRange, zoneAttackMods, actorToken } from "../data/region-zone.mjs";
 import { vehicleOf } from "../data/actor-team.mjs";
+import { attackTalentMods, thrownRange, stripTraits } from "../helpers/talent-effects.mjs";
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
@@ -112,17 +113,18 @@ export class AttackDialog extends HandlebarsApplicationMixin(ApplicationV2) {
     const attackStepBase = (w.step ?? (ranged ? actor.system.combat.accuracy : actor.system.combat.melee)) + tm.attackStep;
     const lastStand = actor.statuses.has("lastStand") ? 0 : 0; // already in combat steps via condition
     const targets = (this.targets.length ? this.targets : [null]).map(t => {
-      const defenceStep = t ? (t.actor.system.combat?.defence ?? 1) : Number(c.manualDefence);
+      const tal = t ? attackTalentMods(actor, t, { hidden: c.hidden }) : { defence: 0, attack: 0, hidden: null, notes: [] };
+      const defenceStep = (t ? (t.actor.system.combat?.defence ?? 1) : Number(c.manualDefence)) + tal.defence;
       const r = attackDifficulty({
         kind: ranged ? "ranged" : "melee",
-        attackStep: attackStepBase + lastStand,
+        attackStep: attackStepBase + lastStand + tal.attack,
         defenceStep,
         range: c.range,
-        weaponRange: c.thrown ? (w.thrownRange || "short") : w.range,
+        weaponRange: c.thrown ? thrownRange(actor, w.thrownRange || "short") : w.range,
         thrownImprovised: c.thrown && !w.traits.includes("thrown"),
         cover: c.cover || null,
         calledShot: c.calledShot || null,
-        hidden: c.hidden,
+        hidden: tal.hidden ?? c.hidden,
         targetProne: t?.actor?.statuses?.has("prone"),
         targetIncapacitated: t?.actor?.statuses?.has("incapacitated") || t?.actor?.statuses?.has("unconscious"),
         pointBlank: actor.items.some(i => i.system.identifier === "pointBlankRange"),
@@ -138,7 +140,7 @@ export class AttackDialog extends HandlebarsApplicationMixin(ApplicationV2) {
         defenceStep: r.defenceStep,
         attackStep: r.attackStep,
         dn: r.dn,
-        notes: r.notes
+        notes: [...r.notes, ...tal.notes]
       };
     });
     return { skill, ranged, targets, attackStepBase, talentMods, tm, unarmed, zoneApplied: this.zoneApplied ?? [] };
@@ -220,7 +222,7 @@ export async function rollAttack(actor, weapon, { skipDialog = false } = {}) {
   const bonusDamage = (actor.system.bonuses?.damage ?? 0) + comp.tm.damage
     + (c.calledShot && hasTalent(actor, "crackShot") ? 1 : 0);
   // Heavy Hitter: unarmed strikes deal 1 + S, gain Crushing, lose Ineffective. OH p.73
-  let traits = [...w.traits, ...comp.tm.traits];
+  let traits = stripTraits(actor, [...w.traits, ...comp.tm.traits]);
   let baseDamage = w.blast || w.damage;
   if (comp.unarmed && hasTalent(actor, "heavyHitter")) {
     baseDamage = Math.max(1, baseDamage);

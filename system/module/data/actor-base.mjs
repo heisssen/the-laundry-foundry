@@ -57,6 +57,8 @@ export class CreatureData extends foundry.abstract.TypeDataModel {
     const d = computeDerived({ attributes, skills, bonuses: this.bonuses, initiativeUsesBody });
     // Guts: +1 Toughness per Training in Resolve. OH p.73
     if (talent("guts")) d.toughness += skills.resolve?.training ?? 0;
+    // Combat Ready: +2 Initiative per purchase. OH p.69
+    d.initiative += 2 * this.parent.items.filter(i => i.type === "talent" && i.system.identifier === "combatReady").length;
 
     const statuses = [...(this.parent.statuses ?? [])];
     const cond = aggregateConditions(statuses);
@@ -64,6 +66,11 @@ export class CreatureData extends foundry.abstract.TypeDataModel {
     const defensive = this._hasDefensiveWeapon() ? 1 : 0;
     // Evasive: Dodge grants +2 Defence steps instead of +1. OH p.71
     if (statuses.includes("dodging") && talent("evasive")) cond.steps.defence += 1;
+    // Combat Sense: no Melee / Accuracy / Defence penalty while Blinded. OH p.69
+    if (statuses.includes("blinded") && talent("combatSense")) {
+      const b = aggregateConditions(["blinded"]).steps;
+      for (const k of ["melee", "accuracy", "defence"]) cond.steps[k] -= b[k] ?? 0;
+    }
 
     const base = {
       melee: overrides.melee ?? d.melee,

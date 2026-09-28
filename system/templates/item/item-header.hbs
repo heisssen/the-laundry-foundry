@@ -5,6 +5,14 @@
     <div class="item-type">{{localize (concat "TYPES.Item." item.type)}}
       {{#if item.actor}}<a data-action="use" class="use-btn"><i class="fa-solid fa-play"></i> {{localize "LAUNDRY.Sheet.Use"}}</a>{{/if}}
     </div>
+    {{#if (laundry-eq item.type "weapon")}}
+    <div class="item-summary-strip">
+      <span class="tag gold"><i class="fa-solid fa-burst"></i> {{#if system.blast}}{{localize "LAUNDRY.Trait.blast"}} {{system.blast}}{{else}}{{system.damage}}{{#if system.addSuccesses}} + S{{/if}}{{/if}}</span>
+      {{#if system.range}}<span class="tag"><i class="fa-solid fa-ruler"></i> {{localize (concat "LAUNDRY.Range." system.range)}}</span>{{/if}}
+      {{#each system.traits}}<span class="tag">{{localize (concat "LAUNDRY.Trait." this)}}</span>{{/each}}
+      {{#if system.requisition}}<span class="tag"><i class="fa-solid fa-stamp"></i> {{system.requisition}}</span>{{/if}}
+    </div>
+    {{/if}}
     <div class="form-row small">
       <label>{{localize "LAUNDRY.Item.identifier"}} <input type="text" name="system.identifier" value="{{system.identifier}}" placeholder="camelCaseId"></label>
       <label>{{localize "LAUNDRY.Item.source"}} <input type="text" name="system.source" value="{{system.source}}" placeholder="OH p.66"></label>

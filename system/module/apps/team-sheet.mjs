@@ -116,7 +116,8 @@ export class TeamSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
         };
       }),
       skillMatrix,
-      objectives: sys.objectives.map((o, i) => ({ ...o, index: i })).filter(visible),
+      // Open objectives first; achieved ones sink to the bottom, struck through.
+      objectives: sys.objectives.map((o, i) => ({ ...o, index: i })).filter(visible).sort((a, b) => a.done - b.done),
       objectivesDone: sys.objectives.filter(o => o.done && visible(o)).length,
       objectivesTotal: sys.objectives.filter(visible).length,
       contacts: sys.contacts.map((c, i) => ({ ...c, index: i })),

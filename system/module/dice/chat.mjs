@@ -16,6 +16,15 @@ registerGMHandler("updateMessage", async ({ id, update }) => {
   return m ? !!(await m.update(update)) : false;
 });
 
+registerGMHandler("healToughness", async ({ actorUuid, amount, key, today }) => {
+  const actor = await fromUuid(actorUuid);
+  if (!actor) return null;
+  const t = actor.system.toughness;
+  await actor.update({ "system.toughness.value": Math.min(t.max, t.value + amount) });
+  await actor.setFlag("the-laundry", key, today);
+  return true;
+});
+
 registerGMHandler("applyDamage", async ({ actorUuid, hit }) => {
   const actor = await fromUuid(actorUuid);
   return actor ? actor.applyDamage(hit) : null;
@@ -296,6 +305,11 @@ async function applyDamage(message, index, mode) {
   if (!target) return;
   if (target.isOwner) await target.applyDamage(hit);
   else await asGM("applyDamage", { actorUuid: t.uuid, hit });
+  if (damage > 0) {
+    const { reactionReminders } = await import("../helpers/talent-effects.mjs");
+    const weapon = a.weaponUuid ? fromUuidSync(a.weaponUuid) : null;
+    await reactionReminders(target, { melee: (weapon?.system?.kind ?? "melee") === "melee" });
+  }
 
   // Trait side effects
   if (mode === "full") {

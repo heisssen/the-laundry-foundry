@@ -9,6 +9,7 @@ import { evaluateTest, applyAdvantage, clampDN, isAutoSuccess } from "../rules/d
 import { dnModifierFor } from "../rules/tables.mjs";
 import { collectMods, summarise } from "../helpers/talent-mods.mjs";
 import { zoneTestMods } from "../data/region-zone.mjs";
+import { helpDice, consumeHelps } from "../helpers/help.mjs";
 
 export const TEMPLATE = `${SYSTEM_PATH}/templates/chat/test-card.hbs`;
 
@@ -66,6 +67,10 @@ export function prepareTest(actor, cfg) {
   }
   if (tm.bonusDice) { pool += tm.bonusDice; breakdown.push({ label: "LAUNDRY.Test.TalentDice", value: tm.bonusDice }); }
   if (cfg.bonusDice) { pool += cfg.bonusDice; breakdown.push({ label: "LAUNDRY.Test.BonusDice", value: cfg.bonusDice }); }
+  // Help Action: allies' dice waiting for this Test. OH p.105
+  const help = cfg.applyHelp === false ? { dice: 0, lines: [], ids: [] }
+    : helpDice(actor, { kind: cfg.kind ?? "test", skill: cfg.skill, targetUuid: cfg.attack?.targets?.[0]?.uuid });
+  if (help.dice) { pool += help.dice; breakdown.push(...help.lines); }
   if (cfg.penaltyDice) { pool -= cfg.penaltyDice; breakdown.push({ label: "LAUNDRY.Test.PenaltyDice", value: -cfg.penaltyDice }); }
   if (cfg.applyConditions !== false && mods.pool && cfg.kind !== "luck" && cfg.kind !== "death") {
     pool += mods.pool;
@@ -100,7 +105,8 @@ export function prepareTest(actor, cfg) {
     complexity,
     breakdown,
     talentMods,
-    talentsApplied: tm.applied,
+    talentsApplied: [...tm.applied, ...help.lines.map(l => `${l.label} +${l.value}d6`)],
+    helpIds: help.ids,
     zonesApplied: [...(cfg.zonesApplied ?? []), ...zm.applied],
     talentSummary: tm,
     auto: isAutoSuccess(pool, dn, complexity)
@@ -138,6 +144,7 @@ export function reevaluate(state, { results = state.evaluation.results, bonuses 
 export async function performTest(actor, cfg, { rollMode, chat = true } = {}) {
   const prepared = prepareTest(actor, cfg);
   const { roll, evaluation } = await rollTest(prepared);
+  if (prepared.helpIds?.length) await consumeHelps(actor, prepared.helpIds);
   const state = {
     v: 1,
     ...prepared,

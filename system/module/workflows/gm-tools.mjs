@@ -89,6 +89,14 @@ export async function respondOpposed(message) {
     responderDN: resp.dn,
     winner
   };
+  // Ruthless: the winner adds 1 success per Training in Resolve to the margin. OH p.80
+  const initiator = state.actorUuid ? await fromUuid(state.actorUuid) : null;
+  const winActor = winner === "a" ? initiator : (winner === "b" ? actor : null);
+  if (winActor?.items.some(i => i.system.identifier === "ruthless")) {
+    const bonus = winActor.system.getSkill("resolve")?.training ?? 0;
+    const margin = Math.abs(state.evaluation.successes - resp.evaluation.successes) + bonus;
+    state.opposed.ruthless = { name: winActor.name, bonus, margin };
+  }
   await updateTestMessage(message, state);
 }
 

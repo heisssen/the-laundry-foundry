@@ -22,6 +22,9 @@ import { registerZoneBehavior, zoneRange, zoneTraits } from "./module/data/regio
 import { registerZoneSettings, registerZoneHooks } from "./module/apps/zones-canvas.mjs";
 import { registerEnrichers } from "./module/helpers/enrichers.mjs";
 import { registerPursuit, PursuitTracker } from "./module/apps/pursuit.mjs";
+import { registerModuleDefaults } from "./module/helpers/module-defaults.mjs";
+import { registerHelp, takeHelpAction } from "./module/helpers/help.mjs";
+import { registerMovementReactions } from "./module/helpers/talent-effects.mjs";
 
 Hooks.once("init", () => {
   console.log(`${SYSTEM_ID} | Initialising The Laundry RPG`);
@@ -72,6 +75,9 @@ Hooks.once("init", () => {
   registerZoneHooks();
   registerEnrichers();
   registerPursuit();
+  registerModuleDefaults();
+  registerHelp();
+  registerMovementReactions();
   game.settings.register(SYSTEM_ID, "showLuckHud", {
     name: "LAUNDRY.Setting.ShowHud.Name", hint: "LAUNDRY.Setting.ShowHud.Hint",
     scope: "client", config: true, type: Boolean, default: true,
@@ -88,6 +94,7 @@ Hooks.once("init", () => {
   game.laundry = {
     rules, Luck, getLuckState, LaundryDie, zoneRange, zoneTraits,
     pursuit: () => PursuitTracker.open(),
+    help: (actor = canvas?.tokens?.controlled[0]?.actor ?? game.user.character) => actor ? takeHelpAction(actor) : ui.notifications.warn("LAUNDRY.Notify.NoCharacter", { localize: true }),
     useItem: async (uuid) => (await fromUuid(uuid))?.use(),
     rollSkill: (skill, cfg) => (canvas.tokens.controlled[0]?.actor ?? game.user.character)?.rollSkill(skill, cfg),
     toolkit: async () => new (await import("./module/workflows/gm-tools.mjs")).GMToolkit().render({ force: true }),

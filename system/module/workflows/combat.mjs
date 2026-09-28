@@ -128,6 +128,10 @@ export function registerCombatHooks() {
     if (!actor) return;
     if (actor.statuses.has("terrified")) await actor.gainAdrenaline(1);
     if (actor.type === "npc" && actor.system.adrenaline.max) await actor.gainAdrenaline(1);
+    // Dig Deep: out of Adrenaline and Toughness → regain 1 Adrenaline. OH p.70
+    if (actor.items.some(i => i.system.identifier === "digDeep") && !actor.system.adrenaline.value && !actor.system.toughness.value) {
+      await actor.gainAdrenaline(1);
+    }
     // End of own turn effects: Charging / Dodging expire at the start of the next turn.
     for (const id of ["charging", "dodging"]) if (actor.statuses.has(id)) await actor.removeCondition(id);
     if (actor.system.lastStand && actor.statuses.has("lastStand")) {

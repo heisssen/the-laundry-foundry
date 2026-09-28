@@ -230,7 +230,9 @@
       "hours": "hours",
       "days": "days",
       "permanent": "Permanent",
-      "special": "Special"
+      "special": "Special",
+      "action": "action",
+      "actions": "actions"
     },
     "Condition": {
       "blinded": "Blinded",
@@ -818,7 +820,7 @@
       "Pursuit": "Pursuit",
       "PursuitHint": "0 = caught, 10 = escaped",
       "StartDistance": "Starting Distance",
-      "StartPursuit": "Start Pursuit",
+      "StartPursuit": "Open Pursuit tracker",
       "Quarry": "Quarry",
       "Pursuer": "Pursuer",
       "Caught": "The quarry is caught!",
@@ -1020,7 +1022,13 @@
         "d69": "No dreams.",
         "d1011": "A clue about your Short-term Goal or KPI.",
         "d12": "A clue about your Long-term Goal or KPI."
-      }
+      },
+      "ResistLabel": "{talent}: resist",
+      "HealedToday": "{name} has already been treated with {talent} today.",
+      "Healed": "{name} recovers {n} Toughness.",
+      "CounterattackReminder": "{name} can Counterattack — a Free Action melee Attack against the attacker (once per turn).",
+      "OpportunistReminder": "{enemy} moves away from {name} — Opportunist: make an Attack against it (once per round).",
+      "StandAndFireReminder": "{enemy} enters {name}'s Zone — Stand and Fire: a ranged Attack as a Free Action (once per round)."
     },
     "Activation": {
       "passive": "Passive",
@@ -1253,6 +1261,31 @@
       "NoChange": "neck and neck.",
       "Caught": "{name} is caught!",
       "Sacrificed": "{name} falls behind and is caught — the others keep running."
+    },
+    "Goals": {
+      "Achieved": "Achieved",
+      "AchieveHint": "Mark as achieved: gain the XP and write a new goal (OH p.34).",
+      "Confirm": "Mark <strong>{goal}</strong> as achieved and gain {xp} XP?",
+      "Chat": "{name} achieved a goal: <em>{goal}</em> (+{xp} XP). Time to pick a new one.",
+      "History": "Achieved goals",
+      "ShortPlaceholder": "Something within the next few sessions…",
+      "LongPlaceholder": "What you're really working towards…"
+    },
+    "Help": {
+      "Title": "Help an ally",
+      "Ally": "Ally",
+      "Kind": "Help with",
+      "KindTest": "their next Test",
+      "KindAttack": "an attack on a nearby enemy",
+      "Give": "Help",
+      "Hint": "OH p.105: the ally adds 1d6 + your Training in the Skill they use (attacks: your Close Combat / Ranged) to their next Test. Target the ally (and the enemy for attacks) first.",
+      "Line": "Help ({name})",
+      "ChatTest": "{helper} helps {ally} — bonus dice on {ally}'s next Test.",
+      "ChatAttack": "{helper} distracts {enemy} — {ally} gets bonus dice attacking it before {helper}'s next turn.",
+      "TargetEnemy": "Target the enemy you study first.",
+      "TargetAlly": "Target the ally you watch over first.",
+      "Studied": "{name} studies {enemy} ({talent}): Defence +1 step against it until the next Rest.",
+      "Eye": "{name} watches over {ally} ({talent}): Defence +1 step until {name}'s next turn."
     }
   }
 }
